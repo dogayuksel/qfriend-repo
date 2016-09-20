@@ -5,6 +5,7 @@
 
 isSignedIn() { auth != null }
 isViewer(uid) { isSignedIn() && auth.uid == uid }
+isAdmin() { root.admins.hasChildren([auth.uid]) }
 isFriend(uid) { true } // We can limit access to sensitive data easily.
 
 // Types
@@ -51,6 +52,13 @@ type User {
   validate() { this.id == auth.uid }
 }
 
+type QueueEntry {
+  loggedAt: CurrentTimestamp,
+  value: Number,
+  venueKey: Number,
+  owner: User,
+}
+
 type UserEmail {
   email: ShortRequiredString
 }
@@ -58,6 +66,9 @@ type UserEmail {
 type UserPresence {
   authenticatedAt: CurrentTimestamp,
   user: User
+}
+
+type Admin {
 }
 
 // Paths
@@ -69,6 +80,25 @@ path /hello-world is HelloWorld {
   update() { true }
 }
 
+path /locations {
+  // Anyone can create, read, update. No one can delete.
+  read() { true }
+  write() { isAdmin() }
+}
+
+path /queues/{queue} is QueueEntry {
+  read() { true }
+  write() { isAdmin() }
+}
+
+path /queues {
+  read() { true }
+}
+
+path /queues {
+  index() {[ "loggedAt", "venueKey" ]}
+}
+
 path /users/{uid} is User {
   read() { isFriend(uid) }
   write() { isViewer(uid) }
@@ -77,6 +107,10 @@ path /users/{uid} is User {
 path /users-emails/{uid} is UserEmail {
   read() { isViewer(uid) }
   write() { isViewer(uid) }
+}
+
+path /admins/{uid} is Admin {
+  read() { isViewer(uid) }
 }
 
 path /users-presence {

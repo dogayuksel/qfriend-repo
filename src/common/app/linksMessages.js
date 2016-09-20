@@ -18,6 +18,10 @@ const LinkMessages = defineMessages({
     defaultMessage: 'Home',
     id: 'app.links.home',
   },
+  tonight: {
+    defaultMessage: 'Tonight',
+    id: 'app.links.tonight',
+  },
   me: {
     defaultMessage: 'Me',
     id: 'app.links.me',
@@ -37,6 +41,10 @@ const LinkMessages = defineMessages({
   settings: {
     defaultMessage: 'Settings',
     id: 'app.links.settings',
+  },
+  logQueue: {
+    defaultMessage: 'Log Queue',
+    id: 'app.links.logQueue',
   },
   signIn: {
     defaultMessage: 'Sign in',

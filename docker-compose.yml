@@ -1,0 +1,10 @@
+este-qfriend:
+  build: .
+  environment:
+    NODE_ENV: production
+  command: npm start
+  ports:
+    - '3000-3000'
+  volumes:
+    - .:/home/app/este-qfriend
+    - /home/app/este-qfriend/node_modules

@@ -17,24 +17,8 @@ const Header = ({ viewer }) => (
       <FormattedMessage {...linksMessages.home} />
     </Link>
     <Space x={2} />
-    <Link bold inverted to="/firebase">
-      <FormattedMessage {...linksMessages.firebase} />
-    </Link>
-    <Space x={2} />
-    <Link bold inverted to="/todos">
-      <FormattedMessage {...linksMessages.todos} />
-    </Link>
-    <Space x={2} />
-    <Link bold inverted to="/fields">
-      <FormattedMessage {...linksMessages.fields} />
-    </Link>
-    <Space x={2} />
-    <Link bold inverted to="/intl">
-      <FormattedMessage {...linksMessages.intl} />
-    </Link>
-    <Space x={2} />
-    <Link bold inverted to="/offline">
-      <FormattedMessage {...linksMessages.offline} />
+    <Link bold inverted to="/tonight">
+      <FormattedMessage {...linksMessages.tonight} />
     </Link>
     <Space x={2} />
     <Link bold inverted to="/me">

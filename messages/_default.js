@@ -65,6 +65,10 @@ export default [
     "defaultMessage": "Home",
   },
   {
+    "id": "app.links.tonight",
+    "defaultMessage": "Tonight",
+  },
+  {
     "id": "app.links.intl",
     "defaultMessage": "Intl",
   },
@@ -87,6 +91,10 @@ export default [
   {
     "id": "app.links.settings",
     "defaultMessage": "Settings",
+  },
+  {
+    "id": "app.links.logQueue",
+    "defaultMessage": "Log Queue",
   },
   {
     "id": "app.links.signIn",
@@ -170,7 +178,7 @@ export default [
   },
   {
     "id": "footer.madeByHtml",
-    "defaultMessage": "Made with love by",
+    "defaultMessage": "Don't wait for dancing!",
   },
   {
     "id": "intl.page.unreadCount",

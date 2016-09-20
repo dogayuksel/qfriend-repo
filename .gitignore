@@ -48,3 +48,6 @@ firebase/rules.json
 src/common/config.json
 src/native/initialState.js
 webpack-assets.json
+
+# Docker
+*.json.gzip

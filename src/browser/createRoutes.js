@@ -6,11 +6,13 @@ import App from './app/App';
 import Fields from './fields/FieldsPage';
 import Firebase from './firebase/FirebasePage';
 import Home from './home/HomePage';
+import Tonight from './tonight/TonightPage';
 import Intl from './intl/IntlPage';
 import Me from './me/MePage';
 import NotFound from './notfound/NotFoundPage';
 import Offline from './offline/OfflinePage';
 import Profile from './me/ProfilePage';
+import LogQueue from './me/LogQueuePage';
 import Settings from './me/SettingsPage';
 import SignIn from './auth/SignInPage';
 import Todos from './todos/TodosPage';
@@ -29,10 +31,12 @@ const createRoutes = (getState: Function) => {
       <IndexRoute component={Home} />
       <Route component={Fields} path="fields" />
       <Route component={Firebase} path="firebase" />
+      <Route component={Tonight} path="tonight" />
       <Route component={Intl} path="intl" />
       <Route component={Me} onEnter={requireViewer} path="me">
         <Route component={Profile} path="profile" />
         <Route component={Settings} path="settings" />
+        <Route component={LogQueue} path="logqueue" />
       </Route>
       <Route component={Offline} path="offline" />
       <Route component={SignIn} path="signin" />

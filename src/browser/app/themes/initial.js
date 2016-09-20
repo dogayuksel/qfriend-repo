@@ -18,16 +18,16 @@ const typography = {
 };
 
 const colors = {
-  primary: '#08e',
+  primary: '#FFEB5B',
   secondary: '#888',
   info: '#08e',
   success: '#1c7',
   warning: '#f70',
   error: '#f52',
   // only grayscale
-  black: '#333',
-  gray: '#ddd',
-  white: '#fff',
+  black: '#eee',
+  gray: '#ccc',
+  white: '#333',
 };
 
 const borders = {

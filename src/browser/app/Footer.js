@@ -1,11 +1,11 @@
 /* @flow */
 import React from 'react';
-import { Footer, Link } from '../app/components';
+import { Footer } from '../app/components';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
 const messages = defineMessages({
   madeByHtml: {
-    defaultMessage: 'Made with love by',
+    defaultMessage: 'Don\'t wait for dancing!',
     id: 'footer.madeByHtml',
   },
 });
@@ -13,10 +13,6 @@ const messages = defineMessages({
 const AppFooter = () => (
   <Footer>
     <FormattedMessage {...messages.madeByHtml} />
-    {'\u00a0'}
-    <Link to="https://twitter.com/steida">
-      steida
-    </Link>
   </Footer>
 );
 

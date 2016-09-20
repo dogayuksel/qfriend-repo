@@ -7,7 +7,10 @@ import intl from './intl/reducer';
 import nativeRouting from '../native/routing/reducer';
 import themes from './themes/reducer';
 import todos from './todos/reducer';
+import venues from './venues/reducer';
+import queues from './queues/reducer';
 import users from './users/reducer';
+import admin from './admin/reducer';
 import { FIREBASE_ON_AUTH } from '../common/lib/redux-firebase/actions';
 import { combineReducers } from 'redux';
 import { fieldsReducer as fields } from './lib/redux-fields';
@@ -50,7 +53,10 @@ const configureReducer = (initialState: Object) => {
     routing,
     themes,
     todos,
+    venues,
+    queues,
     users,
+    admin,
   });
 
   // The power of higher-order reducers, http://slides.com/omnidan/hor
