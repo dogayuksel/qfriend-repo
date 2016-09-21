@@ -8,7 +8,7 @@ import { Block, Image, Link, Space, Text, Title, View } from '../app/components'
 import { FormattedMessage } from 'react-intl';
 import { Match, Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import { queryFirebase } from '../../common/lib/redux-firebase';
+import { firebase } from '../../common/lib/redux-firebase';
 
 // Pages
 import Profile from './ProfilePage';
@@ -83,10 +83,12 @@ MePage.propTypes = {
   viewer: React.PropTypes.object,
 };
 
-MePage = queryFirebase(MePage, (props) => ({
-  path: props.viewer.id && `admins/${props.viewer.id}`,
-  on: { value: props.onAdminCheck },
-}));
+MePage = firebase((database, props) => {
+  const adminsRef = database.child(`admins/${props.viewer.id}`);
+  return [
+    [adminsRef, 'on', 'value', props.onAdminCheck],
+  ];
+})(MePage);
 
 export default connect(state => ({
   viewer: state.users.viewer,

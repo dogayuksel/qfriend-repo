@@ -4,7 +4,7 @@ import Gravatar from 'react-gravatar';
 import React from 'react';
 import { connect } from 'react-redux';
 import { listVenues } from '../../common/venues/actions';
-import { queryFirebase } from '../../common/lib/redux-firebase';
+import { firebase } from '../../common/lib/redux-firebase';
 import { Flex,
          Heading,
          Loading,
@@ -66,10 +66,12 @@ VenueList.propTypes = {
   loaded: React.PropTypes.bool.isRequired,
 };
 
-VenueList = queryFirebase(VenueList, ({ listVenues }) => ({
-  path: 'locations',
-  on: { value: listVenues },
-}));
+VenueList = firebase((database, props) => {
+  const locationsRef = database.child('locations');
+  return [
+    [locationsRef, 'on', 'value', props.listVenues],
+  ];
+})(VenueList);
 
 export default connect(state => ({
   venues: state.venues.venues,

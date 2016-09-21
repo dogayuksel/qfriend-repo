@@ -3,7 +3,7 @@ import React from 'react';
 import { Stat, Text, View } from '../app/components';
 import { connect } from 'react-redux';
 import { checkQueues } from '../../common/queues/actions';
-import { queryFirebase } from '../../common/lib/redux-firebase';
+import { firebase } from '../../common/lib/redux-firebase';
 
 class QueueData extends React.Component {
 
@@ -35,20 +35,28 @@ class QueueData extends React.Component {
   }
 }
 
-QueueData = queryFirebase(QueueData, ({ venueKey, checkQueues }) => {
-  return ({
-    path: venueKey && 'queues/',
-    params: [
-      ['orderByChild', 'venueKey'],
-      ['equalTo', venueKey],
-    ],
-    on: { value: checkQueues },
-  });
-}
-);
+QueueData = firebase((database, props) => {
+  const venueKey = props.venueKey;
+  const queuesRef = database.child('queues')
+                            .orderByChild('venueKey')
+                            .equalTo(venueKey);
+  return [
+    [queuesRef, 'on', 'value', props.checkQueues],
+  ];
+})(QueueData);
 
 export default connect((state, props) => {
   return {
     queue: state.queues.queue.get(`${props.venueKey}`),
   };
 }, { checkQueues })(QueueData);
+
+
+
+
+
+
+
+
+
+

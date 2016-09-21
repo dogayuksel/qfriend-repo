@@ -5,11 +5,11 @@ import QueueData from '../queue/QueueData';
 import React from 'react';
 
 import linksMessages from '../../common/app/linksMessages';
-import { Pre, Block, Text, Form, Input, FieldError, Button, Title, View } from '../app/components';
+import { Block, Text, Form, Input, FieldError, Button, Title, View } from '../app/components';
 import { ValidationError } from '../../common/lib/validation';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { queryFirebase } from '../../common/lib/redux-firebase';
+import { firebase } from '../../common/lib/redux-firebase';
 import { fields } from '../../common/lib/redux-fields';
 
 const styles = {
@@ -31,9 +31,8 @@ class ModifyButtons extends React.Component {
     disabled: React.PropTypes.bool,
   };
 
-  modifyValue = ( fields, param ) => {
+  modifyValue = (fields, param) => {
     const data = ({ ...fields.$values() });
-    console.log(data);
     switch (param) {
       case 'x2': { fields.$setValue('value', data.value * 2); return; }
       case '/2': {
@@ -190,10 +189,12 @@ LogQueuePage = fields(LogQueuePage, {
   }),
 });
 
-LogQueuePage = queryFirebase(LogQueuePage, ({ venueActions: { listVenues } }) => ({
-  path: 'locations',
-  on: { value: listVenues },
-}));
+LogQueuePage = firebase((database, props) => {
+  const locationsLogRef = database.child('locations');
+  return [
+    [locationsLogRef, 'on', 'value', props.venueActions.listVenues],
+  ];
+})(LogQueuePage);
 
 function mapStateToProps(state) {
   return {
