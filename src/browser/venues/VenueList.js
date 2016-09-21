@@ -28,7 +28,7 @@ const Venue = ({ venue: { key, title, description } }) => (
     justify="space-between"
     style={styles.bar}
   >
-    <Flex>
+    <Flex align="center">
       <Gravatar
         default="retro"
         email={`${title}@gmail.com`} // For users signed in via email.

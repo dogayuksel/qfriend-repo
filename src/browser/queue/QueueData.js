@@ -12,6 +12,21 @@ class QueueData extends React.Component {
     venueKey: React.PropTypes.number.isRequired,
   };
 
+  genText = (updateTime) => {
+    switch (updateTime) {
+      case 0: return 'updated just now';
+      case 1: return 'updated a minute ago';
+      default: {
+        if (updateTime >= 120) {
+          return `updated ${updateTime / 60 | 0} hours ago`;
+        } else if (updateTime >= 60) {
+          return 'updated an hour ago';
+        }
+        return `updated ${updateTime} mins ago`;
+      }
+    }
+  };
+
   render() {
     const { queue } = this.props;
     const lastEntry = queue && queue.last();
@@ -26,7 +41,7 @@ class QueueData extends React.Component {
       :
         <Stat
           value={lastEntry.value}
-          label={`${updateTime} mins ago`}
+          label={this.genText(updateTime)}
           unit="mins"
         />
       }

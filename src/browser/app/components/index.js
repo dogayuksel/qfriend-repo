@@ -11,6 +11,7 @@ export { default as Link } from './Link';
 export { default as Loading } from './Loading';
 export { default as SwitchTheme } from './SwitchTheme';
 export { default as Title } from './Title';
+export { default as PageHeader } from './PageHeader';
 export { default as View } from './View';
 export { default as focus } from './focus';
 export { default as fxbml } from './fxbml';
@@ -54,7 +55,6 @@ export {
   Message,
   NavItem,
   Overlay,
-  PageHeader,
   Panel,
   PanelFooter,
   PanelHeader,
