@@ -2,15 +2,18 @@
 import QueueData from '../queue/QueueData';
 import Gravatar from 'react-gravatar';
 import React from 'react';
-import { Loading, Text, View } from '../app/components';
 import { connect } from 'react-redux';
 import { listVenues } from '../../common/venues/actions';
 import { queryFirebase } from '../../common/lib/redux-firebase';
+import { Flex,
+         Heading,
+         Loading,
+         Text,
+         View } from '../app/components';
 
 const styles = {
-  user: {
-    display: 'flex',
-    flexWrap: 'wrap',
+  bar: {
+    maxWidth: '500px',
   },
   gravatar: {
     borderRadius: '25%',
@@ -20,18 +23,24 @@ const styles = {
 };
 
 const Venue = ({ venue: { key, title, description } }) => (
-  <View style={styles.user}>
-    <Gravatar
-      default="retro"
-      email={`${title}@gmail.com`} // For users signed in via email.
-      https
-      rating="x"
-      style={styles.gravatar}
-      title={description}
-    />
-    <Text>{title}</Text>
+  <Flex
+    mb={3}
+    justify="space-between"
+    style={styles.bar}
+  >
+    <Flex>
+      <Gravatar
+        default="retro"
+        email={`${title}@gmail.com`} // For users signed in via email.
+        https
+        rating="x"
+        style={styles.gravatar}
+        title={description}
+      />
+      <Heading size={3}>{title}</Heading>
+    </Flex>
     <QueueData venueKey={key} />
-  </View>
+  </Flex>
 );
 
 Venue.propTypes = {

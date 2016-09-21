@@ -5,7 +5,7 @@ import QueueData from '../queue/QueueData';
 import React from 'react';
 
 import linksMessages from '../../common/app/linksMessages';
-import { Block, Text, Form, Input, FieldError, Button, Title, View } from '../app/components';
+import { Pre, Block, Text, Form, Input, FieldError, Button, Title, View } from '../app/components';
 import { ValidationError } from '../../common/lib/validation';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -19,45 +19,102 @@ const styles = {
   },
 };
 
+type State = {
+  disabled: boolean,
+  error: ?Object,
+  submittedValues: ?Object,
+};
+
+class ModifyButtons extends React.Component {
+  static propTypes = {
+    fields: React.PropTypes.object,
+    disabled: React.PropTypes.bool,
+  };
+
+  modifyValue = ( fields, param ) => {
+    const data = ({ ...fields.$values() });
+    console.log(data);
+    switch (param) {
+      case 'x2': { fields.$setValue('value', data.value * 2); return; }
+      case '/2': {
+        fields.$setValue('value', parseInt(data.value / 2, 10));
+        return;
+      }
+      case '+10': {
+        fields.$setValue('value', parseInt(data.value, 10) + 10);
+        return;
+      }
+      case '-10': { fields.$setValue('value', data.value - 10); return; }
+      default: return;
+    }
+  };
+
+  render() {
+    const { disabled, fields } = this.props;
+    return (
+      <View>
+        <Button
+          mb={3} ml={1} type="button"
+          disabled={disabled}
+          onClick={() => this.modifyValue(fields, 'x2')}
+        >
+          <Text>x2</Text>
+        </Button>
+        <Button
+          mb={3} ml={1} type="button"
+          disabled={disabled}
+          onClick={() => this.modifyValue(fields, '/2')}
+        >
+          <Text>/2</Text>
+        </Button>
+        <Button
+          mb={3} ml={1} type="button"
+          disabled={disabled}
+          onClick={() => this.modifyValue(fields, '+10')}
+        >
+          <Text>+10</Text>
+        </Button>
+        <Button
+          mb={3} ml={1} type="button"
+          disabled={disabled}
+          onClick={() => this.modifyValue(fields, '-10')}
+        >
+          <Text>-10</Text>
+        </Button>
+      </View>
+    );
+  }
+}
+
 class LogQueuePage extends React.Component {
 
   static propTypes = {
     fields: React.PropTypes.object.isRequired,
     venues: React.PropTypes.object,
     viewer: React.PropTypes.object.isRequired,
+    activeEntry: React.PropTypes.String,
+    adminActions: React.PropTypes.object.isRequired,
   };
 
-  constructor() {
-    super();
-    this.state = {
-      disabled: false,
-      error: null,
-      submittedValues: null,
-    };
-  }
-
-  state: {
-    disabled: boolean,
-    error: ?Object,
-    submittedValues: ?Object,
+  state: State = {
+    disabled: false,
+    error: null,
+    submittedValues: null,
   };
 
-  onFormSubmit() {
+  onFormSubmit = () => {
     const { fields,
             activeEntry,
             viewer,
             adminActions: { addQueueEntry },
     } = this.props;
 
-
     const queueData = ({ ...fields.$values() });
-
+    // Disable form.
+    this.setState({ disabled: true });
 
     addQueueEntry(activeEntry, queueData, viewer);
     // This is just a demo. This code belongs to Redux action creator.
-
-    // Disable form.
-    this.setState({ disabled: true });
 
     // Simulate async action.
     setTimeout(() => {
@@ -73,32 +130,10 @@ class LogQueuePage extends React.Component {
     }, 500);
   }
 
-  modifyValue(param) {
-    const { fields,
-            activeEntry,
-            viewer,
-            adminActions: { addQueueEntry },
-    } = this.props;
-    const data = ({ ...fields.$values() });
-    switch (param) {
-      case 'x2': { fields.$setValue('value', data.value * 2); return; }
-      case '/2': {
-        fields.$setValue('value', parseInt(data.value / 2, 10));
-        return;
-      }
-      case '+10': {
-        fields.$setValue('value', parseInt(data.value, 10) + 10);
-        return;
-      }
-      case '-10': { fields.$setValue('value', data.value - 10); return; }
-      default: return;
-    }
-  }
-
   render() {
     const { venues, activeEntry, fields } = this.props;
     const { adminActions: { setActiveEntry } } = this.props;
-    const { disabled, error, submittedValues } = this.state;
+    const { disabled, error } = this.state;
 
     return (
       <View>
@@ -115,7 +150,7 @@ class LogQueuePage extends React.Component {
                   {venue.title}
                 </Button>
                 {activeEntry === venue.key &&
-                 <Form onSubmit={e => this.onFormSubmit(e)}>
+                 <Form onSubmit={this.onFormSubmit}>
                   <QueueData venueKey={venue.key} />
                   <FieldError error={error} prop="name" />
                   <Input
@@ -129,39 +164,11 @@ class LogQueuePage extends React.Component {
                   <Button
                     mb={3} ml={2}
                     disabled={disabled}
-                    type="submit">
+                    type="submit"
+                  >
                     <Text>Submit</Text>
                   </Button>
-                  <View>
-                  <Button
-                    mb={3} ml={1} type="button"
-                    disabled={disabled}
-                    onClick={() => this.modifyValue('x2')}
-                  >
-                    <Text>x2</Text>
-                  </Button>
-                  <Button
-                    mb={3} ml={1} type="button"
-                    disabled={disabled}
-                    onClick={() => this.modifyValue('/2')}
-                  >
-                    <Text>/2</Text>
-                  </Button>
-                  <Button
-                    mb={3} ml={1} type="button"
-                    disabled={disabled}
-                    onClick={() => this.modifyValue('+10')}
-                  >
-                    <Text>+10</Text>
-                  </Button>
-                  <Button
-                    mb={3} ml={1} type="button"
-                    disabled={disabled}
-                    onClick={() => this.modifyValue('-10')}
-                  >
-                    <Text>-10</Text>
-                  </Button>
-                 </View>
+                  <ModifyButtons fields={fields} disabled={false} />
                 </Form>
                 }
               </View>)
@@ -179,7 +186,7 @@ LogQueuePage = fields(LogQueuePage, {
     'value',
   ],
   getInitialState: () => ({
-    value: '15',
+    value: '20',
   }),
 });
 

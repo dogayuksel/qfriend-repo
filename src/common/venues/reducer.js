@@ -14,7 +14,10 @@ const venuesReducer = (state = new State(), action) => {
 
     case actions.LIST_VENUES: {
       const { venues } = action.payload;
-      const venueList = venues && Seq(venues).map(venue => new Venue(venue)).toList();
+      const venueList = venues && Seq(venues)
+        .filter(venue => venue.active === 1)
+        .map(venue => new Venue(venue))
+        .toList();
       return state
         .set('venues', venueList)
         .set('venuesLoaded', true);

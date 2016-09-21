@@ -1,15 +1,9 @@
 /* @flow */
 import React from 'react';
-import { Text, View } from '../app/components';
+import { Stat, Text, View } from '../app/components';
 import { connect } from 'react-redux';
 import { checkQueues } from '../../common/queues/actions';
 import { queryFirebase } from '../../common/lib/redux-firebase';
-
-const styles = {
-  data: {
-    display: 'inline-block',
-  },
-};
 
 class QueueData extends React.Component {
 
@@ -20,24 +14,22 @@ class QueueData extends React.Component {
 
   render() {
     const { queue } = this.props;
+    const lastEntry = queue && queue.last();
     const timeNow = new Date().getTime();
+    const updateTime = lastEntry &&
+                       ((timeNow - lastEntry.loggedAt) / 60000) | 0;
 
     return (
       <View>
       {!queue ?
-       <Text>No queues yet.</Text>
-     : queue.map(item => {
-       console.log(item);
-       return (
-         <Text
-         key={item.loggedAt}
-         style={styles.data}
-         >
-         {item.value} ({((timeNow - item.loggedAt) / 60000) | 0 }
-         mins ago)
-         </Text>
-       );
-     })}
+        <Text>No queues yet.</Text>
+      :
+        <Stat
+          value={lastEntry.value}
+          label={`${updateTime} mins ago`}
+          unit="mins"
+        />
+      }
       </View>
     );
   }

@@ -2,34 +2,29 @@
 import React from 'react';
 import {
   Block,
-  Image,
+  Text,
   Link,
+  Button,
   PageHeader,
-  SwitchTheme,
   Title,
   View,
 } from '../app/components';
 
 const HomePage = () => (
   <View>
-    <Title message="Este.js" />
+    <Title message="Qfriend" />
     <PageHeader
-      description="Starter kit for universal full–fledged React app. One stack
-        for browser, mobile, server."
-      heading="Este"
+      description="No queueing, Go clubbing"
+      heading="Qfriend"
     />
     {/* This is a block with margin-bottom: scale[4]. Inline styles rocks. */}
     <Block mb={4}>
-      <Link to="https://github.com/este/este">
-        github.com/este/este
-      </Link>
+      <Button>
+        <Link inverted to="/tonight">
+          <Text>See tonight</Text>
+        </Link>
+      </Button>
     </Block>
-    <SwitchTheme />
-    <Image
-      alt="50x50 placeholder"
-      mt={2}
-      src={require('./50x50.png')}
-    />
   </View>
 );
 
