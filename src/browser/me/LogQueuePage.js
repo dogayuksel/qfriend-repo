@@ -1,11 +1,11 @@
 /* @flow */
 import * as adminActions from '../../common/admin/actions';
 import * as venueActions from '../../common/venues/actions';
-import QueueData from '../queue/QueueData';
+import QueueEditView from '../queue/QueueEditView';
 import React from 'react';
 
 import linksMessages from '../../common/app/linksMessages';
-import { Block, Text, Form, Input, FieldError, Button, Title, View } from '../app/components';
+import { Flex, Block, Text, Form, Input, FieldError, Button, Title, View } from '../app/components';
 import { ValidationError } from '../../common/lib/validation';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -90,6 +90,7 @@ class LogQueuePage extends React.Component {
   static propTypes = {
     fields: React.PropTypes.object.isRequired,
     venues: React.PropTypes.object,
+    queues: React.PropTypes.object,
     viewer: React.PropTypes.object.isRequired,
     activeEntry: React.PropTypes.String,
     adminActions: React.PropTypes.object.isRequired,
@@ -111,27 +112,30 @@ class LogQueuePage extends React.Component {
     const queueData = ({ ...fields.$values() });
     // Disable form.
     this.setState({ disabled: true });
+    let isValid = false;
+    if (typeof queueData.value === 'number') {
+      isValid = queueData;
+    } else if (typeof queueData.value === 'string') {
+      isValid = parseInt(queueData.value.trim(), 10);
+    }
+    if (!isValid) {
+      this.setState({ disabled: false });
+      const error = new ValidationError('required', { prop: 'value' });
+      this.setState({ error, submittedValues: null });
+      return;
+    }
 
     addQueueEntry(activeEntry, queueData, viewer);
-    // This is just a demo. This code belongs to Redux action creator.
-
-    // Simulate async action.
     setTimeout(() => {
       this.setState({ disabled: false });
-      const isValid = true;
-      if (!isValid) {
-        const error = new ValidationError('required', { prop: 'value' });
-        this.setState({ error, submittedValues: null });
-        return;
-      }
       this.setState({ error: null, submittedValues: queueData });
       fields.$reset();
-    }, 500);
+    }, 750);
   }
 
   render() {
-    const { venues, activeEntry, fields } = this.props;
-    const { adminActions: { setActiveEntry } } = this.props;
+    const { venues, queues, activeEntry, fields } = this.props;
+    const { adminActions: { setActiveEntry, deleteQueueEntry } } = this.props;
     const { disabled, error } = this.state;
 
     return (
@@ -143,33 +147,41 @@ class LogQueuePage extends React.Component {
             {venues && venues.map(venue =>
               <View key={venue.key}>
                 <Button
+                  mb={1}
+                  theme="info"
                   disabled={disabled}
                   onClick={() => setActiveEntry(venue.key)}
                 >
-                  {venue.title}
+                  <Text>{venue.title}</Text>
                 </Button>
                 {activeEntry === venue.key &&
-                 <Form onSubmit={this.onFormSubmit}>
-                  <QueueData venueKey={venue.key} />
-                  <FieldError error={error} prop="name" />
-                  <Input
-                    {...fields.value}
-                    label="Queue time"
-                    style={styles.valueField}
-                    aria-invalid={ValidationError.isInvalid(error, 'value')}
-                    maxLength={10}
-                    type="text"
-                  />
-                  <Button
-                    mb={3} ml={2}
-                    disabled={disabled}
-                    type="submit"
-                  >
-                    <Text>Submit</Text>
-                  </Button>
-                  <ModifyButtons fields={fields} disabled={false} />
-                </Form>
-                }
+                  <Form onSubmit={this.onFormSubmit}>
+                    <Flex align="center">
+                    <QueueEditView
+                      disabled={disabled}
+                      venueKey={venue.key}
+                    />
+                    </Flex>
+                    <FieldError error={error} prop="name" />
+                    <Input
+                      {...fields.value}
+                      label="Queue time"
+                      style={styles.valueField}
+                      aria-invalid={ValidationError.isInvalid(error, 'value')}
+                      maxLength={10}
+                      type="text"
+                    />
+                    <Button
+                      pill
+                      mb={3} ml={2}
+                      disabled={disabled}
+                      type="submit"
+                    >
+                      <Text>Submit</Text>
+                    </Button>
+                    <ModifyButtons fields={fields} disabled={disabled} />
+                  </Form>
+                  }
               </View>)
             }
           </Block>
@@ -199,9 +211,9 @@ LogQueuePage = firebase((database, props) => {
 function mapStateToProps(state) {
   return {
     viewer: state.users.viewer,
-    venues: state.venues.venues,
+    venues: state.venues.venueList,
+    queues: state.queues.queueMap,
     activeEntry: state.admin.get('activeEntry'),
-    /* queueDetailModel: state.fields.get('queueDetailPage'),*/
   };
 }
 

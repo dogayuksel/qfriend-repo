@@ -1,5 +1,5 @@
 /* @flow */
-import VenueList from '../venues/VenueList';
+import QueuesTonight from './QueuesTonight';
 import React from 'react';
 import {
   Block,
@@ -16,7 +16,7 @@ const TonightPage = () => (
       heading="Tonight"
     />
     <Block mb={4}>
-      <VenueList />
+      <QueuesTonight />
     </Block>
   </View>
 );

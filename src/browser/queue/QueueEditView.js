@@ -1,15 +1,17 @@
 /* @flow */
 import React from 'react';
-import { Stat, Text, View } from '../app/components';
+import { Button, Stat, Text, View } from '../app/components';
 import { connect } from 'react-redux';
-import { checkQueues } from '../../common/queues/actions';
+import { checkQueues, deleteQueueEntry } from '../../common/queues/actions';
 import { firebase } from '../../common/lib/redux-firebase';
 
 class QueueData extends React.Component {
 
   static propTypes = {
     queue: React.PropTypes.object,
+    disabled: React.PropTypes.bool.isRequired,
     venueKey: React.PropTypes.number.isRequired,
+    deleteQueueEntry: React.PropTypes.func.isRequired,
   };
 
   genText = (updateTime) => {
@@ -28,7 +30,7 @@ class QueueData extends React.Component {
   };
 
   render() {
-    const { queue } = this.props;
+    const { queue, disabled, deleteQueueEntry } = this.props;
     const lastEntry = queue && queue.last();
     const timeNow = new Date().getTime();
     const updateTime = lastEntry &&
@@ -39,11 +41,23 @@ class QueueData extends React.Component {
       {!queue ?
         <Text>No queues yet.</Text>
       :
-        <Stat
-          value={lastEntry.value}
-          label={this.genText(updateTime)}
-          unit="mins"
-        />
+        <View>
+          <Stat
+            value={lastEntry.value}
+            label={this.genText(updateTime)}
+            unit="mins"
+          />
+          <Button
+            ml={2}
+            theme="error"
+            type="button"
+            disabled={disabled}
+            onClick={() => deleteQueueEntry(lastEntry.key,
+                                            lastEntry.venueKey)}
+          >
+            <Text small>delete</Text>
+          </Button>
+        </View>
       }
       </View>
     );
@@ -62,16 +76,6 @@ QueueData = firebase((database, props) => {
 
 export default connect((state, props) => {
   return {
-    queue: state.queues.queue.get(`${props.venueKey}`),
+    queue: state.queues.queueMap.get(`${props.venueKey}`),
   };
-}, { checkQueues })(QueueData);
-
-
-
-
-
-
-
-
-
-
+}, { checkQueues, deleteQueueEntry })(QueueData);

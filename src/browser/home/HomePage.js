@@ -18,8 +18,8 @@ const HomePage = () => (
       heading="Qfriend"
     />
     {/* This is a block with margin-bottom: scale[4]. Inline styles rocks. */}
-    <Block mb={4}>
-      <Button>
+    <Block ml={4} mb={4}>
+      <Button big>
         <Link inverted to="/tonight">
           <Text>See tonight</Text>
         </Link>

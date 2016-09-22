@@ -6,6 +6,7 @@ const Queue = Record({
   value: '',
   venueKey: '',
   owner: {},
+  key: '',
 }, 'queue');
 
 export default Queue;

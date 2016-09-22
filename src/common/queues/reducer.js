@@ -2,10 +2,10 @@
 import * as actions from './actions';
 import Queue from './queue';
 import { Record } from '../transit';
-import { Seq, Map } from 'immutable';
+import { List, Seq, Map } from 'immutable';
 
 const State = Record({
-  queue: Map(),
+  queueMap: Map(),
 }, 'queues');
 
 const queuesReducer = (state = new State(), action) => {
@@ -19,11 +19,37 @@ const queuesReducer = (state = new State(), action) => {
           if (thresh > 0) return false;
           return true;
         })
-        .map(queue => new Queue(queue)).toList();
-      console.log('queue array', queueArray);
+        .map((value, key) => new Queue({ key, ...value })).toList();
       if (queueArray.size === 0) { return state; }
       const venueKey = queueArray.first().venueKey;
-      return state.mergeDeep({ queue: { [`${venueKey}`]: queueArray } });
+      return state.mergeDeep({ queueMap: { [`${venueKey}`]: queueArray } });
+    }
+
+    case actions.CHECK_ALL_QUEUES: {
+      const queues = Seq(action.payload);
+      let queueMap = Map();
+      queues.forEach((value, key) => {
+        if (!queueMap.get(`${value.venueKey}`)) {
+          queueMap = queueMap.set(`${value.venueKey}`,
+                                  List([new Queue({ key, ...value })]));
+        } else {
+          const list = queueMap.get(`${value.venueKey}`);
+          queueMap = queueMap.set(`${value.venueKey}`,
+                                  list.push(new Queue({ key, ...value })));
+        }
+      });
+      return state.mergeDeep({ queueMap });
+    }
+
+    case actions.DELETE_QUEUE_ENTRY_SUCCESS: {
+      const item = action.payload;
+      const { key, venueKey } = item;
+      const queueMap = state.queueMap.remove(`${venueKey}`);
+      let list = state.queueMap.get(`${venueKey}`);
+      const index = list.findKey((value) => value.key === key);
+      list = list.remove(index);
+      queueMap[venueKey] = list;
+      return state.set('queueMap', queueMap);
     }
 
     default:

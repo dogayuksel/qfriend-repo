@@ -5,7 +5,7 @@ import { Record } from '../transit';
 import { Seq } from 'immutable';
 
 const State = Record({
-  venues: null,
+  venueList: null,
   venuesLoaded: false,
 }, 'venues');
 
@@ -19,7 +19,7 @@ const venuesReducer = (state = new State(), action) => {
         .map(venue => new Venue(venue))
         .toList();
       return state
-        .set('venues', venueList)
+        .set('venueList', venueList)
         .set('venuesLoaded', true);
     }
 

@@ -1,7 +1,6 @@
 /* @flow */
 export const ON_ADMIN_CHECK = 'ON_ADMIN_CHECK';
 export const ADD_QUEUE_ENTRY = 'ADD_QUEUE_ENTRY';
-export const DELETE_QUEUE_ENTRY = 'DELETE_QUEUE_ENTRY';
 export const SET_ACTIVE_ENTRY = 'SET_ACTIVE_ENTRY';
 
 export const onAdminCheck = (snap: Object) => {
@@ -12,12 +11,12 @@ export const onAdminCheck = (snap: Object) => {
   };
 };
 
-export function setActiveEntry(target) {
+export const setActiveEntry = (snap: Object) => {
   return {
     type: SET_ACTIVE_ENTRY,
-    payload: target,
+    payload: snap,
   };
-}
+};
 
 export function addQueueEntry(activeEntry, queueData, viewer) {
   return ({ firebase, firebaseDatabase }) => {
@@ -38,24 +37,4 @@ export function addQueueEntry(activeEntry, queueData, viewer) {
       payload: getPromise(),
     };
   };
-}
-
-export function deleteQueueEntry(item, entryKey) {
-  const markerKey = item.get('key');
-  return ({ firebase }) => {
-    const getPromise = async () => {
-      const deleteEntry = await firebase
-	.child('locations')
-        .child(markerKey.toString())
-	.child('queue')
-        .child('20150507')
-        .child(entryKey)
-	.remove();
-      return deleteEntry;
-    };
-    return {
-      type: 'DELETE_QUEUE_ENTRY',
-      payload: getPromise(),
-    };
-  };
-}
+};

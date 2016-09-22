@@ -31,14 +31,6 @@ const adminReducer = (state = new State(), action) => {
       return state;
     }
 
-    case actions.DELETE_QUEUE_ENTRY_START: {
-      return state;
-    }
-
-    case actions.DELETE_QUEUE_ENTRY_SUCCESS: {
-      return state;
-    }
-
     default:
       return state;
 
