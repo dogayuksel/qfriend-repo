@@ -9,7 +9,7 @@
     "flow": "flow",
     "install": "gulp native-fix",
     "postinstall": "gulp native && gulp build --production",
-    "start": "gulp",
+    "start": "gulp --production",
     "test": "gulp test"
   },
   "engines": {
