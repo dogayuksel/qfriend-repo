@@ -4,6 +4,8 @@ import { Stat, Text, View } from '../app/components';
 import { connect } from 'react-redux';
 import { checkQueues } from '../../common/queues/actions';
 
+const hourToMinute = 90;
+
 class QueueView extends React.Component {
 
   static propTypes = {
@@ -11,7 +13,7 @@ class QueueView extends React.Component {
     venueKey: React.PropTypes.number.isRequired,
   };
 
-  genText = (updateTime) => {
+  genUpdateText = (updateTime) => {
     switch (updateTime) {
       case 0: return 'updated just now';
       case 1: return 'updated a minute ago';
@@ -23,6 +25,31 @@ class QueueView extends React.Component {
         }
         return `updated ${updateTime} mins ago`;
       }
+    }
+  };
+
+  genUnitText = (waitTime) => {
+    switch (waitTime) {
+      case 0: return 'no queues yet';
+      case 1: return 'min';
+      default: {
+        if (waitTime <= hourToMinute) {
+          return 'mins';
+        } else {
+          return 'hours';
+        }
+      }
+    }
+  };
+
+  genValueText = (waitTime) => {
+    if (waitTime > hourToMinute) {
+      return Math.round(waitTime / 60 * 10) / 10;
+    } else if (waitTime === 0) {
+      return null;
+    }
+    else {
+      return waitTime;
     }
   };
 
@@ -39,9 +66,9 @@ class QueueView extends React.Component {
          <Text>No queues yet.</Text>
          :
          <Stat
-           value={lastEntry.value}
-           label={this.genText(updateTime)}
-           unit="mins"
+           value={this.genValueText(lastEntry.value)}
+           label={this.genUpdateText(updateTime)}
+           unit={this.genUnitText(lastEntry.value)}
          />
         }
       </View>
