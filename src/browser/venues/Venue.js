@@ -26,9 +26,9 @@ const styles = {
 const Venue = ({ venue: { key, title, description } }) => {
   return (
     <Flex
+      style={styles.bar}
       mb={3}
       justify="space-between"
-      style={styles.bar}
     >
       <Flex align="center" style={styles.title}>
         <Gravatar
