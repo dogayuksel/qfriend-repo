@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import { Footer } from '../app/components';
+import { Text, Footer } from '../app/components';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
 const messages = defineMessages({
@@ -12,7 +12,7 @@ const messages = defineMessages({
 
 const AppFooter = () => (
   <Footer>
-    <FormattedMessage {...messages.madeByHtml} />
+    <Text>Don't wait for dancing!</Text>
   </Footer>
 );
 
