@@ -10,6 +10,12 @@ import { Loading,
          Text,
          View } from '../app/components';
 
+const styles = {
+  venueList: {
+    maxWidth: 450,
+  },
+};
+
 let QueuesTonight = ({ loaded, venues, queues }) => {
   const displayList = queues.toSeq().sortBy(
     (queue) => queue.last(),
@@ -27,7 +33,7 @@ let QueuesTonight = ({ loaded, venues, queues }) => {
     {!loaded ?
       <Loading />
    : !displayList || displayList.size === 0 ?
-     <Block ml={4} mr={4}>
+     <Block style={styles.venueList} ml={4} pr={1} mr={4}>
        <Text>As we know of, there are no queues in Berlin now.
        Check back on us later.</Text>
      </Block>

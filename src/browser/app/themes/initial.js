@@ -11,8 +11,8 @@ const typography = {
   // www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide
   fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', // minimal set
   monospace: '"Roboto Mono", Menlo, Consolas, monospace',
-  fontSizes: [48, 32, 24, 20, 16, 14, 12],
-  lineHeight: 1.5,
+  fontSizes: [46, 30, 22, 18, 14, 12, 10],
+  lineHeight: 1.4,
   bold: 600,
   scale: [0, 8, 16, 32, 64], // rhythm
 };
