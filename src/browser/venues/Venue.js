@@ -13,6 +13,9 @@ const styles = {
   bar: {
     maxWidth: '500px',
   },
+  title: {
+    maxWidth: '50%',
+  },
   gravatar: {
     borderRadius: '25%',
     margin: '.5em',
@@ -27,7 +30,7 @@ const Venue = ({ venue: { key, title, description } }) => {
       justify="space-between"
       style={styles.bar}
     >
-      <Flex align="center">
+      <Flex align="center" style={styles.title}>
         <Gravatar
           default="retro"
           email={`${title}@gmail.com`}
