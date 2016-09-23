@@ -18,7 +18,7 @@ const typography = {
 };
 
 const colors = {
-  primary: '#FFEB5B',
+  primary: '#e1de17',
   secondary: '#888',
   info: '#08e',
   success: '#1c7',
