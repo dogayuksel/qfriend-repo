@@ -49,7 +49,7 @@ let App = ({ currentLocale, currentTheme }) => (
           ...bootstrap4Metas,
           {
             name: 'description',
-            content: 'Dev stack and starter kit for functional and universal React apps',
+            content: 'Queues at all the famous venues of Berlin',
           },
           ...favicon.meta,
         ]}
