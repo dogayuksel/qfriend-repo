@@ -10,11 +10,8 @@ import { Flex,
          View } from '../app/components';
 
 const styles = {
-  bar: {
-    maxWidth: '500px',
-  },
   title: {
-    maxWidth: '50%',
+    maxWidth: '37%',
   },
   gravatar: {
     borderRadius: '25%',
@@ -26,7 +23,6 @@ const styles = {
 const Venue = ({ venue: { key, title, description } }) => {
   return (
     <Flex
-      style={styles.bar}
       mb={3}
       justify="space-between"
     >
@@ -39,7 +35,12 @@ const Venue = ({ venue: { key, title, description } }) => {
           style={styles.gravatar}
           title={description}
         />
-        <Heading size={3}>{title}</Heading>
+        <Heading
+          size={3}
+          style={styles.title}
+        >
+          {title}
+        </Heading>
       </Flex>
       <QueueView venueKey={key} />
     </Flex>

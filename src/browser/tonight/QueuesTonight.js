@@ -12,7 +12,7 @@ import { Loading,
 
 const styles = {
   venueList: {
-    maxWidth: 450,
+    maxWidth: 475,
   },
 };
 
@@ -29,11 +29,11 @@ let QueuesTonight = ({ loaded, venues, queues }) => {
   /* console.log('display list', displayList);*/
 
   return (
-    <View>
+    <View style={styles.venueList}>
     {!loaded ?
       <Loading />
    : !displayList || displayList.size === 0 ?
-     <Block style={styles.venueList} ml={4} pr={1} mr={4}>
+     <Block ml={4} pr={1} mr={4}>
        <Text>As we know of, there are no queues in Berlin now.
        Check back on us later.</Text>
      </Block>
