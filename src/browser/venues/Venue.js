@@ -11,7 +11,7 @@ import { Flex,
 
 const styles = {
   title: {
-    maxWidth: '37%',
+    maxWidth: '55%',
   },
   gravatar: {
     borderRadius: '25%',
