@@ -11,29 +11,35 @@ gulp.task('favicon-generate', done => {
     design: {
       ios: {
         pictureAspect: 'backgroundAndMargin',
-        backgroundColor: '#ffffff',
-        margin: '28%',
+        backgroundColor: '#333',
+        startupImage: {
+          masterPicture: './src/common/app/favicons/original/favicon.png',
+          backgroundColor: '#333',
+        },
+        margin: '3%',
       },
       desktopBrowser: {},
       windows: {
         pictureAspect: 'noChange',
-        backgroundColor: '#2d89ef',
+        backgroundColor: '#333',
         onConflict: 'override',
       },
       androidChrome: {
         pictureAspect: 'noChange',
-        themeColor: '#ffffff',
+        themeColor: '#333',
         manifest: {
-          name: 'este',
-          display: 'browser',
-          orientation: 'notSet',
+          name: 'qfriend',
+          display: 'standalone',
+          startUrl: '/tonight',
+          orientation: 'portrait',
           onConflict: 'override',
           declared: true,
         },
       },
       safariPinnedTab: {
-        pictureAspect: 'silhouette',
-        themeColor: '#5bbad5',
+        pictureAspect: 'black_and_white',
+        threshold: '60',
+        themeColor: '#333',
       },
     },
     settings: {

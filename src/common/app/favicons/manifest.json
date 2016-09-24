@@ -1,5 +1,5 @@
 {
-	"name": "este",
+	"name": "qfriend",
 	"icons": [
 		{
 			"src": "\/assets\/favicons\/android-chrome-36x36.png",
@@ -37,5 +37,8 @@
 			"type": "image\/png"
 		}
 	],
-	"theme_color": "#ffffff"
+	"theme_color": "#333",
+	"start_url": "\/tonight",
+	"display": "standalone",
+	"orientation": "portrait"
 }
