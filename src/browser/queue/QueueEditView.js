@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import { Button, Stat, Text, View } from '../app/components';
+import { Button, Stat, Text, View, Flex } from '../app/components';
 import { connect } from 'react-redux';
 import { checkQueues, deleteQueueEntry } from '../../common/queues/actions';
 import { firebase } from '../../common/lib/redux-firebase';
@@ -38,26 +38,27 @@ class QueueData extends React.Component {
 
     return (
       <View>
-      {!queue ?
-        <Text>No queues yet.</Text>
-      :
-        <View>
-          <Stat
-            value={lastEntry.value}
-            label={this.genText(updateTime)}
-            unit="mins"
-          />
-          <Button
-            ml={2}
-            theme="error"
-            type="button"
-            disabled={disabled}
-            onClick={() => deleteQueueEntry(lastEntry.key)}
-          >
-            <Text small>delete</Text>
-          </Button>
-        </View>
-      }
+        {!queue ?
+         <Text>No queues yet.</Text>
+         :
+         <Flex column align="center">
+           <Stat
+             mb={1} pl={1}
+             value={lastEntry.value}
+             label={this.genText(updateTime)}
+             unit="mins"
+           />
+           <Button
+             pill mb={2}
+             theme="error"
+             type="button"
+             disabled={disabled}
+             onClick={() => deleteQueueEntry(lastEntry.key)}
+           >
+             <Text small>delete</Text>
+           </Button>
+         </Flex>
+        }
       </View>
     );
   }
