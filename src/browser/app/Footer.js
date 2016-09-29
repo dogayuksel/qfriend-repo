@@ -12,7 +12,7 @@ const messages = defineMessages({
 
 const AppFooter = () => (
   <Footer>
-    <Text>Don't wait for dancing!</Text>
+    <Text>Wait less for a mess!</Text>
   </Footer>
 );
 

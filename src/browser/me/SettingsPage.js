@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react';
+import SwitchLocale from '../intl/SwitchLocale';
 import linksMessages from '../../common/app/linksMessages';
 import { Block, Title, View } from '../app/components';
 import { FormattedMessage } from 'react-intl';
@@ -10,6 +11,7 @@ const SettingsPage = () => (
     <Block>
       <FormattedMessage {...linksMessages.settings} />
     </Block>
+    <SwitchLocale />
   </View>
 );
 
