@@ -92,7 +92,7 @@ class LogQueuePage extends React.Component {
     venues: React.PropTypes.object,
     queues: React.PropTypes.object,
     viewer: React.PropTypes.object.isRequired,
-    activeEntry: React.PropTypes.String,
+    activeEntry: React.PropTypes.node,
     adminActions: React.PropTypes.object.isRequired,
   };
 
@@ -157,10 +157,10 @@ class LogQueuePage extends React.Component {
                 {activeEntry === venue.key &&
                   <Form onSubmit={this.onFormSubmit}>
                     <Flex align="center">
-                    <QueueEditView
-                      disabled={disabled}
-                      venueKey={venue.key}
-                    />
+                      <QueueEditView
+                        disabled={disabled}
+                        venueKey={venue.key}
+                      />
                     </Flex>
                     <FieldError error={error} prop="name" />
                     <Input

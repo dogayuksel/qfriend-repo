@@ -52,8 +52,7 @@ class QueueData extends React.Component {
             theme="error"
             type="button"
             disabled={disabled}
-            onClick={() => deleteQueueEntry(lastEntry.key,
-                                            lastEntry.venueKey)}
+            onClick={() => deleteQueueEntry(lastEntry.key)}
           >
             <Text small>delete</Text>
           </Button>

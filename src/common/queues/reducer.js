@@ -20,9 +20,13 @@ const queuesReducer = (state = new State(), action) => {
           return true;
         })
         .map((value, key) => new Queue({ key, ...value })).toList();
-      if (queueArray.size === 0) { return state; }
+      if (queueArray.size === 0) {
+        return state.set('queueMap', Map());
+      }
       const venueKey = queueArray.first().venueKey;
-      return state.mergeDeep({ queueMap: { [`${venueKey}`]: queueArray } });
+      let queueMap = state.queueMap.remove(`${venueKey}`);
+      queueMap = queueMap.set(`${venueKey}`, queueArray);
+      return state.set('queueMap', queueMap);
     }
 
     case actions.CHECK_ALL_QUEUES: {
@@ -42,14 +46,7 @@ const queuesReducer = (state = new State(), action) => {
     }
 
     case actions.DELETE_QUEUE_ENTRY_SUCCESS: {
-      const item = action.payload;
-      const { key, venueKey } = item;
-      const queueMap = state.queueMap.remove(`${venueKey}`);
-      let list = state.queueMap.get(`${venueKey}`);
-      const index = list.findKey((value) => value.key === key);
-      list = list.remove(index);
-      queueMap[venueKey] = list;
-      return state.set('queueMap', queueMap);
+      return state;
     }
 
     default:
