@@ -30,7 +30,7 @@ class QueueView extends React.Component {
 
   genUnitText = (waitTime) => {
     switch (waitTime) {
-      case 0: return 'no queues yet';
+      case 0: return 'no queues';
       case 1: return 'min';
       default: {
         if (waitTime <= hourToMinute) {
