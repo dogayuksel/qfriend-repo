@@ -20,8 +20,8 @@ export const checkAllQueues = (snap: Object) => {
   };
 };
 
-export function deleteQueueEntry(key) {
-  return ({ firebase }) => {
+export const deleteQueueEntry = (key: number) => {
+  return ({ firebase }: any) => {
     const getPromise = async () => {
       const deleteItem = await firebase
         .child('queues').child(key).remove();

@@ -9,6 +9,14 @@ import { Flex,
          Text,
          View } from '../app/components';
 
+type VenueProps = {
+  venue: {
+    key: number,
+    title: ?string,
+    description: ?string,
+  }
+}
+
 const styles = {
   title: {
     maxWidth: '55%',
@@ -20,7 +28,7 @@ const styles = {
   },
 };
 
-const Venue = ({ venue: { key, title, description } }) => {
+const Venue = ({ venue: { key, title, description } }: VenueProps) => {
   return (
     <Flex
       mb={3}
@@ -29,7 +37,7 @@ const Venue = ({ venue: { key, title, description } }) => {
       <Flex align="center" style={styles.title}>
         <Gravatar
           default="retro"
-          email={`${title}@gmail.com`}
+          email={title && `${title}@gmail.com`}
           https
           rating="x"
           style={styles.gravatar}
