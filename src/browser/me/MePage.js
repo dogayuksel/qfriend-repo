@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 import { firebase } from '../../common/lib/redux-firebase';
 
 // Pages
-import Profile from './ProfilePage';
 import Settings from './SettingsPage';
 import LogQueue from './LogQueuePage';
 
@@ -19,10 +18,6 @@ const Navbar = ({ pathname, isAdmin }) => (
   <Block>
     <Link exactly to={pathname}>
       <FormattedMessage {...linksMessages.me} />
-    </Link>
-    <Space x={2} />
-    <Link to={`${pathname}/profile`}>
-      <FormattedMessage {...linksMessages.profile} />
     </Link>
     <Space x={2} />
     <Link to={`${pathname}/settings`}>
@@ -72,7 +67,6 @@ let MePage = ({ pathname, viewer, isAdmin }) => (
           </View>
         )}
       />
-      <Match pattern={`${pathname}/profile`} component={Profile} />
       <Match pattern={`${pathname}/settings`} component={Settings} />
       <Match pattern={`${pathname}/logqueue`} component={LogQueue} />
     </View>

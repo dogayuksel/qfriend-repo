@@ -23,7 +23,7 @@ let SignInPage = ({ disabled, intl, location, viewer }) => (
         location.state &&
         location.state.from &&
         location.state.from.pathname
-      ) || '/'}
+      ) || '/me'}
     />
   :
     <View>
