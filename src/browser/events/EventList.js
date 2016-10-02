@@ -44,7 +44,7 @@ EventList = firebase((database, props) => {
 EventList = firebase((database, props) => {
   const locationsRef = database.child('locations');
   return [
-    [locationsRef, 'once', 'value', props.listVenues],
+    [locationsRef, 'on', 'value', props.listVenues],
   ];
 })(EventList);
 

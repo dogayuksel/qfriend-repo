@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react';
+import moment from 'moment';
 import { deleteEvent } from '../../common/events/actions';
 import { connect } from 'react-redux';
 import { Text,
@@ -14,7 +15,7 @@ import { Text,
          View } from '../app/components';
 
 type State = {
-  timerValue: ?Object,
+  countdown: ?String,
 };
 
 class Event extends React.Component {
@@ -24,39 +25,27 @@ class Event extends React.Component {
   };
 
   state: State = {
-    timerValue: null,
+    countdown: null,
   };
 
-  countdown = (timerValue) => {
-    if (timerValue > 24) {
-      const days = timerValue / 24 | 0;
-      return `${days} days`;
-    } else {
-      return `${timerValue} hours`;
-    }
-  }
-
-  componentDidMount = () => {
-    this.setTimerValue(this.props.event);
+  componentWillMount = () => {
+    const { beginsAt } = this.props.event;
+    const hoursLeft = moment(beginsAt).fromNow();
+    this.setState({ countdown: hoursLeft });
     /* window.setInterval(() => {
      *   this.setTimerValue(this.props.event);
      * }, 1000 * 10);*/
   }
 
-  setTimerValue = (event) => {
-    const hoursLeft = ((event.beginsAt - Date.now()) / 3600000) | 0;
-    this.setState({ timerValue: hoursLeft });
-  }
-
   render() {
     const { pathname, event, venue, isAdmin } = this.props;
-    const { timerValue } = this.state;
+    const { countdown } = this.state;
 
     return (
       <Card
         ml={1}
         rounded
-        width={226}
+        width={242}
       >
         <CardImage src={event.photoURL}/>
         <Heading
@@ -68,7 +57,7 @@ class Event extends React.Component {
         <Text>
           {venue && venue.title}
         </Text>
-        <Text small>Starts in {this.countdown(timerValue)}</Text>
+        <Text small>{countdown}</Text>
         {isAdmin && pathname === '/editevents' &&
          <View mt={1}>
            <Link to={`${pathname}/event/${event.key}`}>
@@ -94,7 +83,7 @@ export default connect((state, props) => {
   const { venueKey } = props.event;
   return {
     isAdmin: state.admin.isAdmin,
-    pathname: state.app.location.pathname,
+    pathname: state.app.location && state.app.location.pathname,
     venue: (state.venues.venueList &&
             state.venues.venueList.find(value => `${value.key}` === venueKey)),
   };

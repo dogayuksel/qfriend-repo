@@ -2,10 +2,10 @@
 import * as actions from './actions';
 import Event from './event';
 import { Record } from '../transit';
-import { Seq } from 'immutable';
+import { Seq, Map } from 'immutable';
 
 const State = Record({
-  eventList: null,
+  eventList: Map(),
   eventsLoaded: false,
 }, 'events');
 
