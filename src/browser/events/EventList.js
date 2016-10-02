@@ -19,11 +19,11 @@ const styles = {
   },
 };
 
-let EventList = ({ events, pathname }) => {
+let EventList = ({ events }) => {
   return (
     <Flex align="center" wrap style={styles.eventList}>
       {events && events.map((event) =>
-        <Event key={event.key} event={event} pathname={pathname}/>
+        <Event key={event.key} event={event} />
        )
       }
     </Flex>
@@ -32,7 +32,6 @@ let EventList = ({ events, pathname }) => {
 
 EventList.propTypes = {
   events: React.PropTypes.object,
-  pathname: React.PropTypes.string,
 };
 
 EventList = firebase((database, props) => {

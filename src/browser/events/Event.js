@@ -92,9 +92,9 @@ class Event extends React.Component {
 
 export default connect((state, props) => {
   const { venueKey } = props.event;
-  console.log(typeof venueKey);
   return {
     isAdmin: state.admin.isAdmin,
+    pathname: state.app.location.pathname,
     venue: (state.venues.venueList &&
             state.venues.venueList.find(value => `${value.key}` === venueKey)),
   };
