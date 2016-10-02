@@ -13,7 +13,10 @@ const TonightPage = ({ queues }) => (
   <View>
     <Title message="Qfriend" />
     <PageHeader
-      description="Queues at all famous venues of Berlin."
+      description={queues.size > 0
+                 ? 'No queueing! Go clubbing!'
+                 : 'We will update you with real-time queues'
+                  }
       heading={queues.size > 0 ? 'Tonight' : 'Featured Events'}
   />
     <Block>

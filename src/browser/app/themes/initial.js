@@ -25,8 +25,8 @@ const colors = {
   warning: '#b92b27',
   error: '#f04',
   // only grayscale
-  black: '#111',
-  gray: '#333333',
+  black: '#222',
+  gray: '#444',
   white: '#fff',
 };
 
