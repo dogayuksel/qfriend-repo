@@ -15,7 +15,7 @@ const SignOut = ({ signOut }, { router }) => {
   };
   return (
     <View>
-      <Button onClick={onClick}>
+      <Button theme="primary" onClick={onClick}>
         <FormattedMessage {...buttonsMessages.signOut} />
       </Button>
     </View>

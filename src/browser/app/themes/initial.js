@@ -9,7 +9,7 @@
 
 const typography = {
   // www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide
-  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', // minimal set
+  fontFamily: '"Avenir Next", Helvetica, sans-serif',
   monospace: '"Roboto Mono", Menlo, Consolas, monospace',
   fontSizes: [46, 30, 22, 18, 14, 12, 10],
   lineHeight: 1.4,
@@ -19,23 +19,23 @@ const typography = {
 
 const colors = {
   primary: '#ffdd18',
-  secondary: '#888',
-  info: '#08e',
-  success: '#1c7',
-  warning: '#f70',
-  error: '#f52',
+  secondary: '#0084ff',
+  info: '#2ecc71',
+  success: '#0f8',
+  warning: '#b92b27',
+  error: '#f04',
   // only grayscale
-  black: '#eee',
-  gray: '#ccc',
-  white: '#333',
+  black: '#111',
+  gray: '#333333',
+  white: '#fff',
 };
 
 const borders = {
-  borderRadius: 2,
-  borderColor: 'rgba(0, 0, 0, .25)',
+  borderRadius: 5,
+  borderColor: `rgba(255, 255, 255, ${2/16})`,
 };
 
-const inverted = colors.white;
+const inverted = '#222';
 
 const zIndex = [0, 2, 4, 8, 16];
 
@@ -62,11 +62,15 @@ export const compute = (theme: Object) => ({
     active: { textDecoration: 'underline' },
   },
   Container: {
-    backgroundColor: theme.colors.white,
-    color: theme.colors.black, // inherited
+    backgroundColor: theme.colors.black,
+    color: theme.colors.white, // inherited
     fontFamily: theme.fontFamily, // inherited
     fontSize: theme.fontSizes[4], // inherited
     lineHeight: theme.lineHeight, // inherited
+  },
+  Panel: {
+    borderWidth: 2,
+    backgroundColor: theme.colors.black,
   },
   Toolbar: {
     marginTop: theme.scale[2],

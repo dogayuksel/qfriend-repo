@@ -3,6 +3,7 @@ import invariant from 'invariant';
 import mapFirebaseUserToAppUser from './mapFirebaseUserToAppUser';
 import messages from './messages';
 import { APP_OFFLINE, APP_ONLINE } from '../../app/actions';
+import { adminCheck } from '../../admin/actions';
 import { ValidationError } from '../validation';
 
 export const FIREBASE_OFF_QUERY = 'FIREBASE_OFF_QUERY';
@@ -106,6 +107,7 @@ const onAuth = user => ({ dispatch }) => {
   if (user) {
     // Save user after successful auth to possible update its profile data.
     dispatch(saveUser(user));
+    dispatch(adminCheck(user));
   }
   return {
     type: FIREBASE_ON_AUTH,

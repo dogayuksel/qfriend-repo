@@ -1,15 +1,20 @@
 /* @flow */
-export const ON_ADMIN_CHECK = 'ON_ADMIN_CHECK';
+export const ADMIN_CHECK_SUCCESS = 'ADMIN_CHECK_SUCCESS';
 export const ADD_QUEUE_ENTRY = 'ADD_QUEUE_ENTRY';
 export const SET_ACTIVE_ENTRY = 'SET_ACTIVE_ENTRY';
 
-export const onAdminCheck = (snap: Object) => {
-  const adminCheck = snap.val();
+export const adminCheck = (user: Object) => ({ firebase }: any) => {
+  const getPromise = async () => {
+    const adminCheck = await firebase
+      .child(`/admins/${user.id}`)
+      .once('value', (value) => value);
+    return adminCheck;
+  }
   return {
-    type: ON_ADMIN_CHECK,
-    payload: { adminCheck },
+    type: 'ADMIN_CHECK',
+    payload: getPromise(),
   };
-};
+}
 
 export const setActiveEntry = (snap: Object) => {
   return {
@@ -18,8 +23,8 @@ export const setActiveEntry = (snap: Object) => {
   };
 };
 
-export function addQueueEntry(activeEntry, queueData, viewer) {
-  return ({ firebase, firebaseDatabase }) => {
+export const addQueueEntry = (activeEntry, queueData, viewer) => {
+  return ({ firebase, firebaseDatabase }: any) => {
     const getPromise = async () => {
       const userWithoutEmail = viewer.toJS();
       delete userWithoutEmail.email;

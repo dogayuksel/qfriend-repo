@@ -1,5 +1,6 @@
 /* @flow */
 import Venue from '../venues/Venue';
+import EventList from '../events/EventList';
 import React from 'react';
 import { connect } from 'react-redux';
 import { listVenues } from '../../common/venues/actions';
@@ -7,14 +8,9 @@ import { checkAllQueues } from '../../common/queues/actions';
 import { firebase } from '../../common/lib/redux-firebase';
 import { Loading,
          Block,
+         Heading,
          Text,
          View } from '../app/components';
-
-const styles = {
-  venueList: {
-    maxWidth: 475,
-  },
-};
 
 let QueuesTonight = ({ loaded, venues, queues }) => {
   const displayList = queues.toSeq().sortBy(
@@ -29,15 +25,12 @@ let QueuesTonight = ({ loaded, venues, queues }) => {
   /* console.log('display list', displayList);*/
 
   return (
-    <View style={styles.venueList}>
+    <View>
     {!loaded ?
-      <Loading />
+     <Loading />
    : !displayList || displayList.size === 0 ?
-     <Block ml={4} pr={1} mr={4}>
-       <Text>As we know of, there are no queues in Berlin now.
-       Check back on us later.</Text>
-     </Block>
-      :
+     <EventList />
+     :
      displayList.map(item => {
        const venueKey = item.first().get('venueKey');
        const venue = venues.find(venue => venue.key === venueKey);
@@ -70,6 +63,13 @@ QueuesTonight = firebase((database, props) => {
   const locationsRef = database.child('locations');
   return [
     [locationsRef, 'on', 'value', props.listVenues],
+  ];
+})(QueuesTonight);
+
+QueuesTonight = firebase((database, props) => {
+  const queuesRef = database.child('events');
+  return [
+    [queuesRef, 'once', 'value', props.getAllEvents],
   ];
 })(QueuesTonight);
 

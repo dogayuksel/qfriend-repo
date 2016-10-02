@@ -15,6 +15,7 @@ const Social = ({ disabled, signIn }) => {
 
   return (
     <Button
+      theme="primary"
       data-provider="facebook"
       onClick={onButtonClick}
     >

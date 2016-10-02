@@ -15,12 +15,12 @@ const LinkMessages = defineMessages({
     id: 'app.links.users',
   },
   home: {
-    defaultMessage: 'Home',
+    defaultMessage: 'Qfriend',
     id: 'app.links.home',
   },
-  tonight: {
-    defaultMessage: 'Tonight',
-    id: 'app.links.tonight',
+  editEvents: {
+    defaultMessage: 'Edit Events',
+    id: 'app.links.editEvents',
   },
   me: {
     defaultMessage: 'Me',

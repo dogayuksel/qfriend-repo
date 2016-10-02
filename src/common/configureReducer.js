@@ -8,6 +8,7 @@ import themes from './themes/reducer';
 import todos from './todos/reducer';
 import venues from './venues/reducer';
 import queues from './queues/reducer';
+import events from './events/reducer';
 import users from './users/reducer';
 import admin from './admin/reducer';
 import { FIREBASE_ON_AUTH } from '../common/lib/redux-firebase/actions';
@@ -46,6 +47,7 @@ const configureReducer = (initialState: Object) => {
     todos,
     venues,
     queues,
+    events,
     users,
     admin,
   });

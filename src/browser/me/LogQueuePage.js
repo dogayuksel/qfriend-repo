@@ -54,6 +54,7 @@ class ModifyButtons extends React.Component {
       <View>
         <Button
           mb={3} ml={1} type="button"
+          theme="primary"
           disabled={disabled}
           onClick={() => this.modifyValue(fields, 'x2')}
         >
@@ -61,6 +62,7 @@ class ModifyButtons extends React.Component {
         </Button>
         <Button
           mb={3} ml={1} type="button"
+          theme="primary"
           disabled={disabled}
           onClick={() => this.modifyValue(fields, '/2')}
         >
@@ -68,6 +70,7 @@ class ModifyButtons extends React.Component {
         </Button>
         <Button
           mb={3} ml={1} type="button"
+          theme="primary"
           disabled={disabled}
           onClick={() => this.modifyValue(fields, '+10')}
         >
@@ -75,6 +78,7 @@ class ModifyButtons extends React.Component {
         </Button>
         <Button
           mb={3} ml={1} type="button"
+          theme="primary"
           disabled={disabled}
           onClick={() => this.modifyValue(fields, '-10')}
         >
@@ -148,7 +152,7 @@ class LogQueuePage extends React.Component {
               <View key={venue.key}>
                 <Button
                   mb={1}
-                  theme="info"
+                  theme="secondary"
                   disabled={disabled}
                   onClick={() => setActiveEntry(venue.key)}
                 >
@@ -174,6 +178,7 @@ class LogQueuePage extends React.Component {
                     <Button
                       pill
                       mb={3} ml={2}
+                      theme="primary"
                       disabled={disabled}
                       type="submit"
                     >

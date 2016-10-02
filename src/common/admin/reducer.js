@@ -1,3 +1,4 @@
+/* @flow weak */
 import * as actions from './actions';
 import { Record } from '../transit';
 import { Map } from 'immutable';
@@ -10,10 +11,10 @@ const State = Record({
 const adminReducer = (state = new State(), action) => {
   switch (action.type) {
 
-    case actions.ON_ADMIN_CHECK: {
-      const { adminCheck } = action.payload;
-      if (adminCheck && adminCheck.isAdmin === true) {
-        return state.set('isAdmin', true);
+    case actions.ADMIN_CHECK_SUCCESS: {
+      const adminCheck = action.payload.val();
+      if (adminCheck && adminCheck.isAdmin) {
+        return state.set('isAdmin', true)
       }
       return state;
     }
@@ -21,14 +22,6 @@ const adminReducer = (state = new State(), action) => {
     case actions.SET_ACTIVE_ENTRY: {
       const key = action.payload;
       return state.set('activeEntry', key);
-    }
-
-    case actions.ADD_QUEUE_ENTRY_START: {
-      return state;
-    }
-
-    case actions.ADD_QUEUE_ENTRY_SUCCESS: {
-      return state;
     }
 
     default:

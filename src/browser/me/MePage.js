@@ -1,5 +1,4 @@
 /* @flow */
-import { onAdminCheck } from '../../common/admin/actions';
 import Gravatar from 'react-gravatar';
 import React from 'react';
 import SignOut from '../auth/SignOut';
@@ -8,7 +7,6 @@ import { Block, Image, Link, Space, Text, Title, View } from '../app/components'
 import { FormattedMessage } from 'react-intl';
 import { Match, Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import { firebase } from '../../common/lib/redux-firebase';
 
 // Pages
 import Settings from './SettingsPage';
@@ -77,14 +75,7 @@ MePage.propTypes = {
   viewer: React.PropTypes.object,
 };
 
-MePage = firebase((database, props) => {
-  const adminsRef = database.child(`admins/${props.viewer.id}`);
-  return [
-    [adminsRef, 'on', 'value', props.onAdminCheck],
-  ];
-})(MePage);
-
 export default connect(state => ({
   viewer: state.users.viewer,
   isAdmin: state.admin.isAdmin,
-}), { onAdminCheck })(MePage);
+}))(MePage);

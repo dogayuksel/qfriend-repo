@@ -62,11 +62,7 @@ export default [
   },
   {
     "id": "app.links.home",
-    "defaultMessage": "Home",
-  },
-  {
-    "id": "app.links.tonight",
-    "defaultMessage": "Tonight",
+    "defaultMessage": "Qfriend",
   },
   {
     "id": "app.links.intl",
@@ -95,6 +91,10 @@ export default [
   {
     "id": "app.links.logQueue",
     "defaultMessage": "Log Queue",
+  },
+  {
+    "id": "app.links.editEvents",
+    "defaultMessage": "Edit Events",
   },
   {
     "id": "app.links.signIn",

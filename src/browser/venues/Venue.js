@@ -18,6 +18,9 @@ type VenueProps = {
 }
 
 const styles = {
+  venueItem: {
+      maxWidth: 475,
+  },
   title: {
     maxWidth: '55%',
   },
@@ -33,6 +36,7 @@ const Venue = ({ venue: { key, title, description } }: VenueProps) => {
     <Flex
       mb={3}
       justify="space-between"
+      style={styles.venueItem}
     >
       <Flex align="center" style={styles.title}>
         <Gravatar

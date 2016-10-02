@@ -1,31 +1,27 @@
 /* @flow */
+import QueuesTonight from './QueuesTonight';
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Block,
-  Text,
-  Link,
-  Button,
   PageHeader,
   Title,
   View,
 } from '../app/components';
 
-const HomePage = () => (
+const TonightPage = ({ queues }) => (
   <View>
     <Title message="Qfriend" />
     <PageHeader
-      description="No queueing, Go clubbing"
-      heading="Qfriend"
-    />
-    {/* This is a block with margin-bottom: scale[4]. Inline styles rocks. */}
-    <Block ml={4} mb={4}>
-      <Link inverted to="/tonight">
-        <Button big>
-          <Text>See tonight</Text>
-        </Button>
-      </Link>
+      description="Queues at all famous venues of Berlin."
+      heading={queues.size > 0 ? 'Tonight' : 'Featured Events'}
+  />
+    <Block>
+      <QueuesTonight />
     </Block>
   </View>
 );
 
-export default HomePage;
+export default connect(state => ({
+  queues: state.queues.queueMap,
+}))(TonightPage);

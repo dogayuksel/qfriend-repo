@@ -59,6 +59,14 @@ type QueueEntry {
   owner: User,
 }
 
+type Event {
+  beginsAt: Number,
+  name: LongString,
+  description: LongString,
+  photoURL: LongString,
+  venueKey: ShortString,
+}
+
 type UserEmail {
   email: ShortRequiredString
 }
@@ -84,6 +92,20 @@ path /locations {
   // Anyone can create, read, update. No one can delete.
   read() { true }
   write() { isAdmin() }
+}
+
+path /events/{event} is Event {
+  // Anyone can create, read, update. No one can delete.
+  read() { true }
+  write() { isAdmin() }
+}
+
+path /events {
+  read() { true }
+}
+
+path /events {
+  index() {[ "beginsAt", "venueKey" ]}
 }
 
 path /queues/{queue} is QueueEntry {
