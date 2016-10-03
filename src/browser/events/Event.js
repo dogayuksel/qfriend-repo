@@ -18,6 +18,13 @@ type State = {
   countdown: ?String,
 };
 
+const styles = {
+  imageContainer: {
+    maxHeight: 160,
+    overflow: 'hidden',
+  }
+}
+
 class Event extends React.Component {
 
   static propTypes = {
@@ -45,9 +52,11 @@ class Event extends React.Component {
       <Card
         ml={1}
         rounded
-        width={242}
+        width={243}
       >
-        <CardImage src={event.photoURL}/>
+        <View style={styles.imageContainer}>
+          <CardImage style={styles.cardImage} src={event.photoURL}/>
+        </View>
         <Heading
           level={2}
           size={3}

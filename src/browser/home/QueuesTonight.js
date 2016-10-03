@@ -18,7 +18,7 @@ import { Loading,
 const styles = {
   eventList: {
     width: '80vw',
-    maxWidth: '1005px',
+    maxWidth: '780px',
     margin: 'auto',
   },
 };
