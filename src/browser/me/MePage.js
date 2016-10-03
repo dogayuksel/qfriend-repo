@@ -55,7 +55,6 @@ let MePage = ({ pathname, viewer, isAdmin }) => (
                 <Gravatar
                   default="retro"
                   email={viewer.email}
-                  https
                   rating="x"
                   size={100}
                 />
