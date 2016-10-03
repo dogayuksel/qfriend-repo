@@ -13,6 +13,7 @@ const initialState = fromJSON(window.__INITIAL_STATE__); // eslint-disable-line 
 const reportingMiddleware = configureReporting({
   appVersion: initialState.config.appVersion,
   sentryUrl: initialState.config.sentryUrl,
+  googleAnalyticsId: initialState.config.googleAnalyticsId,
   unhandledRejection: fn => window.addEventListener('unhandledrejection', fn),
 });
 

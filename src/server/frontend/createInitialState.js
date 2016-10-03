@@ -12,7 +12,8 @@ const createInitialState = () => ({
     .set('appName', config.appName)
     .set('appVersion', config.appVersion)
     .set('firebase', config.firebase)
-    .set('sentryUrl', config.sentryUrl),
+    .set('sentryUrl', config.sentryUrl)
+    .set('googleAnalyticsId', config.googleAnalyticsId),
   device: deviceReducer(undefined, {}),
   intl: intlReducer(undefined, {})
     .set('currentLocale', config.defaultLocale)

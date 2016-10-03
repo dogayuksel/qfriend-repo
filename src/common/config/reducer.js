@@ -6,6 +6,7 @@ const State = Record({
   appVersion: '',
   firebase: '',
   sentryUrl: '',
+  googleAnalyticsId: '',
 }, 'config');
 
 const configReducer = (state = new State()) => state;

@@ -1,5 +1,6 @@
 /* @flow weak */
 import Raven from 'raven-js';
+import ReactGA from 'react-ga';
 import { firebaseActions } from './lib/redux-firebase';
 
 // bluebirdjs.com/docs/api/error-management-configuration.html#global-rejection-events
@@ -34,12 +35,28 @@ const reportingMiddleware = () => next => action => {
   if (action.type === firebaseActions.FIREBASE_ON_AUTH) {
     setRavenUserContext(action.payload.user);
   }
+  if (process.env.NODE_ENV === 'production') {
+    if (action.type === "APP_SET_LOCATION") {
+      ReactGA.set({ page: action.payload.location.pathname });
+      ReactGA.pageview(action.payload.location.pathname);
+    }
+    if (action.type === "FIREBASE_SIGN_IN_START") {
+      ReactGA.event({
+        category: 'User',
+        action: 'Tried Signing in',
+      });
+    }
+  }
   // TODO: Use Raven.setExtraContext for last 10 actions and limited app state.
   return next(action);
 };
 
 const configureReporting = (options) => {
-  const { appVersion, sentryUrl, unhandledRejection } = options;
+  const { appVersion,
+          sentryUrl,
+          unhandledRejection,
+          googleAnalyticsId } = options;
+  ReactGA.initialize(googleAnalyticsId);
   Raven.config(sentryUrl, {
     // gist.github.com/impressiver/5092952
     ignoreErrors: [
