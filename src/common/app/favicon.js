@@ -47,56 +47,6 @@ export default {
       "href": "/assets/favicons/apple-touch-icon-180x180.png"
     },
     {
-      "rel": "apple-touch-startup-image",
-      "media": "(device-width: 414px) and (device-height: 736px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 3)",
-      "href": "/assets/favicons/apple-touch-startup-image-1182x2208.png"
-    },
-    {
-      "rel": "apple-touch-startup-image",
-      "media": "(device-width: 414px) and (device-height: 736px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)",
-      "href": "/assets/favicons/apple-touch-startup-image-1242x2148.png"
-    },
-    {
-      "rel": "apple-touch-startup-image",
-      "media": "(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)",
-      "href": "/assets/favicons/apple-touch-startup-image-1496x2048.png"
-    },
-    {
-      "rel": "apple-touch-startup-image",
-      "media": "(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)",
-      "href": "/assets/favicons/apple-touch-startup-image-1536x2008.png"
-    },
-    {
-      "rel": "apple-touch-startup-image",
-      "media": "(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)",
-      "href": "/assets/favicons/apple-touch-startup-image-320x460.png"
-    },
-    {
-      "rel": "apple-touch-startup-image",
-      "media": "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)",
-      "href": "/assets/favicons/apple-touch-startup-image-640x1096.png"
-    },
-    {
-      "rel": "apple-touch-startup-image",
-      "media": "(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)",
-      "href": "/assets/favicons/apple-touch-startup-image-640x920.png"
-    },
-    {
-      "rel": "apple-touch-startup-image",
-      "media": "(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 1)",
-      "href": "/assets/favicons/apple-touch-startup-image-748x1024.png"
-    },
-    {
-      "rel": "apple-touch-startup-image",
-      "media": "(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)",
-      "href": "/assets/favicons/apple-touch-startup-image-750x1294.png"
-    },
-    {
-      "rel": "apple-touch-startup-image",
-      "media": "(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 1)",
-      "href": "/assets/favicons/apple-touch-startup-image-768x1004.png"
-    },
-    {
       "rel": "icon",
       "type": "image/png",
       "href": "/assets/favicons/favicon-32x32.png",
@@ -121,7 +71,7 @@ export default {
     {
       "rel": "mask-icon",
       "href": "/assets/favicons/safari-pinned-tab.svg",
-      "color": "#333"
+      "color": "#222"
     },
     {
       "rel": "shortcut icon",
@@ -130,12 +80,8 @@ export default {
   ],
   "meta": [
     {
-      "name": "apple-mobile-web-app-capable",
-      "content": "yes"
-    },
-    {
       "name": "msapplication-TileColor",
-      "content": "#333"
+      "content": "#222"
     },
     {
       "name": "msapplication-TileImage",
@@ -147,7 +93,7 @@ export default {
     },
     {
       "name": "theme-color",
-      "content": "#333"
+      "content": "#222"
     }
   ]
 };

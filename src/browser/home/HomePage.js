@@ -11,7 +11,7 @@ import {
 
 const TonightPage = ({ queues }) => (
   <View>
-    <Title message="Qfriend" />
+    <Title message="Qfriend / Real-time queue updates from famous Berlin Clubs" />
     <PageHeader
       description={queues.size > 0
                  ? 'No queueing! Go clubbing!'

@@ -37,8 +37,5 @@
 			"type": "image\/png"
 		}
 	],
-	"theme_color": "#333",
-	"start_url": "\/tonight",
-	"display": "standalone",
-	"orientation": "portrait"
+	"theme_color": "#222"
 }
