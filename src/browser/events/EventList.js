@@ -20,9 +20,12 @@ const styles = {
 };
 
 let EventList = ({ events }) => {
+  const eventsList = events.toSeq().sortBy((value) => {
+    return value.beginsAt;
+  }).toList();
   return (
     <Flex align="center" wrap style={styles.eventList}>
-      {events && events.map((event) =>
+      {events && eventsList.map((event) =>
         <Event key={event.key} event={event} />
        )
       }

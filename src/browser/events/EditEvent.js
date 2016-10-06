@@ -39,12 +39,16 @@ class EditEvent extends React.Component {
             event: { name,
                      description,
                      photoURL,
+                     residentAdvisorURL,
+                     facebookEventURL,
                      venueKey,
                      beginsAt } } = this.props;
     fields.$setValue('name', name);
     fields.$setValue('description', description);
     fields.$setValue('photoURL', photoURL);
     fields.$setValue('venueKey', venueKey);
+    fields.$setValue('residentAdvisorURL', residentAdvisorURL);
+    fields.$setValue('facebookEventURL', facebookEventURL);
     const time = moment(beginsAt);
     const hours = time.hours();
     const minutes = time.minutes();
@@ -85,6 +89,8 @@ EditEvent = fields(EditEvent, {
   fields: [
     'name',
     'photoURL',
+    'residentAdvisorURL',
+    'facebookEventURL',
     'description',
     'venueKey',
     'daymonth',

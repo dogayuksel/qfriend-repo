@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 import moment from 'moment';
-import { deleteEvent } from '../../common/events/actions';
+import { deleteEvent, reportEventClick } from '../../common/events/actions';
 import { connect } from 'react-redux';
 import { Text,
          Heading,
@@ -12,6 +12,7 @@ import { Text,
          Space,
          Button,
          Flex,
+         Box,
          View } from '../app/components';
 
 type State = {
@@ -47,6 +48,7 @@ class Event extends React.Component {
   render() {
     const { pathname, event, venue, isAdmin } = this.props;
     const { countdown } = this.state;
+    const { reportEventClick } = this.props;
 
     return (
       <Card
@@ -55,7 +57,7 @@ class Event extends React.Component {
         width={243}
       >
         <View style={styles.imageContainer}>
-          <CardImage style={styles.cardImage} src={event.photoURL}/>
+          <CardImage src={event.photoURL} />
         </View>
         <Heading
           level={2}
@@ -63,10 +65,41 @@ class Event extends React.Component {
         >
           {event.name}
         </Heading>
-        <Text>
-          {venue && venue.title}
-        </Text>
-        <Text small>{countdown}</Text>
+        <Flex mr={1} justify='space-between' align='center'>
+          <Box>
+            <Text>
+              {venue && venue.title}
+            </Text>
+            <Text small>{countdown}</Text>
+          </Box>
+          <Flex>
+            {event.facebookEventURL ?
+             <Link
+               onClick={() => reportEventClick('facebook')}
+               to={event.facebookEventURL}
+             >
+               FB
+             </Link>
+             :
+             null
+            }
+          {event.facebookEventURL && event.residentAdvisorURL ?
+           <Space x={2} />
+           :
+           null
+          }
+          {event.residentAdvisorURL ?
+           <Link
+             onClick={() => reportEventClick('residentAdvisor')}
+             to={event.residentAdvisorURL}
+           >
+             RA
+           </Link>
+           :
+           null
+          }
+          </Flex>
+        </Flex>
         {isAdmin && pathname === '/editevents' &&
          <View mt={1}>
            <Link to={`${pathname}/event/${event.key}`}>
@@ -96,4 +129,4 @@ export default connect((state, props) => {
     venue: (state.venues.venueList &&
             state.venues.venueList.find(value => `${value.key}` === venueKey)),
   };
-}, { deleteEvent })(Event);
+}, { deleteEvent, reportEventClick })(Event);

@@ -3,6 +3,7 @@ export const GET_ALL_EVENTS = 'GET_ALL_EVENTS';
 export const SAVE_EVENT_SUCCESS = 'SAVE_EVENT_SUCCESS';
 export const SAVE_NEW_EVENT_SUCCESS = 'SAVE_NEW_EVENT_SUCCESS';
 export const DELETE_EVENT_SUCCESS = 'DELETE_EVENT_SUCCESS';
+export const REPORT_EVENT_LINK_CLICK = 'REPORT_EVENT_LINK_CLICK';
 
 export const getAllEvents = (snap: Object) => {
   const events = snap.val();
@@ -11,6 +12,13 @@ export const getAllEvents = (snap: Object) => {
     payload: { events },
   };
 };
+
+export const reportEventClick = (type: string) => {
+  return {
+    type: REPORT_EVENT_LINK_CLICK,
+    payload: type,
+  }
+}
 
 export const saveEvent = ( event: Object, eventKey: String ) => {
   return ({ firebase }: any) => {

@@ -68,6 +68,16 @@ class EventForm extends React.Component {
             label="Photo URL"
             type="text"
           />
+          <Input
+            {...fields.residentAdvisorURL}
+            label="Resident Advisor URL"
+            type="text"
+          />
+          <Input
+            {...fields.facebookEventURL}
+            label="Facebook event URL"
+            type="text"
+          />
           <Select
             {...fields.venueKey}
             label="Venue"

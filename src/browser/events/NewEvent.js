@@ -54,6 +54,8 @@ NewEvent = fields(NewEvent, {
   fields: [
     'name',
     'photoURL',
+    'residentAdvisorURL',
+    'facebookEventURL',
     'description',
     'venueKey',
     'beginsAt',

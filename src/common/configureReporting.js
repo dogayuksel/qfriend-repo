@@ -46,6 +46,14 @@ const reportingMiddleware = () => next => action => {
         action: 'Tried Signing in',
       });
     }
+    if (action.type === "REPORT_EVENT_LINK_CLICK") {
+      const linkType = action.payload;
+      ReactGA.event({
+        category: 'Interact',
+        action: 'Clicked on an event link',
+        label: linkType,
+      });
+    }
   }
   // TODO: Use Raven.setExtraContext for last 10 actions and limited app state.
   return next(action);

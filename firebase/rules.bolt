@@ -64,6 +64,8 @@ type Event {
   name: LongString,
   description: LongString,
   photoURL: LongString,
+  residentAdvisorURL: LongString,
+  facebookEventURL: LongString,
   venueKey: ShortString,
 }
 

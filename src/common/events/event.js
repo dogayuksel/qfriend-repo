@@ -6,6 +6,8 @@ const Event = Record({
   name: '',
   description: '',
   photoURL: '',
+  residentAdvisorURL: '',
+  facebookEventURL: '',
   venueKey: '',
   key: '',
 }, 'event');
