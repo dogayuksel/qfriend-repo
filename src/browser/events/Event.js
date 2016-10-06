@@ -48,6 +48,7 @@ class Event extends React.Component {
   render() {
     const { pathname, event, venue, isAdmin } = this.props;
     const { countdown } = this.state;
+    const eventStartDate = moment(event.beginsAt).format();
     const { reportEventClick } = this.props;
 
     return (
@@ -55,13 +56,26 @@ class Event extends React.Component {
         ml={1}
         rounded
         width={243}
+        itemScope
+        itemType="http://schema.org/MusicEvent"
       >
+        <View
+          itemProp="location"
+          itemScope
+          itemType="http://schema.org/MusicVenue"
+        >
+          <meta itemProp="name" content={venue.title} />
+          <meta itemProp="address" content={venue.address} />
+          <meta itemProp="url" content={venue.facebookURL} />
+          <meta itemProp="description" content={venue.description} />
+        </View>
         <View style={styles.imageContainer}>
-          <CardImage src={event.photoURL} />
+          <CardImage itemProp="image" src={event.photoURL} />
         </View>
         <Heading
           level={2}
           size={3}
+          itemProp="name"
         >
           {event.name}
         </Heading>
@@ -70,13 +84,20 @@ class Event extends React.Component {
             <Text>
               {venue && venue.title}
             </Text>
-            <Text small>{countdown}</Text>
+            <Text
+              small
+              itemProp="startDate"
+              content={eventStartDate}
+            >
+              {countdown}
+            </Text>
           </Box>
           <Flex>
             {event.facebookEventURL ?
              <Link
                onClick={() => reportEventClick('facebook')}
                to={event.facebookEventURL}
+               itemProp="url"
              >
                FB
              </Link>
@@ -92,6 +113,7 @@ class Event extends React.Component {
            <Link
              onClick={() => reportEventClick('residentAdvisor')}
              to={event.residentAdvisorURL}
+             itemProp="url"
            >
              RA
            </Link>

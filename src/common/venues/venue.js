@@ -5,6 +5,8 @@ const Venue = Record({
   key: '',
   title: '',
   description: '',
+  facebookURL: '',
+  address: '',
   latlng: {},
 }, 'venue');
 
