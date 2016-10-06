@@ -13,9 +13,10 @@
 
 > You don't have to start with everything. Este is perfect even for plain static pages. You can gracefully add any platform later. Este mission is simple: **Help startups to deliver minimal valuable product asap with the state of the art real-time universal app stack**.
 
-> Pokud máte zájem o školení JavaScript, React.js, nebo Este.js, napište mi daniel@steigerwald.cz
+> Pokud máte zájem o školení JavaScript, React.js, nebo Este.js, objednejte se na [javascript-skoleni.cz](https://javascript-skoleni.cz/).
 
-> *Vote Gary Johnson https://www.johnsonweld.com*
+> Workshop soon! [reactiveconf.com/workshop/universal-react-is-a-real-thing](https://reactiveconf.com/workshop/universal-react-is-a-real-thing)
+> Write me for 50% discount for Reactiveconf ticket (daniel@steigerwald.cz).
 
 ## Techniques
 
@@ -132,7 +133,7 @@ React Native: [Getting Started](https://facebook.github.io/react-native/docs/get
 - set name in `package.json`
 - set locales, firebaseUrl, sentryUrl, etc. in `src/server/config.js`
 - remove unused locale-data from `src/browser/index.js`
-- change `src/common/app/favicons/original/favicon.png`, then `gulp favicon`
+- change `src/common/app/favicons/original/favicon.png`, then `gulp favicon` and `gulp -p`
 - remove unused reducers from `src/common/configureReducer.js`
 - delete unused app features, todos for example: src/{platform}/todos
 - modify your FB app_id e.g. for [iOS](https://developers.facebook.com/docs/ios/getting-started/#configure-xcode-project)
