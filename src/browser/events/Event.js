@@ -59,6 +59,7 @@ class Event extends React.Component {
         itemScope
         itemType="http://schema.org/MusicEvent"
       >
+        {venue &&
         <View
           itemProp="location"
           itemScope
@@ -69,6 +70,7 @@ class Event extends React.Component {
           <meta itemProp="url" content={venue.facebookURL} />
           <meta itemProp="description" content={venue.description} />
         </View>
+        }
         <View style={styles.imageContainer}>
           <CardImage itemProp="image" src={event.photoURL} />
         </View>

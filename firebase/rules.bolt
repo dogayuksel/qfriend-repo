@@ -67,6 +67,7 @@ type Event {
   residentAdvisorURL: LongString,
   facebookEventURL: LongString,
   venueKey: ShortString,
+  isFeatured: Boolean,
 }
 
 type UserEmail {

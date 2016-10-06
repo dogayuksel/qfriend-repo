@@ -8,6 +8,7 @@ import { Text,
          Heading,
          Button,
          Link,
+         Checkbox,
          Form,
          Input,
          Textarea,
@@ -78,7 +79,14 @@ class EventForm extends React.Component {
             label="Facebook event URL"
             type="text"
           />
+          <Checkbox
+            {...fields.isFeatured}
+            checked={fields.isFeatured.value}
+            label="Featured event?"
+            theme="info"
+          />
           <Select
+            mb={3}
             {...fields.venueKey}
             label="Venue"
             options={venueMap}

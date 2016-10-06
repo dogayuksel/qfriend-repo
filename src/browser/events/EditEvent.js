@@ -42,11 +42,13 @@ class EditEvent extends React.Component {
                      residentAdvisorURL,
                      facebookEventURL,
                      venueKey,
+                     isFeatured,
                      beginsAt } } = this.props;
     fields.$setValue('name', name);
     fields.$setValue('description', description);
     fields.$setValue('photoURL', photoURL);
     fields.$setValue('venueKey', venueKey);
+    fields.$setValue('isFeatured', isFeatured);
     fields.$setValue('residentAdvisorURL', residentAdvisorURL);
     fields.$setValue('facebookEventURL', facebookEventURL);
     const time = moment(beginsAt);
@@ -93,6 +95,7 @@ EditEvent = fields(EditEvent, {
     'facebookEventURL',
     'description',
     'venueKey',
+    'isFeatured',
     'daymonth',
     'hours',
     'minutes',

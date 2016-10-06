@@ -8,6 +8,7 @@ const Event = Record({
   photoURL: '',
   residentAdvisorURL: '',
   facebookEventURL: '',
+  isFeatured: '',
   venueKey: '',
   key: '',
 }, 'event');

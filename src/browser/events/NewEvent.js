@@ -58,6 +58,7 @@ NewEvent = fields(NewEvent, {
     'facebookEventURL',
     'description',
     'venueKey',
+    'isFeatured',
     'beginsAt',
     'daymonth',
     'hours',
@@ -67,6 +68,7 @@ NewEvent = fields(NewEvent, {
     venueKey: "1",
     hours: 23,
     minutes: 45,
+    isFeatured: false,
   }),
 });
 
