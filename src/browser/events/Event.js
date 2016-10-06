@@ -81,7 +81,7 @@ class Event extends React.Component {
         >
           {event.name}
         </Heading>
-        <Flex mr={1} justify='space-between' align='center'>
+        <Flex mr={1} justify='space-between' align='flex-end'>
           <Box>
             <Text>
               {venue && venue.title}
@@ -100,6 +100,7 @@ class Event extends React.Component {
                onClick={() => reportEventClick('facebook')}
                to={event.facebookEventURL}
                itemProp="url"
+               theme="secondary"
              >
                FB
              </Link>
@@ -116,6 +117,7 @@ class Event extends React.Component {
              onClick={() => reportEventClick('residentAdvisor')}
              to={event.residentAdvisorURL}
              itemProp="url"
+             theme="secondary"
            >
              RA
            </Link>
