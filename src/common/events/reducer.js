@@ -14,7 +14,7 @@ const eventsReducer = (state = new State(), action) => {
 
     case actions.GET_ALL_EVENTS: {
       const { events } = action.payload;
-      const eventList = events && Seq(events)
+      const eventList = Seq(events)
         .map((event, key) => new Event({ ...event, key }))
         .toList();
       return state

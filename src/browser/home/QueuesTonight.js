@@ -33,8 +33,7 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
       }
       return valueB.get('value') - valueA.get('value');
     }).toList();
-  const eventsList = events
-    .toSeq()
+  const eventsList = events.toSeq()
     .sortBy(value => value.beginsAt)
     .sortBy(value => -value.isFeatured)
     .toList();
