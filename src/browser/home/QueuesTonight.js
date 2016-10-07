@@ -52,8 +52,12 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
     displayList.map(item => {
       const venueKey = item.first().get('venueKey');
       const venue = venues.find(venue => venue.key === venueKey);
+      const event = events.find(event =>
+        event.venueKey === venueKey.toString()
+      );
+      console.log(event);
       return (
-        <Venue key={venueKey} venue={venue} />
+        <Venue key={venueKey} venue={venue} event={event} />
       );
     })
       }
@@ -85,7 +89,7 @@ QueuesTonight = firebase((database, props) => {
 })(QueuesTonight);
 
 QueuesTonight = firebase((database, props) => {
-  const timeThresh = moment().subtract(1, 'day').valueOf();
+  const timeThresh = moment().subtract(12, 'hours').valueOf();
   const queuesRef = database.child('events')
                             .orderByChild('beginsAt')
                             .startAt(timeThresh);

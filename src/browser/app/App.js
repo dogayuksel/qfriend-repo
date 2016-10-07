@@ -23,6 +23,7 @@ import Offline from '../offline/OfflinePage';
 import SignIn from '../auth/SignInPage';
 import Todos from '../todos/TodosPage';
 import EditEvents from '../events/EditEventsPage';
+import Event from '../events/EventPage';
 
 // v4-alpha.getbootstrap.com/getting-started/introduction/#starter-template
 const bootstrap4Metas: any = [
@@ -59,6 +60,7 @@ let App = ({ currentLocale, currentTheme }) => (
       />
       <Header />
       <Match exactly pattern="/" component={Home} />
+      <Match pattern="/event/:eventId" component={Event} />
       <Match pattern="/fields" component={Fields} />
       <Match pattern="/users" component={Users} />
       <Match pattern="/intl" component={Intl} />

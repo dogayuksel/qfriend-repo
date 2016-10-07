@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import { Stat, Text, View } from '../app/components';
+import { Stat, Text, View, Flex } from '../app/components';
 import { connect } from 'react-redux';
 import { checkQueues } from '../../common/queues/actions';
 
@@ -61,7 +61,7 @@ class QueueView extends React.Component {
                        ((timeNow - lastEntry.loggedAt) / 60000) | 0;
 
     return (
-      <View>
+      <Flex align="center">
         {!queue ?
          <Text>No queues yet.</Text>
          :
@@ -71,7 +71,7 @@ class QueueView extends React.Component {
            unit={this.genUnitText(lastEntry.value)}
          />
         }
-      </View>
+      </Flex>
     );
   }
 }

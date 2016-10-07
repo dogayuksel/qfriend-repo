@@ -74,6 +74,7 @@ class Event extends React.Component {
         <View style={styles.imageContainer}>
           <CardImage itemProp="image" src={event.photoURL} />
         </View>
+        <Link to={`/event/${event.key}`}>
         <Heading
           level={2}
           size={3}
@@ -81,6 +82,7 @@ class Event extends React.Component {
         >
           {event.name}
         </Heading>
+        </Link>
         <Flex mr={1} justify='space-between' align='flex-end'>
           <Box>
             <Text>
@@ -94,37 +96,6 @@ class Event extends React.Component {
               {countdown}
             </Text>
           </Box>
-          <Flex>
-            {event.facebookEventURL ?
-             <Link
-               onClick={() => reportEventClick('facebook')}
-               to={event.facebookEventURL}
-               itemProp="url"
-               theme="secondary"
-             >
-               FB
-             </Link>
-             :
-             null
-            }
-          {event.facebookEventURL && event.residentAdvisorURL ?
-           <Space x={2} />
-           :
-           null
-          }
-          {event.residentAdvisorURL ?
-           <Link
-             onClick={() => reportEventClick('residentAdvisor')}
-             to={event.residentAdvisorURL}
-             itemProp="url"
-             theme="secondary"
-           >
-             RA
-           </Link>
-           :
-           null
-          }
-          </Flex>
         </Flex>
         {isAdmin && pathname === '/editevents' &&
          <View mt={1}>
