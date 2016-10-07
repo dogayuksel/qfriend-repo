@@ -37,7 +37,7 @@ class EventPage extends React.Component {
   };
 
   render() {
-    const { isAdmin, venues, event } = this.props;
+    const { isAdmin, venues, event, reportEventClick } = this.props;
     const venue = venues.find(value => `${value.key}` === event.venueKey);
     const eventStartDate = event && moment(event.beginsAt).format('LLLL');
 
@@ -91,6 +91,7 @@ class EventPage extends React.Component {
              <Venue venue={venue} event={null}/>
              {event.facebookEventURL ?
               <Link
+                target="_blank"
                 onClick={() => reportEventClick('facebook')}
                 to={event.facebookEventURL}
                 itemProp="url"
@@ -101,21 +102,22 @@ class EventPage extends React.Component {
               :
               null
              }
-        {event.facebookEventURL && event.residentAdvisorURL &&
-         <View mt={1}/>
-        }
-        {event.residentAdvisorURL ?
-         <Link
-           onClick={() => reportEventClick('residentAdvisor')}
-           to={event.residentAdvisorURL}
-           itemProp="url"
-           theme="secondary"
-         >
-           resident advisor
-         </Link>
-         :
-         null
-        }
+             {event.facebookEventURL && event.residentAdvisorURL &&
+              <View mt={1}/>
+             }
+             {event.residentAdvisorURL ?
+              <Link
+                target="_blank"
+                onClick={() => reportEventClick('residentAdvisor')}
+                to={event.residentAdvisorURL}
+                itemProp="url"
+                theme="secondary"
+              >
+                resident advisor
+              </Link>
+              :
+              null
+             }
            </View>
            <Link to="/">
              <Button mt={4} theme="primary">
@@ -139,8 +141,8 @@ EventPage = firebase((database, props) => {
 EventPage = firebase((database, props) => {
   const timeThresh = moment().subtract(6, 'hours').valueOf();
   const queuesRef = database.child('queues')
-                               .orderByChild('loggedAt')
-                               .startAt(timeThresh);
+                            .orderByChild('loggedAt')
+                            .startAt(timeThresh);
   return [
     [queuesRef, 'on', 'value', props.checkAllQueues],
   ];
