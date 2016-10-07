@@ -71,7 +71,7 @@ class Event extends React.Component {
           <meta itemProp="description" content={venue.description} />
         </View>
         }
-        <View style={styles.imageContainer}>
+        <View style={styles.imageContainer} mb={1}>
           <CardImage itemProp="image" src={event.photoURL} />
         </View>
         <Link to={`/event/${event.key}`}>
