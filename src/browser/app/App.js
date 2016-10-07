@@ -50,7 +50,7 @@ let App = ({ currentLocale, currentTheme }) => (
           ...bootstrap4Metas,
           {
             name: 'description',
-            content: 'Real-time queue updates for all the famous clubs of Berlin. Berghain, Tresor, about blank, Renate and many more. Place to check before heading for Berlin Nightlife',
+            content: 'Live queue updates from the best clubs of Berlin. Berghain, Tresor, about blank, Renate and many more. Place to check before heading for Berlin Nightlife',
           },
           ...favicon.meta,
         ]}
