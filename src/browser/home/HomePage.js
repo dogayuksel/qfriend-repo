@@ -15,9 +15,9 @@ const TonightPage = ({ queues }) => (
     <PageHeader
       description={queues.size > 0
                  ? 'No queueing! Go clubbing!'
-                 : 'We will update you with real-time queues'
+                 : 'No queues right now... We will cover these on the weekend!'
                   }
-      heading={queues.size > 0 ? 'Tonight' : 'Featured Events'}
+      heading={queues.size > 0 ? 'Tonight' : 'Events'}
   />
     <Block>
       <QueuesTonight />
