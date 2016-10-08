@@ -35,6 +35,12 @@ gulp.task('favicon-generate', done => {
         pictureAspect: 'silhouette',
         themeColor: '#222',
       },
+      openGraph: {
+	pictureAspect: "backgroundAndMargin",
+	backgroundColor: "#222",
+	margin: "12%",
+	ratio: "1.91:1",
+      },
     },
     settings: {
       scalingAlgorithm: 'Mitchell',

@@ -80,6 +80,10 @@ export default {
   ],
   "meta": [
     {
+      "property": "og:image",
+      "content": "/assets/favicons/open-graph.png"
+    },
+    {
       "name": "msapplication-TileColor",
       "content": "#222"
     },

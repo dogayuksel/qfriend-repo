@@ -52,6 +52,10 @@ let App = ({ currentLocale, currentTheme }) => (
             name: 'description',
             content: 'Live queue updates from the best clubs of Berlin. Berghain, Tresor, about blank, Renate and many more. Place to check before heading for Berlin Nightlife',
           },
+          {
+            property: 'og:title',
+            content: 'Live queue updates from famous Berlin Clubs'
+          },
           ...favicon.meta,
         ]}
         link={[
