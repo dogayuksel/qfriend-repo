@@ -2,6 +2,7 @@
 import React from 'react';
 import Venue from '../venues/Venue';
 import moment from 'moment';
+import FacebookProvider, { Share } from 'react-facebook';
 import { listVenues } from '../../common/venues/actions';
 import { checkAllQueues } from '../../common/queues/actions';
 import { getAllEvents } from '../../common/events/actions';
@@ -66,6 +67,7 @@ class EventPage extends React.Component {
              style={styles.image}
            />
            <View mt={3}>
+             <Flex align="center">
              <Heading
                style={styles.title}
                level={1}
@@ -74,6 +76,19 @@ class EventPage extends React.Component {
              >
                {event.name}
              </Heading>
+             <FacebookProvider appID="1000515043403983">
+               <Share href={`http://qfriend.co/event/${event.key}`}>
+                 <Button
+                   pill
+                   ml={2}
+                   type="button"
+                   theme="secondary"
+                 >
+                   Share
+                 </Button>
+               </Share>
+             </FacebookProvider>
+             </Flex>
              <Text
                mt={1}
                small
