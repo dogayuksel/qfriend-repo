@@ -50,6 +50,11 @@ class EventPage extends React.Component {
       >
         {event && venue &&
          <View>
+           <meta property="og:url" content={`http://qfriend.co/event/${event.key}`} />
+           <meta property="og:title" content="Live Queue Updates"/>
+           <meta property="og:description" content={`${event.title} @ ${venue.title}`} />
+           <meta property="og:image" content={event.photoURL} />
+           <meta property="og:app_id" content="1000515043403983" />
            <View
              itemProp="location"
              itemScope
