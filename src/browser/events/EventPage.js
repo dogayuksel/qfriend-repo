@@ -39,7 +39,7 @@ class EventPage extends React.Component {
 
   render() {
     const { isAdmin, venues, event, reportEventClick } = this.props;
-    const venue = venues.find(value => `${value.key}` === event.venueKey);
+    const venue = event && venues.find(value => `${value.key}` === event.venueKey);
     const eventStartDate = event && moment(event.beginsAt).format('LLLL');
 
     return (
@@ -48,7 +48,7 @@ class EventPage extends React.Component {
         itemScope
         itemType="http://schema.org/MusicEvent"
       >
-        {event && venue &&
+        {event && venue ?
          <View>
            <View
              itemProp="location"
@@ -134,13 +134,17 @@ class EventPage extends React.Component {
               null
              }
            </View>
-           <Link to="/">
-             <Button mt={4} theme="primary">
-               Back
-             </Button>
-           </Link>
          </View>
+         :
+         <Heading size={3} mt={4}>
+           Can't find that event
+         </Heading>
         }
+      <Link to="/">
+        <Button mt={4} theme="primary">
+          Back
+        </Button>
+      </Link>
       </View>
     );
   }
