@@ -79,7 +79,7 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
               level={2}
               mb={2} pl={3} pr={1}
             >
-              Rest of the Events This Weekend
+              Other Events
             </Heading>
             <Flex align='baseline' wrap style={styles.eventList}>
               {otherEventsList.map((event) =>
