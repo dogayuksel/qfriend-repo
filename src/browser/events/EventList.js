@@ -1,6 +1,7 @@
 /* @flow */
 import React from 'react';
 import Event from './Event';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { getAllEvents } from '../../common/events/actions';
 import { listVenues } from '../../common/venues/actions';
@@ -21,7 +22,7 @@ const styles = {
 
 let EventList = ({ events }) => {
   const eventsList = events.toSeq().sortBy((value) => {
-    return value.beginsAt;
+    return -value.beginsAt;
   }).toList();
   return (
     <Flex align="center" wrap style={styles.eventList}>
@@ -38,7 +39,10 @@ EventList.propTypes = {
 };
 
 EventList = firebase((database, props) => {
-  const queuesRef = database.child('events');
+  const timeThresh = moment().subtract(17, 'days').valueOf();
+  const queuesRef = database.child('events')
+                            .orderByChild('beginsAt')
+                            .startAt(timeThresh);
   return [
     [queuesRef, 'on', 'value', props.getAllEvents],
   ];
