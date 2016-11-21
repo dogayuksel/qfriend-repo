@@ -21,6 +21,10 @@ const styles = {
     maxWidth: '780px',
     margin: 'auto',
   },
+  subTitles: {
+    margin: 'auto',
+    maxWidth: '800px',
+  },
 };
 
 let QueuesTonight = ({ loaded, venues, queues, events }) => {
@@ -33,21 +37,58 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
       }
       return valueB.get('value') - valueA.get('value');
     }).toList();
-  const eventsList = events.toSeq()
+
+  const featuredEventsList = events
+    .toSeq()
     .sortBy(value => value.beginsAt)
-    .sortBy(value => -value.isFeatured)
+    .filter(value => value.isFeatured)
+    .toList();
+
+  const otherEventsList = events
+    .toSeq()
+    .sortBy(value => value.beginsAt)
+    .filter(value => !(value.isFeatured))
     .toList();
 
   return (
     <View>
       {!loaded ?
       <Loading />
-    : !displayList || displayList.size === 0 ?
-    <Flex align='baseline' wrap style={styles.eventList}>
-      {eventsList.map((event) =>
-      <Event key={event.key} event={event} />
-      )}
-    </Flex>
+       : !displayList || displayList.size === 0 ?
+       <Block>
+         {featuredEventsList.count() > 0 &&
+          <Block>
+            <Heading
+              style={styles.subTitles}
+              level={2} mb={2} pl={3} pr={1}
+            >
+              Featured Events
+            </Heading>
+            <Flex align='baseline' wrap style={styles.eventList}>
+              {featuredEventsList.map((event) =>
+                <Event key={event.key} event={event} />
+               )}
+            </Flex>
+           </Block>
+         }
+         {otherEventsList.count() > 0 &&
+          <Block>
+            <Heading
+              style={styles.subTitles}
+              mt={4}
+              level={2}
+              mb={2} pl={3} pr={1}
+            >
+              Rest of the Events This Weekend
+            </Heading>
+            <Flex align='baseline' wrap style={styles.eventList}>
+              {otherEventsList.map((event) =>
+                <Event key={event.key} event={event} />
+               )}
+            </Flex>
+           </Block>
+         }
+        </Block>
     :
     displayList.map(item => {
       const venueKey = item.first().get('venueKey');
