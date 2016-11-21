@@ -34,6 +34,7 @@ class ModifyButtons extends React.Component {
   modifyValue = (fields, param) => {
     const data = ({ ...fields.$values() });
     switch (param) {
+      case '0': { fields.$setValue('value', 0); return; }
       case 'x2': { fields.$setValue('value', data.value * 2); return; }
       case '/2': {
         fields.$setValue('value', parseInt(data.value / 2, 10));
@@ -52,6 +53,14 @@ class ModifyButtons extends React.Component {
     const { disabled, fields } = this.props;
     return (
       <View>
+        <Button
+          mb={3} ml={1} type="button"
+          theme="primary"
+          disabled={disabled}
+          onClick={() => this.modifyValue(fields, '0')}
+        >
+          <Text>0</Text>
+        </Button>
         <Button
           mb={3} ml={1} type="button"
           theme="primary"
