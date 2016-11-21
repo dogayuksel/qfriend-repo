@@ -2,12 +2,15 @@
 import React from 'react';
 import linksMessages from '../../common/app/linksMessages';
 import { FormattedMessage } from 'react-intl';
-import { Link, Space, Toolbar } from '../app/components';
+import { Link, Space, Toolbar, Text } from '../app/components';
 import { connect } from 'react-redux';
 
 const styles = {
   toolbar: {
     flexWrap: 'wrap',
+  },
+  seperator: {
+    color: '#333',
   },
 };
 
@@ -24,6 +27,18 @@ const Header = ({ viewer, isAdmin }) => (
     </Link>
     }
     <Space x={1} auto />
+    <Link
+      bold
+      inverted
+      exactly
+      target="_blank"
+      to="https://www.facebook.com/QFriendBerlin/"
+    >
+      fb
+    </Link>
+    <Space x={2} />
+    <Text style={styles.seperator}>|</Text>
+    <Space x={2} />
     {viewer &&
      <Link bold inverted to="/me">
        <FormattedMessage {...linksMessages.me} />
