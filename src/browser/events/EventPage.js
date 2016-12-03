@@ -101,12 +101,11 @@ class EventPage extends React.Component {
                mb={2}
                small
              >
-
                <Link
                  target="_blank"
                  to={`http://maps.google.com/?q=${venue.address}`}
-                 itemProp="url"
                  theme="secondary"
+                 onClick={() => reportEventClick('useMapsLink')}
                >
                  {venue.address}
                </Link>
