@@ -68,26 +68,26 @@ class EventPage extends React.Component {
            />
            <View mt={3}>
              <Flex align="center">
-             <Heading
-               style={styles.title}
-               level={1}
-               size={1}
-               itemProp="name"
-             >
-               {event.name}
-             </Heading>
-             <FacebookProvider appID="1000515043403983">
-               <Share href={`http://qfriend.co/event/${event.key}`}>
-                 <Button
-                   pill
-                   ml={2}
-                   type="button"
-                   theme="secondary"
-                 >
-                   Share
-                 </Button>
-               </Share>
-             </FacebookProvider>
+               <Heading
+                 style={styles.title}
+                 level={1}
+                 size={1}
+                 itemProp="name"
+               >
+                 {event.name}
+               </Heading>
+               <FacebookProvider appID="1000515043403983">
+                 <Share href={`http://qfriend.co/event/${event.key}`}>
+                   <Button
+                     pill
+                     ml={2}
+                     type="button"
+                     theme="secondary"
+                   >
+                     Share
+                   </Button>
+                 </Share>
+               </FacebookProvider>
              </Flex>
              <Text
                mt={1}
@@ -101,7 +101,15 @@ class EventPage extends React.Component {
                mb={2}
                small
              >
-               {venue.address}
+
+               <Link
+                 target="_blank"
+                 to={`http://maps.google.com/?q=${venue.address}`}
+                 itemProp="url"
+                 theme="secondary"
+               >
+                 {venue.address}
+               </Link>
              </Text>
              <Venue venue={venue} event={null}/>
              {event.facebookEventURL ?
@@ -140,11 +148,11 @@ class EventPage extends React.Component {
            Can't find that event
          </Heading>
         }
-      <Link to="/">
-        <Button mt={4} theme="primary">
-          Back
-        </Button>
-      </Link>
+        <Link to="/">
+          <Button mt={4} theme="primary">
+            Back
+          </Button>
+        </Link>
       </View>
     );
   }
