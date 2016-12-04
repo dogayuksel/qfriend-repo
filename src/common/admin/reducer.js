@@ -4,19 +4,15 @@ import { Record } from '../transit';
 import { Map } from 'immutable';
 
 const State = Record({
-  isAdmin: undefined,
+  isAdmin: false,
   activeEntry: 'undefined',
 }, 'admin');
 
 const adminReducer = (state = new State(), action) => {
   switch (action.type) {
 
-    case actions.ADMIN_CHECK_SUCCESS: {
-      const adminCheck = action.payload.val();
-      if (adminCheck && adminCheck.isAdmin) {
-        return state.set('isAdmin', true)
-      }
-      return state;
+    case actions.ADMIN_CHECK_DONE: {
+      return state.set('isAdmin', true);
     }
 
     case actions.SET_ACTIVE_ENTRY: {

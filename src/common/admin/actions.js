@@ -1,20 +1,21 @@
 /* @flow */
-export const ADMIN_CHECK_SUCCESS = 'ADMIN_CHECK_SUCCESS';
+import { Observable } from 'rxjs/Observable';
+
+export const ADMIN_CHECK = 'ADMIN_CHECK';
+export const ADMIN_CHECK_DONE = 'ADMIN_CHECK_DONE';
 export const ADD_QUEUE_ENTRY = 'ADD_QUEUE_ENTRY';
 export const SET_ACTIVE_ENTRY = 'SET_ACTIVE_ENTRY';
 
-export const adminCheck = (user: Object) => ({ firebase }: any) => {
-  const getPromise = async () => {
-    const adminCheck = await firebase
-      .child(`/admins/${user.id}`)
-      .once('value', (value) => value);
-    return adminCheck;
-  }
+export const adminCheck = (user: Object) => {
   return {
-    type: 'ADMIN_CHECK',
-    payload: getPromise(),
+    type: ADMIN_CHECK,
+    payload: { user },
   };
 }
+
+export const adminCheckDone = () => ({
+    type: ADMIN_CHECK_DONE,
+  });
 
 export const setActiveEntry = (snap: Object) => {
   return {
@@ -23,7 +24,9 @@ export const setActiveEntry = (snap: Object) => {
   };
 };
 
-export const addQueueEntry = (activeEntry, queueData, viewer) => {
+export const addQueueEntry = (activeEntry: Number,
+                              queueData: Object,
+                              viewer: Object) => {
   return ({ firebase, firebaseDatabase }: any) => {
     const getPromise = async () => {
       const userWithoutEmail = viewer.toJS();
@@ -43,3 +46,26 @@ export const addQueueEntry = (activeEntry, queueData, viewer) => {
     };
   };
 };
+
+const adminCheckEpic = (action$, { firebase, user }) => {
+  return action$
+    .ofType(ADMIN_CHECK)
+    .mergeMap(({ payload: { user } }) => {
+      const promise = user && firebase
+        .child(`/admins/${user.uid}`)
+        .once('value', (value) => value)
+        .then(value => {
+          if (value.val() && value.val().isAdmin) {
+            return adminCheckDone();
+          }
+        });
+      if (user) {
+        return Observable.from(promise);
+      }
+      return Observable.of();
+    });
+}
+
+export const epics = [
+  adminCheckEpic,
+];
