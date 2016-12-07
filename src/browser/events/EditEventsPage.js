@@ -24,7 +24,7 @@ const EditEventsPage = ({ pathname }) => {
         render={() => {
             return(
               <View>
-                <Link to={`${pathname}/newevent/`}>
+                <Link to={`${pathname}/newevent`}>
                   <Button mb={3}
                     theme="primary"
                   >
