@@ -1,6 +1,7 @@
 /* @flow weak */
 import Raven from 'raven-js';
 import ReactGA from 'react-ga';
+import { REHYDRATE } from 'redux-persist/constants';
 
 const captureException = error => {
   if (process.env.NODE_ENV === 'production') {
@@ -34,7 +35,7 @@ const createReportingMiddleware = () => {
     const { app, auth, device, fields } = state;
     const limitedState = { app, auth, device, fields };
     // Because payload is huge (whole app state).
-    if (action.type === 'REDUX_STORAGE_SAVE') {
+    if (action.type === REHYDRATE) {
       action = {
         ...action,
         payload: {},
