@@ -27,25 +27,29 @@ const setRavenUserContext = user => {
   });
 };
 
-const reportingMiddleware = () => next => action => {
-  // strings, because hot reloading (ok, because circular references)
-  if (action.type === 'APP_ERROR') {
-    captureException(action.payload.error);
-  } else if (action.type === 'ON_AUTH') {
-    setRavenUserContext(action.payload.firebaseUser);
-  }
-  if (process.env.NODE_ENV === 'production') {
-    if (action.type === 'APP_SET_LOCATION') {
-      ReactGA.set({ page: action.payload.location.pathname });
-      ReactGA.pageview(action.payload.location.pathname);
-    }
-    if (action.type === 'FIREBASE_SIGN_IN_START') {
+const createReportingMiddleware = () => {
+  let lastTenActions = [];
+  const setExtraContext = (state, action) => {
+    const { app, auth, device, fields } = state;
+    const limitedState = { app, auth, device, fields };
+    lastTenActions = [action, ...lastTenActions].slice(0, 10);
+    Raven.setExtraContext({ limitedState, lastTenActions });
+  };
+
+  return store => next => action => {
+    // strings, because hot reloading (ok, because circular references)
+    // TODO report location to google analytics
+    // ReactGA.set({ page: action.payload.location.pathname });
+    // ReactGA.pageview(action.payload.location.pathname);
+    if (action.type === 'APP_ERROR') {
+      captureException(action.payload.error);
+    } else if (action.type === 'ON_AUTH') {
+      setRavenUserContext(action.payload.firebaseUser);
       ReactGA.event({
         category: 'User',
-        action: 'Tried Signing in',
+        action: 'User signs in',
       });
-    }
-    if (action.type === 'REPORT_EVENT_LINK_CLICK') {
+    } else if (action.type === 'REPORT_EVENT_LINK_CLICK') {
       const linkType = action.payload;
       ReactGA.event({
         category: 'Interact',
@@ -53,9 +57,9 @@ const reportingMiddleware = () => next => action => {
         label: linkType,
       });
     }
-  }
-  // TODO: Use Raven.setExtraContext for last 10 actions and limited app state.
-  return next(action);
+    setExtraContext(store.getState(), action);
+    return next(action);
+  };
 };
 
 // bluebirdjs.com/docs/api/error-management-configuration.html#global-rejection-events
@@ -116,7 +120,7 @@ const configureReporting = (options) => {
     // docs.getsentry.com/hosted/clients/javascript/tips/#decluttering-sentry
   }).install();
   register(unhandledRejection);
-  return reportingMiddleware;
+  return createReportingMiddleware();
 };
 
 export default configureReporting;
