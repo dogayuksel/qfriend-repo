@@ -48,7 +48,6 @@ const Venue = ({ event, venue: { key, title, description } }: VenueProps) => {
         <Gravatar
           default="retro"
           email={title && `${title}@gmail.com`}
-          https
           rating="x"
           style={styles.gravatar}
           title={description}
