@@ -31,7 +31,7 @@ const EditEventsPage = ({ pathname }) => {
                     New Event
                   </Button>
                 </Link>
-                <EventList />
+                <EventList pathname={pathname} />
               </View>
             );
           }}

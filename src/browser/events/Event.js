@@ -30,6 +30,7 @@ class Event extends React.Component {
 
   static propTypes = {
     event: React.PropTypes.object,
+    pathname: React.PropTypes.string,
   };
 
   state: State = {
@@ -122,7 +123,6 @@ export default connect((state, props) => {
   const { venueKey } = props.event;
   return {
     isAdmin: state.admin.isAdmin,
-    pathname: state.app.location && state.app.location.pathname,
     venue: (state.venues.venueList &&
             state.venues.venueList.find(value => `${value.key}` === venueKey)),
   };

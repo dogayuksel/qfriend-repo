@@ -20,14 +20,18 @@ const styles = {
   },
 };
 
-let EventList = ({ events }) => {
+let EventList = ({ events, pathname }) => {
   const eventsList = events.toSeq().sortBy((value) => {
     return -value.beginsAt;
   }).toList();
   return (
     <Flex align="center" wrap style={styles.eventList}>
       {events && eventsList.map((event) =>
-        <Event key={event.key} event={event} />
+        <Event
+          key={event.key}
+          event={event}
+          pathname={pathname}
+        />
        )
       }
     </Flex>
@@ -36,6 +40,7 @@ let EventList = ({ events }) => {
 
 EventList.propTypes = {
   events: React.PropTypes.object,
+  pathname: React.PropTypes.string,
 };
 
 EventList = firebase((database, props) => {
