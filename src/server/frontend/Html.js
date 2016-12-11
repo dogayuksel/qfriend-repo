@@ -6,7 +6,7 @@ type Props = {
   appCssFilename: string,
   bodyHtml: string,
   helmet: Object,
-  isProduction: boolean,
+  isProduction: bool,
 };
 
 const Html = ({
