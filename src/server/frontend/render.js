@@ -63,7 +63,7 @@ const renderBody = (store, context, location, fetchPromises) => {
           <App />
         </ServerRouter>
       </ServerFetchProvider>
-    </Redux>
+    </Redux>,
   );
   return { markup, helmet: Helmet.rewind() };
 };
@@ -94,7 +94,7 @@ const renderHtml = (state, bodyMarkupWithHelmet) => {
       bodyHtml={`<div id="app">${bodyMarkup}</div>${scriptsMarkup}`}
       helmet={helmet}
       isProduction={config.isProduction}
-    />
+    />,
   );
   return `<!DOCTYPE html>${markup}`;
 };
