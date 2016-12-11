@@ -29,6 +29,19 @@ const styles = {
 };
 
 let QueuesTonight = ({ loaded, venues, queues, events }) => {
+  const diff = (a, b) => {
+    const venueAVal = R.takeLast(1, R.map(R.prop('value'), a['data']))[0];
+    const venueBVal = R.takeLast(1, R.map(R.prop('value'), b['data']))[0];
+    if ( venueAVal === venueBVal ) {
+      const venueALog = R.takeLast(1, R.map(R.prop('loggedAt'), a['data']))[0];
+      const venueBLog = R.takeLast(1, R.map(R.prop('loggedAt'), b['data']))[0];
+      return -1 * (venueALog - venueBLog);
+    }
+    return -1 * ( venueAVal - venueBVal );
+  };
+  const convert = R.compose(R.map(R.zipObj(['venueKey', 'data'])), R.toPairs);
+  let queueList = R.sort(diff, convert(queues));
+
   var isFeatured = R.prop('isFeatured');
   const featuredEventsList = R.filter(isFeatured, events);
   const otherEventsList = R.reject(isFeatured, events);
@@ -37,7 +50,7 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
     <View>
       {!loaded ?
       <Loading />
-       : !queues || Object.keys(queues).length === 0 ?
+       : !queueList || queueList.length === 0 ?
        <Block>
          {featuredEventsList.length > 0 &&
           <Block>
@@ -79,14 +92,13 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
          }
         </Block>
     :
-   Object.keys(queues).map(item => {
-     const venueKey = R.takeLast(1, R.map(R.prop('venueKey'), queues[item]));
-     const venue = R.find(R.propEq('key', venueKey[0]))(venues);
-     const event = R.find(R.propEq('venueKey', venueKey.toString()))(events);
+   R.map(item => {
+     const venue = R.find(R.propEq('key', parseInt(item['venueKey'], 10)))(venues);
+     const event = R.find(R.propEq('venueKey', item['venueKey']))(events);
      return (
-       <Venue key={venueKey[0]} venue={venue} event={event} />
+       <Venue key={item['venueKey']} venue={venue} event={event} />
      );
-   })
+   })(queueList)
       }
     </View>
   );
