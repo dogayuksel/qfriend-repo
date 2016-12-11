@@ -1,5 +1,6 @@
 /* @flow */
 import './QueuesTonight.css';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Venue from '../venues/Venue';
 import Event from '../events/Event';
 import React from 'react';
@@ -52,7 +53,13 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
       {!loaded ?
       <Loading />
        : !queueList || queueList.length === 0 ?
-       <View className="page">
+       <ReactCSSTransitionGroup
+         transitionName="example"
+         transitionAppear={true}
+         transitionAppearTimeout={500}
+         transitionEnter={false}
+         transitionLeave={false}
+       >
          {featuredEventsList.length > 0 &&
           <Block>
             <Heading
@@ -91,7 +98,7 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
             </Flex>
            </Block>
          }
-        </View>
+        </ReactCSSTransitionGroup>
     :
    R.map(item => {
      const venue = R.find(R.propEq('key', parseInt(item['venueKey'], 10)))(venues);

@@ -1,9 +1,8 @@
-.page {
-  animation-name: appear;
-  animation-duration: 4s;
+.example-appear {
+  opacity: 0.01;
 }
 
-@keyframes appear {
-  from {opacity: 0.1}
-  to {opacity: 1}
+.example-appear.example-appear-active {
+  opacity: 1;
+  transition: opacity .9s ease-in;
 }

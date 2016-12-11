@@ -1,5 +1,6 @@
 /* @flow */
 import './EventPage.css';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import React from 'react';
 import Venue from '../venues/Venue';
 import moment from 'moment';
@@ -50,7 +51,13 @@ class EventPage extends React.Component {
         itemType="http://schema.org/MusicEvent"
       >
         {event && venue ?
-         <View className="page">
+         <ReactCSSTransitionGroup
+           transitionName="example"
+           transitionAppear={true}
+           transitionAppearTimeout={500}
+           transitionEnter={false}
+           transitionLeave={false}
+         >
            <View
              itemProp="location"
              itemScope
@@ -142,7 +149,7 @@ class EventPage extends React.Component {
               null
              }
            </View>
-         </View>
+         </ReactCSSTransitionGroup>
          :
          <Heading size={3} mt={4}>
            Can't find that event
