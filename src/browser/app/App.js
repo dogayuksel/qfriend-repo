@@ -85,9 +85,11 @@ App.propTypes = {
   currentTheme: React.PropTypes.string,
 };
 
-App = connect(state => ({
-  currentLocale: state.intl.currentLocale,
-  currentTheme: state.themes.currentTheme,
-}))(App);
+App = connect(
+  state => ({
+    currentLocale: state.intl.currentLocale,
+    currentTheme: state.themes.currentTheme,
+  }),
+)(App);
 
 export default start(App);
