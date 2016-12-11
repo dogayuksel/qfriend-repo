@@ -98,7 +98,7 @@ EditEvent = fields(EditEvent, {
       photoURL,
       residentAdvisorURL,
       facebookEventURL,
-      venueKey: venueKey,
+      venueKey,
       isFeatured,
       daymonth: rest,
       hours,
