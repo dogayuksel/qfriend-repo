@@ -1,4 +1,5 @@
 /* @flow */
+import './EventPage.css';
 import React from 'react';
 import Venue from '../venues/Venue';
 import moment from 'moment';
@@ -49,7 +50,7 @@ class EventPage extends React.Component {
         itemType="http://schema.org/MusicEvent"
       >
         {event && venue ?
-         <View>
+         <View className="page">
            <View
              itemProp="location"
              itemScope

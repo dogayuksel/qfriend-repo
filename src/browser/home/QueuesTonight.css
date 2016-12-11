@@ -1,0 +1,9 @@
+.page {
+  animation-name: appear;
+  animation-duration: 4s;
+}
+
+@keyframes appear {
+  from {opacity: 0.1}
+  to {opacity: 1}
+}
