@@ -1,23 +1,25 @@
 /* @flow weak */
 import * as actions from './actions';
-import { Record } from '../transit';
-import { Map } from 'immutable';
 
-const State = Record({
+const initialState = {
   isAdmin: false,
-  activeEntry: 'undefined',
-}, 'admin');
+  activeEntry: undefined,
+};
 
-const adminReducer = (state = new State(), action) => {
+const adminReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case actions.ADMIN_CHECK_DONE: {
-      return state.set('isAdmin', true);
+      return { ...state, isAdmin: true };
     }
 
     case actions.SET_ACTIVE_ENTRY: {
       const key = action.payload;
-      return state.set('activeEntry', key);
+      return { ...state, activeEntry: key };
+    }
+
+    case actions.ADD_QUEUE_ENTRY_DONE: {
+      return state;
     }
 
     default:

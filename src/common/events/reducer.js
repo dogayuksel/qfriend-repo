@@ -1,25 +1,25 @@
 /* @flow weak */
 import * as actions from './actions';
-import Event from './event';
-import { Record } from '../transit';
-import { Seq, Map } from 'immutable';
+import R from 'ramda';
+import createEvent from './createEvent';
 
-const State = Record({
-  eventList: Map(),
+const initialState = {
+  eventList: [],
   eventsLoaded: false,
-}, 'events');
+};
 
-const eventsReducer = (state = new State(), action) => {
+const eventsReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case actions.GET_ALL_EVENTS: {
       const { events } = action.payload;
-      const eventList = Seq(events)
-        .map((event, key) => new Event({ ...event, key }))
-        .toList();
-      return state
-        .set('eventList', eventList)
-        .set('eventsLoaded', true);
+      if (!events) {
+        return { ...state }
+      }
+      const eventList = Object
+        .keys(events)
+        .map( key => createEvent({ ...events[key], key: key }) );
+      return { ...state, eventList, eventsLoaded: true };
     }
 
     default:

@@ -1,26 +1,29 @@
 /* @flow weak */
 import * as actions from './actions';
-import Venue from './venue';
-import { Record } from '../transit';
-import { Seq, List } from 'immutable';
+import R from 'ramda';
+import createVenue from './createVenue';
 
-const State = Record({
-  venueList: List(),
+const initialState = {
+  venueList: [],
   venuesLoaded: false,
-}, 'venues');
+};
 
-const venuesReducer = (state = new State(), action) => {
+const venuesReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case actions.LIST_VENUES: {
       const { venues } = action.payload;
-      const venueList = venues && Seq(venues)
-        .filter(venue => venue.active === 1)
-        .map(venue => new Venue(venue))
-        .toList();
-      return state
-        .set('venueList', venueList)
-        .set('venuesLoaded', true);
+      if (!venues) {
+        return state
+      }
+      const venueList = Object
+        .keys(venues)
+        .map( key => createVenue({
+          ...venues[key],
+          key: parseInt(key, 10),
+        }));
+      // TODO filter actives
+      return { ...state, venueList, venuesLoaded: true };
     }
 
     default:

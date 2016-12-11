@@ -1,16 +1,9 @@
-/* @flow */
-export const CHECK_QUEUES = 'CHECK_QUEUES';
-export const CHECK_ALL_QUEUES = 'CHECK_ALL_QUEUES';
-export const DELETE_QUEUE_ENTRY_START = 'DELETE_QUEUE_ENTRY_START';
-export const DELETE_QUEUE_ENTRY_SUCCESS = 'DELETE_QUEUE_ENTRY_SUCCESS';
+/* @flow weak */
+import { Observable } from 'rxjs/Observable';
 
-export const checkQueues = (snap: Object) => {
-  const queues = snap.val();
-  return {
-    type: CHECK_QUEUES,
-    payload: queues,
-  };
-};
+export const CHECK_ALL_QUEUES = 'CHECK_ALL_QUEUES';
+export const DELETE_QUEUE_ENTRY = 'DELETE_QUEUE_ENTRY';
+export const DELETE_QUEUE_ENTRY_DONE = 'DELETE_QUEUE_ENTRY_DONE';
 
 export const checkAllQueues = (snap: Object) => {
   const queues = snap.val();
@@ -20,16 +13,33 @@ export const checkAllQueues = (snap: Object) => {
   };
 };
 
-export const deleteQueueEntry = (key: number) => {
-  return ({ firebase }: any) => {
-    const getPromise = async () => {
-      const deleteItem = await firebase
-        .child('queues').child(key).remove();
-      return deleteItem;
-    };
-    return {
-      type: 'DELETE_QUEUE_ENTRY',
-      payload: getPromise(),
-    };
+export const deleteQueueEntryDone = () => {
+  return {
+    type: DELETE_QUEUE_ENTRY_DONE,
   };
 };
+
+export const deleteQueueEntry = (key: number) => {
+    return {
+      type: DELETE_QUEUE_ENTRY,
+      payload: { key },
+    };
+};
+
+const deleteQueueEntryEpic = (action$, {firebase}) =>
+  action$.ofType(DELETE_QUEUE_ENTRY)
+         .mergeMap(({ payload: {key} }) => {
+           const promise = firebase
+             .child('queues').child(key).remove().
+              then(value => {
+                return deleteQueueEntryDone();
+              })
+             .catch(e => {
+                console.log(e);
+              });
+           return Observable.from(promise);
+         });
+
+export const epics = [
+  deleteQueueEntryEpic,
+];

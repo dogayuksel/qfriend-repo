@@ -9,7 +9,7 @@ const hourToMinute = 90;
 class QueueView extends React.Component {
 
   static propTypes = {
-    queue: React.PropTypes.object,
+    queue: React.PropTypes.array,
     venueKey: React.PropTypes.number.isRequired,
   };
 
@@ -55,7 +55,7 @@ class QueueView extends React.Component {
 
   render() {
     const { queue } = this.props;
-    const lastEntry = queue && queue.last();
+    const lastEntry = queue && queue[queue.length-1];
     const timeNow = new Date().getTime();
     const updateTime = lastEntry &&
                        ((timeNow - lastEntry.loggedAt) / 60000) | 0;
@@ -78,6 +78,6 @@ class QueueView extends React.Component {
 
 export default connect((state, props) => {
   return {
-    queue: state.queues.queueMap.get(`${props.venueKey}`),
+    queue: state.queues.queueMap[`${props.venueKey}`],
   };
 }, { checkQueues })(QueueView);

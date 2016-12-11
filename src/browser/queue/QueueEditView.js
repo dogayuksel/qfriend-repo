@@ -1,14 +1,16 @@
 /* @flow */
 import React from 'react';
+import moment from 'moment';
+import R from 'ramda';
 import { Button, Stat, Text, View, Flex } from '../app/components';
 import { connect } from 'react-redux';
-import { checkQueues, deleteQueueEntry } from '../../common/queues/actions';
+import { checkAllQueues, deleteQueueEntry } from '../../common/queues/actions';
 import { firebase } from '../../common/lib/redux-firebase';
 
 class QueueData extends React.Component {
 
   static propTypes = {
-    queue: React.PropTypes.object,
+    queue: React.PropTypes.array,
     disabled: React.PropTypes.bool.isRequired,
     venueKey: React.PropTypes.number.isRequired,
     deleteQueueEntry: React.PropTypes.func.isRequired,
@@ -31,14 +33,19 @@ class QueueData extends React.Component {
 
   render() {
     const { queue, disabled, deleteQueueEntry } = this.props;
-    const lastEntry = queue && queue.last();
-    const timeNow = new Date().getTime();
-    const updateTime = lastEntry &&
-                       ((timeNow - lastEntry.loggedAt) / 60000) | 0;
+
+    let lastEntry = {};
+    let updateTime = 0;
+
+    if (queue && queue.length > 0) {
+      lastEntry = queue[queue.length-1];
+      const timeNow = new Date().getTime();
+      updateTime = ((timeNow - lastEntry.loggedAt) / 60000) | 0;
+    }
 
     return (
       <View>
-        {!queue ?
+        {!queue || queue.length === 0 ?
          <Text>No queues yet.</Text>
          :
          <Flex column align="center">
@@ -65,17 +72,17 @@ class QueueData extends React.Component {
 }
 
 QueueData = firebase((database, props) => {
-  const venueKey = props.venueKey;
+  const timeThresh = moment().subtract(12, 'hours').valueOf();
   const queuesRef = database.child('queues')
-                            .orderByChild('venueKey')
-                            .equalTo(venueKey);
+                            .orderByChild('loggedAt')
+                            .startAt(timeThresh);
   return [
-    [queuesRef, 'on', 'value', props.checkQueues],
+    [queuesRef, 'on', 'value', props.checkAllQueues],
   ];
 })(QueueData);
 
 export default connect((state, props) => {
   return {
-    queue: state.queues.queueMap.get(`${props.venueKey}`),
+    queue: state.queues.queueMap[`${props.venueKey}`],
   };
-}, { checkQueues, deleteQueueEntry })(QueueData);
+}, { checkAllQueues, deleteQueueEntry })(QueueData);

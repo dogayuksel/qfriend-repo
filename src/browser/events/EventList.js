@@ -2,6 +2,7 @@
 import React from 'react';
 import Event from './Event';
 import moment from 'moment';
+import R from 'ramda';
 import { connect } from 'react-redux';
 import { getAllEvents } from '../../common/events/actions';
 import { listVenues } from '../../common/venues/actions';
@@ -21,9 +22,9 @@ const styles = {
 };
 
 let EventList = ({ events, pathname }) => {
-  const eventsList = events.toSeq().sortBy((value) => {
-    return -value.beginsAt;
-  }).toList();
+  const diff = (a, b) => -1 * (a.beginsAt - b.beginsAt);
+  const eventsList = R.sort(diff, events);
+
   return (
     <Flex align="center" wrap style={styles.eventList}>
       {events && eventsList.map((event) =>
@@ -39,7 +40,7 @@ let EventList = ({ events, pathname }) => {
 };
 
 EventList.propTypes = {
-  events: React.PropTypes.object,
+  events: React.PropTypes.array,
   pathname: React.PropTypes.string,
 };
 

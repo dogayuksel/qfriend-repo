@@ -34,32 +34,8 @@ class EditEvent extends React.Component {
     fields.$setValue('daymonth', date.valueOf());
   }
 
-  componentWillMount = () => {
-    const { fields,
-            event: { name,
-                     description,
-                     photoURL,
-                     residentAdvisorURL,
-                     facebookEventURL,
-                     venueKey,
-                     isFeatured,
-                     beginsAt } } = this.props;
-    fields.$setValue('name', name);
-    fields.$setValue('description', description);
-    fields.$setValue('photoURL', photoURL);
-    fields.$setValue('venueKey', venueKey);
-    fields.$setValue('isFeatured', isFeatured);
-    fields.$setValue('residentAdvisorURL', residentAdvisorURL);
-    fields.$setValue('facebookEventURL', facebookEventURL);
-    const time = moment(beginsAt);
-    const hours = time.hours();
-    const minutes = time.minutes();
-    const rest = time.subtract(hours, 'hours')
-                     .subtract(minutes, 'minutes')
-                     .valueOf();
-    fields.$setValue('daymonth', rest);
-    fields.$setValue('hours', hours);
-    fields.$setValue('minutes', minutes);
+  componentWillUnmount = () => {
+    this.props.fields.$reset();
   }
 
   render() {
@@ -100,6 +76,35 @@ EditEvent = fields(EditEvent, {
     'hours',
     'minutes',
   ],
+  getInitialState: props => {
+    const { event } = props;
+    const { name,
+            description,
+            photoURL,
+            residentAdvisorURL,
+            facebookEventURL,
+            venueKey,
+            isFeatured,
+            beginsAt } = event;
+    const time = moment(beginsAt);
+    const hours = time.hours();
+    const minutes = time.minutes();
+    const rest = time.subtract(hours, 'hours')
+                     .subtract(minutes, 'minutes')
+                     .valueOf();
+    return ({
+      name,
+      description,
+      photoURL,
+      residentAdvisorURL,
+      facebookEventURL,
+      venueKey: venueKey,
+      isFeatured,
+      daymonth: rest,
+      hours,
+      minutes,
+    });
+  },
 });
 
 export default connect((state, props) => {

@@ -102,7 +102,7 @@ class LogQueuePage extends React.Component {
 
   static propTypes = {
     fields: React.PropTypes.object.isRequired,
-    venues: React.PropTypes.object,
+    venues: React.PropTypes.array,
     queues: React.PropTypes.object,
     viewer: React.PropTypes.object.isRequired,
     activeEntry: React.PropTypes.node,
@@ -227,7 +227,7 @@ function mapStateToProps(state) {
     viewer: state.users.viewer,
     venues: state.venues.venueList,
     queues: state.queues.queueMap,
-    activeEntry: state.admin.get('activeEntry'),
+    activeEntry: state.admin.activeEntry,
   };
 }
 

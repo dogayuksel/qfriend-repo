@@ -1,51 +1,41 @@
 /* @flow weak */
 import * as actions from './actions';
-import Queue from './queue';
-import { Record } from '../transit';
-import { List, Seq, Map } from 'immutable';
+import R from 'ramda';
+import createQueue from './createQueue';
+import moment from 'moment';
 
-const State = Record({
-  queueMap: Map(),
-}, 'queues');
+const initialState = {
+  queueMap: {},
+};
 
-const queuesReducer = (state = new State(), action) => {
+const queuesReducer = (state = initialState, action) => {
   switch (action.type) {
 
-    case actions.CHECK_QUEUES: {
-      const queues = action.payload;
-      const queueArray = Seq(queues)
-        .filter(queue => {
-          const thresh = new Date().getTime() - queue.loggedAt - 21600000;
-          if (thresh > 0) return false;
-          return true;
-        })
-        .map((value, key) => new Queue({ key, ...value })).toList();
-      if (queueArray.size === 0) {
-        return state.set('queueMap', Map());
-      }
-      const venueKey = queueArray.first().venueKey;
-      let queueMap = state.queueMap.remove(`${venueKey}`);
-      queueMap = queueMap.set(`${venueKey}`, queueArray);
-      return state.set('queueMap', queueMap);
-    }
-
     case actions.CHECK_ALL_QUEUES: {
-      const queues = Seq(action.payload);
-      let queueMap = Map();
-      queues.forEach((value, key) => {
-        if (!queueMap.get(`${value.venueKey}`)) {
-          queueMap = queueMap.set(`${value.venueKey}`,
-                                  List([new Queue({ key, ...value })]));
+      const queueList = action.payload;
+      if (!queueList) {
+        return { ...state, queueMap: {} };
+      }
+      const queues = Object
+        .keys(queueList)
+        .map( key => createQueue({
+          ...queueList[key],
+          key,
+        }));
+      let queueMap = {};
+      R.map((value) => {
+        if (!queueMap[`${value.venueKey}`]) {
+          queueMap[`${value.venueKey}`] = [value];
         } else {
-          const list = queueMap.get(`${value.venueKey}`);
-          queueMap = queueMap.set(`${value.venueKey}`,
-                                  list.push(new Queue({ key, ...value })));
+          const list = queueMap[`${value.venueKey}`];
+          list.push(createQueue(value));
+          queueMap[`${value.venueKey}`] = list;
         }
-      });
-      return state.mergeDeep({ queueMap });
+      }, queues);
+      return { ...state, queueMap };
     }
 
-    case actions.DELETE_QUEUE_ENTRY_SUCCESS: {
+    case actions.DELETE_QUEUE_ENTRY_DONE: {
       return state;
     }
 

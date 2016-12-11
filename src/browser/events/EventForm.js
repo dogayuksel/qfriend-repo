@@ -2,6 +2,7 @@
 import React from 'react';
 import { Calendar } from 'react-date-range';
 import moment from 'moment';
+import R from 'ramda';
 import { saveNewEvent } from '../../common/events/actions';
 import { connect } from 'react-redux';
 import { Text,
@@ -27,7 +28,7 @@ class EventForm extends React.Component {
     isExact: React.PropTypes.bool.isRequired,
     onSubmit: React.PropTypes.func.isRequired,
     handleCalendar: React.PropTypes.func.isRequired,
-    venues: React.PropTypes.object.isRequired,
+    venues: React.PropTypes.array.isRequired,
   };
 
   render() {
@@ -38,13 +39,13 @@ class EventForm extends React.Component {
             handleCalendar,
             isExact,
             venues } = this.props;
-    const venueMap = venues.map((value) => {
-      const { title, key } = value
-      return ({
-        children: title,
-        value: key,
-      });
-    }).toJS();
+
+    const pickMix = (venue) => ({
+      children: venue['title'],
+      value: venue['key'],
+    });
+    const activeFilter = (venue) => venue.active === 1;
+    const venueMap = R.map(pickMix, R.filter(activeFilter, venues));
 
     return (
       <View mt={2} mb={3}>

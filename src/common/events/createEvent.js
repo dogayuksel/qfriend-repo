@@ -1,7 +1,6 @@
-/* @flow */
-import { Record } from '../transit';
+/* @flow weak */
 
-const Event = Record({
+const createEvent = (json) => ({
   beginsAt: '',
   name: '',
   description: '',
@@ -11,6 +10,7 @@ const Event = Record({
   isFeatured: '',
   venueKey: '',
   key: '',
-}, 'event');
+  ...json,
+});
 
-export default Event;
+export default createEvent;
