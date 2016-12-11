@@ -6,6 +6,7 @@ import { epics as authEpics } from './auth/actions';
 import { epics as usersEpics } from './users/actions';
 import { epics as adminEpics } from './admin/actions';
 import { epics as queueEpics } from './queues/actions';
+import { epics as eventEpics } from './events/actions';
 
 const epics = [
   ...appEpics,
@@ -13,6 +14,7 @@ const epics = [
   ...usersEpics,
   ...adminEpics,
   ...queueEpics,
+  ...eventEpics,
 ];
 
 const configureEpics = (deps: Object) => (action$, { getState }) =>
