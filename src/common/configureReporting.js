@@ -2,7 +2,7 @@
 import Raven from 'raven-js';
 import ReactGA from 'react-ga';
 
-const captureException = error => {
+const captureException = (error) => {
   if (process.env.NODE_ENV === 'production') {
     Raven.captureException(error);
     // We can use also Raven.lastEventId() and Raven.showReportDialog().
@@ -16,7 +16,7 @@ const captureException = error => {
   }
 };
 
-const setRavenUserContext = user => {
+const setRavenUserContext = (user) => {
   if (!user) {
     Raven.setUserContext();
     return;
@@ -42,7 +42,7 @@ const createReportingMiddleware = () => {
     Raven.setExtraContext(context);
   };
 
-  return store => next => action => {
+  return store => next => (action) => {
     // TODO report location to google analytics
     // ReactGA.set({ page: action.payload.location.pathname });
     // ReactGA.pageview(action.payload.location.pathname);
@@ -68,7 +68,7 @@ const createReportingMiddleware = () => {
 };
 
 // bluebirdjs.com/docs/api/error-management-configuration.html#global-rejection-events
-const register = unhandledRejection => unhandledRejection(event => {
+const register = unhandledRejection => unhandledRejection((event) => {
   event.preventDefault();
   // http://bluebirdjs.com/docs/api/error-management-configuration.html
   captureException(event.detail.reason);
