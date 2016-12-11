@@ -1,13 +1,3 @@
-// - speakerdeck.com/vjeux/react-css-in-js
-// - jxnblk.com/writing/posts/patterns-for-style-composition-in-react
-
-// App styles are here:
-// - browser/app/themes
-// - browser/app/components
-
-// But not everything belongs to inline styles.
-// We need global styles for platform specific stuff.
-
 * {
   // Because box-sizing is not inherited.
   box-sizing: border-box;
@@ -26,6 +16,3 @@ body {
   margin: 0;
   background: #222;
 }
-
-// Yes, we can still override inline style globally.
-// github.com/jxnblk/rebass#styling-with-css
