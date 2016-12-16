@@ -6,6 +6,7 @@ import moment from 'moment';
 
 const initialState = {
   queueMap: {},
+  queuesLoaded: false,
 };
 
 const queuesReducer = (state = initialState, action) => {
@@ -14,7 +15,7 @@ const queuesReducer = (state = initialState, action) => {
     case actions.CHECK_ALL_QUEUES: {
       const queueList = action.payload;
       if (!queueList) {
-        return { ...state, queueMap: {} };
+        return { ...state, queueMap: {}, queuesLoaded: true };
       }
       const queues = Object
         .keys(queueList)
@@ -32,7 +33,7 @@ const queuesReducer = (state = initialState, action) => {
           queueMap[`${value.venueKey}`] = list;
         }
       }, queues);
-      return { ...state, queueMap };
+      return { ...state, queueMap, queuesLoaded: true };
     }
 
     case actions.DELETE_QUEUE_ENTRY_DONE: {

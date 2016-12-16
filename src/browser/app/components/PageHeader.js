@@ -9,6 +9,9 @@ const styles = {
     width: '110px',
     height: '110px',
   },
+  pageHeader: {
+    maxWidth: '390px',
+  },
 };
 
 const PageHead = (props: Object) => (
@@ -19,7 +22,7 @@ const PageHead = (props: Object) => (
       src={require('./qfriend-logo.png')}
       alt="logo"
     />
-  <PageHeader mt={4} {...props} />
+    <PageHeader mt={4} style={styles.pageHeader} {...props} />
   </Flex>
 );
 
