@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 
 export const ADMIN_CHECK = 'ADMIN_CHECK';
 export const ADMIN_CHECK_DONE = 'ADMIN_CHECK_DONE';
+export const ADMIN_CHECK_FAIL = 'ADMIN_CHECK_FAIL';
 export const ADD_QUEUE_ENTRY = 'ADD_QUEUE_ENTRY';
 export const ADD_QUEUE_ENTRY_DONE = 'ADD_QUEUE_ENTRY_DONE';
 export const SET_ACTIVE_ENTRY = 'SET_ACTIVE_ENTRY';
@@ -16,7 +17,12 @@ export const adminCheck = (user: Object) => {
 
 export const adminCheckDone = () => ({
     type: ADMIN_CHECK_DONE,
-  });
+});
+
+export const adminCheckFail = () => ({
+  type: ADMIN_CHECK_FAIL,
+  payload: { error: 'not admin' },
+});
 
 export const setActiveEntry = (snap: Object) => {
   return {
@@ -69,7 +75,12 @@ const adminCheckEpic = (action$, { firebase, user }) => {
         .then(value => {
           if (value.val() && value.val().isAdmin) {
             return adminCheckDone();
+          } else {
+            return adminCheckFail();
           }
+        })
+        .catch(e => {
+          console.log('error', e);
         });
       if (user) {
         return Observable.from(promise);
