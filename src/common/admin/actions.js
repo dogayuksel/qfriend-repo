@@ -8,7 +8,7 @@ export const ADD_QUEUE_ENTRY = 'ADD_QUEUE_ENTRY';
 export const ADD_QUEUE_ENTRY_DONE = 'ADD_QUEUE_ENTRY_DONE';
 export const SET_ACTIVE_ENTRY = 'SET_ACTIVE_ENTRY';
 
-export const adminCheck = (user: Object) => {
+export const adminCheck = (user: ?Object) => {
   return {
     type: ADMIN_CHECK,
     payload: { user },

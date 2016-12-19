@@ -48,11 +48,17 @@ const createReportingMiddleware = () => {
     // ReactGA.pageview(action.payload.location.pathname);
     if (action.type === 'APP_ERROR') {
       captureException(action.payload.error);
-    } else if (action.type === 'ON_AUTH') {
+    } else if (action.type === 'SIGN_IN_DONE') {
       setRavenUserContext(action.payload.firebaseUser);
       ReactGA.event({
         category: 'User',
         action: 'User signs in',
+      });
+    } else if (action.type === 'SIGN_UP_DONE') {
+      setRavenUserContext(action.payload.firebaseUser);
+      ReactGA.event({
+        category: 'User',
+        action: 'User registers',
       });
     } else if (action.type === 'REPORT_EVENT_LINK_CLICK') {
       const linkType = action.payload;

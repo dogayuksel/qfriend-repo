@@ -61,28 +61,31 @@ class Event extends React.Component {
         itemType="http://schema.org/MusicEvent"
       >
         {venue &&
-        <View
-          itemProp="location"
-          itemScope
-          itemType="http://schema.org/MusicVenue"
-        >
-          <meta itemProp="name" content={venue.title} />
-          <meta itemProp="address" content={venue.address} />
-          <meta itemProp="url" content={venue.facebookURL} />
-          <meta itemProp="description" content={venue.description} />
-        </View>
+         <View
+           itemProp="location"
+           itemScope
+           itemType="http://schema.org/MusicVenue"
+         >
+           <meta itemProp="name" content={venue.title} />
+           <meta itemProp="address" content={venue.address} />
+           <meta itemProp="url" content={venue.facebookURL} />
+           <meta itemProp="description" content={venue.description} />
+         </View>
         }
         <View style={styles.imageContainer} mb={1}>
           <CardImage itemProp="image" src={event.photoURL} />
         </View>
-        <Link to={`/event/${event.key}`}>
-        <Heading
-          level={2}
-          size={3}
-          itemProp="name"
+        <Link
+          onClick={() => reportEventClick(event.key)}
+          to={`/event/${event.key}`}
         >
-          {event.name}
-        </Heading>
+          <Heading
+            level={2}
+            size={3}
+            itemProp="name"
+          >
+            {event.name}
+          </Heading>
         </Link>
         <Flex mr={1} justify='space-between' align='flex-end'>
           <Box>
