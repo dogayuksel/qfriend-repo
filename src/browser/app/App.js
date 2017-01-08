@@ -9,7 +9,7 @@ import R from 'ramda';
 import React from 'react';
 import favicon from '../../common/app/favicon';
 import start from '../../common/app/start';
-import { Container } from '../app/components';
+import { Box, Container, Flex } from '../app/components';
 import { Match, ThemeProvider } from '../../common/app/components';
 import { Miss } from 'react-router';
 import { connect } from 'react-redux';
@@ -27,6 +27,15 @@ import TodosPage from '../todos/TodosPage';
 import EditEventsPage from '../events/EditEventsPage';
 import EventPage from '../events/EventPage';
 
+
+const styles = {
+  container: {
+    minHeight: '100vh',
+  },
+  page: {
+    flex: 1,
+  },
+};
 
 // v4-alpha.getbootstrap.com/getting-started/introduction/#starter-template
 const bootstrap4Metas: any = [
@@ -65,19 +74,24 @@ const App = ({ currentLocale, currentTheme }) => (
           ...favicon.link,
         ]}
       />
-      <Header />
-      <Match exactly pattern="/" component={HomePage} />
-      <Match pattern="/event/:eventId" component={EventPage} />
-      <Match pattern="/fields" component={FieldsPage} />
-      <Match pattern="/users" component={UsersPage} />
-      <Match pattern="/intl" component={IntlPage} />
-      <Match pattern="/offline" component={OfflinePage} />
-      <Match pattern="/signin" component={SignInPage} />
-      <Match pattern="/todos" component={TodosPage} />
-      <Match authorized pattern="/editevents" component={EditEventsPage} />
-      <Match authorized pattern="/me" component={MePage} />
-      <Miss component={NotFoundPage} />
-      <Footer />
+      <Flex flexColumn style={styles.container}>
+        <Header />
+        <Box style={styles.page}>
+          <Match exactly pattern="/" component={HomePage} />
+          <Match pattern="/event/:eventId" component={EventPage} />
+          <Match pattern="/fields" component={FieldsPage} />
+          <Match pattern="/users" component={UsersPage} />
+          <Match pattern="/intl" component={IntlPage} />
+          <Match pattern="/offline" component={OfflinePage} />
+          <Match pattern="/signin" component={SignInPage} />
+          <Match pattern="/todos" component={TodosPage} />
+          <Match authorized pattern="/editevents" component={EditEventsPage} />
+          <Match authorized pattern="/me" component={MePage} />
+          <Miss component={NotFoundPage} />
+        </Box>
+        <Footer />
+      </Flex>
+
     </Container>
   </ThemeProvider>
 );
