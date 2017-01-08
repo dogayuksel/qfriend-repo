@@ -63,7 +63,7 @@ class EditEvent extends React.Component {
   }
 }
 
-EditEvent = fields(EditEvent, {
+EditEvent = fields({
   path: 'editEvent',
   fields: [
     'name',
@@ -106,7 +106,7 @@ EditEvent = fields(EditEvent, {
       minutes,
     });
   },
-});
+})(EditEvent);
 
 export default connect((state: State, props) => {
   const { eventKey } = props.params;

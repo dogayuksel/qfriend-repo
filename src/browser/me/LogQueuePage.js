@@ -134,7 +134,7 @@ class LogQueuePage extends React.Component {
   }
 }
 
-LogQueuePage = fields(LogQueuePage, {
+LogQueuePage = fields({
   path: 'queuePage',
   fields: [
     'value',
@@ -142,7 +142,7 @@ LogQueuePage = fields(LogQueuePage, {
   getInitialState: () => ({
     value: '20',
   }),
-});
+})(LogQueuePage);
 
 LogQueuePage = firebase((database, props) => {
   const locationsLogRef = database.child('locations');

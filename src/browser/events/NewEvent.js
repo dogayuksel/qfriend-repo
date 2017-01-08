@@ -50,7 +50,7 @@ class NewEvent extends React.Component {
   }
 }
 
-NewEvent = fields(NewEvent, {
+NewEvent = fields({
   path: 'newEvent',
   fields: [
     'name',
@@ -71,7 +71,7 @@ NewEvent = fields(NewEvent, {
     minutes: 45,
     isFeatured: false,
   }),
-});
+})(NewEvent);
 
 export default connect((state: State, props) => {
   return {
