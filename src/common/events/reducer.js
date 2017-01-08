@@ -1,24 +1,32 @@
-/* @flow weak */
-import * as actions from './actions';
+/* @flow */
+import type { Action, EventsState, Event } from '../types';
 import R from 'ramda';
-import createEvent from './createEvent';
 
 const initialState = {
   eventList: [],
   eventsLoaded: false,
 };
 
-const eventsReducer = (state = initialState, action) => {
+const reducer = (
+  state: EventsState = initialState,
+  action: Action,
+): EventsState => {
   switch (action.type) {
 
-    case actions.GET_ALL_EVENTS: {
+    case 'GET_ALL_EVENTS': {
       const { events } = action.payload;
       if (!events) {
-        return { ...state }
+        return { ...state };
       }
       const eventList = Object
         .keys(events)
-        .map( key => createEvent({ ...events[key], key: key }) );
+        .map( key => {
+          const event: Event = {
+            ...events[key],
+            key,
+          };
+          return event;
+        });
       return { ...state, eventList, eventsLoaded: true };
     }
 
@@ -28,4 +36,4 @@ const eventsReducer = (state = initialState, action) => {
   }
 };
 
-export default eventsReducer;
+export default reducer;

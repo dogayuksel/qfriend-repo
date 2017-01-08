@@ -2,7 +2,6 @@
 import QueueView from '../queue/QueueView';
 import Gravatar from 'react-gravatar';
 import React from 'react';
-import { connect } from 'react-redux';
 import { Flex,
          Heading,
          Loading,

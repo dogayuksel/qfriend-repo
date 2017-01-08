@@ -1,35 +1,38 @@
-/* @flow weak */
-import * as actions from './actions';
+/* @flow */
+import type { Action, VenuesState, Venue } from '../types';
 import R from 'ramda';
-import createVenue from './createVenue';
 
 const initialState = {
   venueList: [],
   venuesLoaded: false,
 };
 
-const venuesReducer = (state = initialState, action) => {
+const reducer = (
+  state: VenuesState = initialState,
+  action: Action,
+): VenuesState => {
   switch (action.type) {
-
-    case actions.LIST_VENUES: {
+    case 'LIST_VENUES': {
       const { venues } = action.payload;
       if (!venues) {
         return state
       }
       const venueList = Object
         .keys(venues)
-        .map( key => createVenue({
-          ...venues[key],
-          key: parseInt(key, 10),
-        }));
+        .map( key => {
+          const venue: Venue = {
+            ...venues[key],
+            key: parseInt(key, 10),
+          };
+          return venue;
+        });
       // TODO filter actives
       return { ...state, venueList, venuesLoaded: true };
     }
 
     default:
       return state;
-
   }
 };
 
-export default venuesReducer;
+export default reducer;

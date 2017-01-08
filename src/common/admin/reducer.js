@@ -1,25 +1,23 @@
-/* @flow weak */
-import * as actions from './actions';
+/* @flow */
+import type { Action, AdminState } from '../types';
 
 const initialState = {
   isAdmin: false,
-  activeEntry: undefined,
+  activeEntry: null,
 };
 
-const adminReducer = (state = initialState, action) => {
+const reducer = (
+  state: AdminState = initialState,
+  action: Action,
+): AdminState => {
   switch (action.type) {
-
-    case actions.ADMIN_CHECK_DONE: {
+    case 'ADMIN_CHECK_DONE': {
       return { ...state, isAdmin: true };
     }
 
-    case actions.SET_ACTIVE_ENTRY: {
-      const key = action.payload;
-      return { ...state, activeEntry: key };
-    }
-
-    case actions.ADD_QUEUE_ENTRY_DONE: {
-      return state;
+    case 'SET_ACTIVE_ENTRY': {
+      const { venueKey } = action.payload;
+      return { ...state, activeEntry: venueKey };
     }
 
     default:
@@ -28,4 +26,4 @@ const adminReducer = (state = initialState, action) => {
   }
 };
 
-export default adminReducer;
+export default reducer;

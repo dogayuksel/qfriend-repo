@@ -1,9 +1,10 @@
 /* @flow */
+import type { State } from '../../common/types';
 import React from 'react';
 import EventForm from './EventForm';
 import { Calendar } from 'react-date-range';
 import moment from 'moment';
-import { saveNewEvent } from '../../common/events/actions';
+import { saveEvent } from '../../common/events/actions';
 import { connect } from 'react-redux';
 import { Text,
          Heading,
@@ -27,7 +28,7 @@ class NewEvent extends React.Component {
     const { hours, minutes, daymonth, ...event } = fields.$values();
     event['beginsAt'] = moment(daymonth)
       .add(hours, 'hours').add(minutes, 'minutes').valueOf();
-    this.props.saveNewEvent(event, fields);
+    this.props.saveEvent(event, '', fields);
   }
 
   handleSelect = (date, fields) => {
@@ -72,9 +73,9 @@ NewEvent = fields(NewEvent, {
   }),
 });
 
-export default connect((state, props) => {
+export default connect((state: State, props) => {
   return {
     isAdmin: state.admin.isAdmin,
     venues: state.venues.venueList,
   };
-},{ saveNewEvent })(NewEvent);
+},{ saveEvent })(NewEvent);

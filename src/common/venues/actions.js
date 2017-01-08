@@ -1,10 +1,10 @@
 /* @flow */
-export const LIST_VENUES = 'LIST_VENUES';
+import type { Action } from '../types';
 
-export const listVenues = (snap: Object) => {
+export const listVenues = (snap: Object): Action => {
   const venues = snap.val();
   return {
-    type: LIST_VENUES,
+    type: 'LIST_VENUES',
     payload: { venues },
   };
 };

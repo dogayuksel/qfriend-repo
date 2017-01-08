@@ -1,8 +1,9 @@
 /* @flow */
+import type { State } from '../../common/types';
 import React from 'react';
 import { Stat, Text, View, Flex } from '../app/components';
 import { connect } from 'react-redux';
-import { checkQueues } from '../../common/queues/actions';
+import { checkAllQueues } from '../../common/queues/actions';
 
 const hourToMinute = 90;
 
@@ -76,8 +77,8 @@ class QueueView extends React.Component {
   }
 }
 
-export default connect((state, props) => {
+export default connect((state: State, props) => {
   return {
     queue: state.queues.queueMap[`${props.venueKey}`],
   };
-}, { checkQueues })(QueueView);
+}, { checkAllQueues })(QueueView);

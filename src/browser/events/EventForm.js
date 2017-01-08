@@ -1,9 +1,9 @@
 /* @flow */
+import type { State } from '../../common/types';
 import React from 'react';
 import { Calendar } from 'react-date-range';
 import moment from 'moment';
 import R from 'ramda';
-import { saveNewEvent } from '../../common/events/actions';
 import { connect } from 'react-redux';
 import { Text,
          Heading,
@@ -134,6 +134,6 @@ class EventForm extends React.Component {
   }
 }
 
-export default connect(state => ({
+export default connect((state: State) => ({
   venues: state.venues.venueList,
 }))(EventForm);

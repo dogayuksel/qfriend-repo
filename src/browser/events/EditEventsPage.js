@@ -1,4 +1,5 @@
 /* @flow */
+import type { State } from '../../common/types';
 import React from 'react';
 import EventList from './EventList';
 import EditEvent from './EditEvent';
@@ -46,17 +47,7 @@ EditEventsPage.propTypes = {
   pathname: React.PropTypes.string.isRequired,
 };
 
-export default connect(state => ({
+export default connect((state: State) => ({
   viewer: state.users.viewer,
   isAdmin: state.admin.isAdmin,
 }))(EditEventsPage);
-
-
-
-
-
-
-
-
-
-

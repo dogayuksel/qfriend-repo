@@ -1,7 +1,6 @@
-/* @flow weak */
-import * as actions from './actions';
+/* @flow */
 import R from 'ramda';
-import createQueue from './createQueue';
+import type { Action, QueuesState, Queue } from '../types';
 import moment from 'moment';
 
 const initialState = {
@@ -9,35 +8,37 @@ const initialState = {
   queuesLoaded: false,
 };
 
-const queuesReducer = (state = initialState, action) => {
+const reducer = (
+  state: QueuesState = initialState,
+  action: Action,
+): QueuesState => {
   switch (action.type) {
-
-    case actions.CHECK_ALL_QUEUES: {
+    case 'CHECK_ALL_QUEUES': {
       const queueList = action.payload;
       if (!queueList) {
         return { ...state, queueMap: {}, queuesLoaded: true };
       }
       const queues = Object
         .keys(queueList)
-        .map( key => createQueue({
-          ...queueList[key],
-          key,
-        }));
+        .map( key => {
+          const queue: Queue = {
+            ...queueList[key],
+            key,
+          };
+          return queue;
+        }
+        );
       let queueMap = {};
       R.map((value) => {
         if (!queueMap[`${value.venueKey}`]) {
           queueMap[`${value.venueKey}`] = [value];
         } else {
           const list = queueMap[`${value.venueKey}`];
-          list.push(createQueue(value));
+          list.push(value);
           queueMap[`${value.venueKey}`] = list;
         }
       }, queues);
       return { ...state, queueMap, queuesLoaded: true };
-    }
-
-    case actions.DELETE_QUEUE_ENTRY_DONE: {
-      return state;
     }
 
     default:
@@ -45,4 +46,4 @@ const queuesReducer = (state = initialState, action) => {
   }
 };
 
-export default queuesReducer;
+export default reducer;

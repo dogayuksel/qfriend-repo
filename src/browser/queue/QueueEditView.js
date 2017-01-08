@@ -1,4 +1,5 @@
 /* @flow */
+import type { State } from '../../common/types';
 import React from 'react';
 import moment from 'moment';
 import R from 'ramda';
@@ -81,7 +82,7 @@ QueueData = firebase((database, props) => {
   ];
 })(QueueData);
 
-export default connect((state, props) => {
+export default connect((state: State, props) => {
   return {
     queue: state.queues.queueMap[`${props.venueKey}`],
   };

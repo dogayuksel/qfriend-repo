@@ -1,4 +1,5 @@
 /* @flow */
+import type { State } from '../../common/types';
 import QueuesTonight from './QueuesTonight';
 import React from 'react';
 import { reportEventClick } from '../../common/events/actions';
@@ -27,6 +28,6 @@ const TonightPage = ({ queues, reportEventClick }) => (
   </View>
 );
 
-export default connect(state => ({
+export default connect((state: State) => ({
   queues: state.queues.queueMap,
 }), { reportEventClick })(TonightPage);

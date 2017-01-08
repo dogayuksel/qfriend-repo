@@ -1,4 +1,5 @@
 /* @flow */
+import type { State } from '../../common/types';
 import React from 'react';
 import Event from './Event';
 import moment from 'moment';
@@ -61,7 +62,7 @@ EventList = firebase((database, props) => {
   ];
 })(EventList);
 
-export default connect((state, props) => {
+export default connect((state: State, props) => {
   return {
     events: state.events.eventList,
   };

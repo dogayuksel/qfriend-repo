@@ -1,4 +1,5 @@
 /* @flow */
+import type { State } from '../../common/types';
 import React from 'react';
 import Venue from '../venues/Venue';
 import moment from 'moment';
@@ -184,7 +185,7 @@ EventPage = firebase((database, props) => {
   ];
 })(EventPage);
 
-export default connect((state, props) => {
+export default connect((state: State, props) => {
   const { eventId } = props.params;
   return {
     event: state.events.eventList.find(value => value.key === eventId),

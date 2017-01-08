@@ -1,4 +1,5 @@
 /* @flow */
+import type { State } from '../../common/types';
 import React from 'react';
 import EventForm from './EventForm';
 import { Calendar } from 'react-date-range';
@@ -27,7 +28,7 @@ class EditEvent extends React.Component {
     const eventKey = this.props.params.eventKey;
     event['beginsAt'] = moment(daymonth)
       .add(hours, 'hours').add(minutes, 'minutes').valueOf();
-    this.props.saveEvent(event, eventKey);
+    this.props.saveEvent(event, eventKey, null);
   }
 
   handleSelect = (date, fields) => {
@@ -107,7 +108,7 @@ EditEvent = fields(EditEvent, {
   },
 });
 
-export default connect((state, props) => {
+export default connect((state: State, props) => {
   const { eventKey } = props.params;
   return {
     isAdmin: state.admin.isAdmin,

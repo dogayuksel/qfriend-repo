@@ -1,33 +1,30 @@
-/* @flow weak */
+/* @flow */
 import { Observable } from 'rxjs/Observable';
+import type { Action, Deps } from '../types';
 
-export const CHECK_ALL_QUEUES = 'CHECK_ALL_QUEUES';
-export const DELETE_QUEUE_ENTRY = 'DELETE_QUEUE_ENTRY';
-export const DELETE_QUEUE_ENTRY_DONE = 'DELETE_QUEUE_ENTRY_DONE';
-
-export const checkAllQueues = (snap: Object) => {
+export const checkAllQueues = (snap: Object): Action => {
   const queues = snap.val();
   return {
-    type: CHECK_ALL_QUEUES,
+    type: 'CHECK_ALL_QUEUES',
     payload: queues,
   };
 };
 
-export const deleteQueueEntryDone = () => {
+export const deleteQueueEntryDone = (): Action => {
   return {
-    type: DELETE_QUEUE_ENTRY_DONE,
+    type: 'DELETE_QUEUE_ENTRY_DONE',
   };
 };
 
-export const deleteQueueEntry = (key: number) => {
+export const deleteQueueEntry = (key: string): Action => {
     return {
-      type: DELETE_QUEUE_ENTRY,
+      type: 'DELETE_QUEUE_ENTRY',
       payload: { key },
     };
 };
 
-const deleteQueueEntryEpic = (action$, {firebase}) =>
-  action$.ofType(DELETE_QUEUE_ENTRY)
+const deleteQueueEntryEpic = (action$: any, {firebase}: Deps) =>
+  action$.filter((action: Action) => action.type === 'DELETE_QUEUE_ENTRY')
          .mergeMap(({ payload: {key} }) => {
            const promise = firebase
              .child('queues').child(key).remove().

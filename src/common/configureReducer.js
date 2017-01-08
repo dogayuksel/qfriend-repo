@@ -1,4 +1,5 @@
 /* @flow weak */
+import type { Action, State } from './types';
 import app from './app/reducer';
 import auth from './auth/reducer';
 import config from './config/reducer';
@@ -14,22 +15,25 @@ import admin from './admin/reducer';
 import { combineReducers } from 'redux';
 import { fieldsReducer as fields } from './lib/redux-fields';
 
-const resetStateOnSignOut = (reducer, initialState) => (state, action) => {
-  // Reset app state on sign out, stackoverflow.com/q/35622588/233902.
+// stackoverflow.com/q/35622588/233902
+const resetStateOnSignOutReducer = (reducer, initialState) => (
+  state: State,
+  action: Action,
+) => {
   const userWasSignedOut =
-    action.type === 'ON_AUTH' && // string because hot reloading
+    action.type === 'ON_AUTH' &&
     state.users.viewer &&
     !action.payload.firebaseUser;
-  if (userWasSignedOut) {
-    // Preserve state without sensitive data.
-    state = {
-      app: state.app,
-      config: initialState.config,
-      device: initialState.device,
-      intl: initialState.intl,
-    };
+  if (!userWasSignedOut) {
+    return reducer(state, action);
   }
-  return reducer(state, action);
+  // Reset app state to purge all sensitive data.
+  return reducer({
+    app: state.app,
+    config: initialState.config,
+    device: initialState.device,
+    intl: initialState.intl,
+  }, action);
 };
 
 const configureReducer = (initialState: Object) => {
@@ -50,7 +54,7 @@ const configureReducer = (initialState: Object) => {
   });
 
   // The power of higher-order reducers, http://slides.com/omnidan/hor
-  reducer = resetStateOnSignOut(reducer, initialState);
+  reducer = resetStateOnSignOutReducer(reducer, initialState);
 
   return reducer;
 };

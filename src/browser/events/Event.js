@@ -1,4 +1,5 @@
 /* @flow */
+import type { State } from '../../common/types';
 import React from 'react';
 import moment from 'moment';
 import { deleteEvent, reportEventClick } from '../../common/events/actions';
@@ -15,7 +16,7 @@ import { Text,
          Box,
          View } from '../app/components';
 
-type State = {
+type timerState = {
   countdown: ?String,
 };
 
@@ -33,7 +34,7 @@ class Event extends React.Component {
     pathname: React.PropTypes.string,
   };
 
-  state: State = {
+  state: timerState = {
     countdown: null,
   };
 
@@ -122,7 +123,7 @@ class Event extends React.Component {
   }
 }
 
-export default connect((state, props) => {
+export default connect((state: State, props) => {
   const { venueKey } = props.event;
   return {
     isAdmin: state.admin.isAdmin,

@@ -1,4 +1,5 @@
 /* @flow */
+import type { State } from '../../common/types';
 import Venue from '../venues/Venue';
 import Event from '../events/Event';
 import React from 'react';
@@ -138,7 +139,7 @@ QueuesTonight = firebase((database, props) => {
   ];
 })(QueuesTonight);
 
-export default connect(state => ({
+export default connect((state: State) => ({
   events: state.events.eventList,
   venues: state.venues.venueList,
   queues: state.queues.queueMap,

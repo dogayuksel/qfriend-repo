@@ -1,4 +1,5 @@
 /* @flow weak */
+import type { Action } from './types';
 import Raven from 'raven-js';
 import ReactGA from 'react-ga';
 
@@ -42,7 +43,7 @@ const createReportingMiddleware = () => {
     Raven.setExtraContext(context);
   };
 
-  return store => next => (action) => {
+  return store => next => (action: Action) => {
     // TODO report location to google analytics
     // ReactGA.set({ page: action.payload.location.pathname });
     // ReactGA.pageview(action.payload.location.pathname);
@@ -61,11 +62,10 @@ const createReportingMiddleware = () => {
         action: 'User registers',
       });
     } else if (action.type === 'REPORT_EVENT_LINK_CLICK') {
-      const linkType = action.payload;
       ReactGA.event({
         category: 'Interact',
         action: 'Clicked on an event link',
-        label: linkType,
+        label: action.payload.linkType,
       });
     }
     setExtraContext(store.getState(), action);
