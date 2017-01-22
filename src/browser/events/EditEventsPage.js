@@ -20,9 +20,12 @@ const EditEventsPage = ({ pathname }: Object) => {
         pattern={pathname}
         render={() => {
             return(
-              <Box>
+              <Box margin={2}>
                 <Link to={`${pathname}/newevent`}>
-                  <Button>
+                  <Button
+                    marginHorizontal={1}
+                    primary
+                  >
                     New Event
                   </Button>
                 </Link>

@@ -13,13 +13,6 @@ import { bindActionCreators } from 'redux';
 import { firebase } from '../../common/lib/redux-firebase';
 import { fields } from '../../common/lib/redux-fields';
 
-const styles = {
-  valueField: {
-    maxWidth: '120px',
-    display: 'inline-block',
-  },
-};
-
 type LocalState = {
   disabled: boolean,
   error: ?Object,
@@ -82,7 +75,7 @@ class LogQueuePage extends React.Component {
     return (
       <Box>
         <Title message={linksMessages.me} />
-        <Box>
+        <Box margin={1}>
           <Text>make entries below</Text>
           <Box>
             {venues && venues.map(venue =>
@@ -92,7 +85,7 @@ class LogQueuePage extends React.Component {
                   disabled={disabled}
                   onClick={() => setActiveEntry(venue.key)}
                 >
-                  <Text>{venue.title}</Text>
+                  {venue.title}
                 </Button>
                 {activeEntry === venue.key &&
                  <Form onSubmit={this.onFormSubmit}>
@@ -102,20 +95,22 @@ class LogQueuePage extends React.Component {
                        venueKey={venue.key}
                      />
                    </Box>
-                   <Input
-                     {...fields.value}
-                     label="Queue time"
-                     style={styles.valueField}
-                     maxLength={10}
-                     type="text"
-                   />
-                   <Button
-                     onClick={this.onFormSubmit}
-                     primary
-                     disabled={disabled}
-                   >
-                     <Text>Submit</Text>
-                   </Button>
+                   <Box display="flex" alignItems="center">
+                     <Input
+                       marginRight={1}
+                       {...fields.value}
+                       label="Queue time"
+                       maxLength={10}
+                       type="text"
+                     />
+                     <Button
+                       onClick={this.onFormSubmit}
+                       primary
+                       disabled={disabled}
+                     >
+                       Submit
+                     </Button>
+                   </Box>
                    <ModifyButtons fields={fields} disabled={disabled} />
                  </Form>
                 }

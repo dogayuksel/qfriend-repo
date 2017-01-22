@@ -26,7 +26,11 @@ let EventList = ({ events, pathname }) => {
   const eventsList = R.sort(diff, events);
 
   return (
-    <Box>
+    <Box
+      marginVertical={1}
+      display="flex"
+      flexWrap="wrap"
+    >
       {events && eventsList.map((event) =>
         <Event
           key={event.key}

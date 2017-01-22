@@ -36,7 +36,7 @@ class ModifyButtons extends React.Component {
           disabled={disabled}
           onClick={() => this.modifyValue(fields, '0')}
         >
-          <Text>0</Text>
+          0
         </Button>
         <Button
           marginHorizontal={0.2}
@@ -44,7 +44,7 @@ class ModifyButtons extends React.Component {
           disabled={disabled}
           onClick={() => this.modifyValue(fields, 'x2')}
         >
-          <Text>x2</Text>
+          x2
         </Button>
         <Button
           marginHorizontal={0.2}
@@ -52,7 +52,7 @@ class ModifyButtons extends React.Component {
           disabled={disabled}
           onClick={() => this.modifyValue(fields, '/2')}
         >
-          <Text>/2</Text>
+          /2
         </Button>
         <Button
           marginHorizontal={0.2}
@@ -60,7 +60,7 @@ class ModifyButtons extends React.Component {
           disabled={disabled}
           onClick={() => this.modifyValue(fields, '+10')}
         >
-          <Text>+10</Text>
+          +10
         </Button>
         <Button
           marginHorizontal={0.2}
@@ -68,7 +68,7 @@ class ModifyButtons extends React.Component {
           disabled={disabled}
           onClick={() => this.modifyValue(fields, '-10')}
         >
-          <Text>-10</Text>
+          -10
         </Button>
       </Box>
     );

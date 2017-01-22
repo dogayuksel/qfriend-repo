@@ -11,6 +11,7 @@ import { Text,
          Link,
          Form,
          Input,
+         Checkbox,
          Box } from '../app/components';
 import { fields } from '../../common/lib/redux-fields';
 
@@ -44,60 +45,67 @@ class EventForm extends React.Component {
     const venueMap = R.map(pickMix, R.filter(activeFilter, venues));
 
     return (
-      <Box>
+      <Box margin={1}>
         <Link to="/editevents">
-          <Text>Back</Text>
+          <Button primary>Back</Button>
         </Link>
         <Form onSubmit={onSubmit}>
           <Input
-            {...fields.name}
+            field={fields.name}
             maxLength={100}
             label="Event Name"
             type="text"
+            placeholder="Shorten if necessary"
           />
           <Input
-            {...fields.description}
+            field={fields.description}
             maxLength={300}
             label="Event description"
-            type="textarea"
+            type="text"
+            placeholder="Something about the event"
+            rows={3}
           />
           <Input
-            {...fields.photoURL}
+            field={fields.photoURL}
             label="Photo URL"
             type="text"
+            placeholder=""
           />
           <Input
-            {...fields.residentAdvisorURL}
+            field={fields.residentAdvisorURL}
             label="Resident Advisor URL"
-            type="text"
+            type="url"
+            placeholder=""
           />
           <Input
-            {...fields.facebookEventURL}
+            field={fields.facebookEventURL}
             label="Facebook event URL"
-            type="text"
+            type="url"
+            placeholder=""
           />
-          <Input
-            {...fields.isFeatured}
-            checked={fields.isFeatured.value}
+          <Checkbox
+            field={fields.isFeatured}
             label="Featured event?"
-            theme="info"
           />
           <Input
-            mb={3}
-            {...fields.venueKey}
+            marginBottom={3}
+            field={fields.venueKey}
             label="Venue"
             options={venueMap}
+            placeholder=""
           />
           <Box>
             <Input
-              {...fields.hours}
+              field={fields.hours}
               label="hour"
-              type="number"
+              type="text"
+              placeholder=""
             />
             <Input
-              {...fields.minutes}
+              field={fields.minutes}
               label="minute"
-              type="number"
+              type="text"
+              placeholder=""
             />
           </Box>
           <Calendar
@@ -117,7 +125,10 @@ class EventForm extends React.Component {
             }}
           />
           <Box>
-            <Button onClick={onSubmit}>
+            <Button
+              onClick={onSubmit}
+              success
+            >
               Save
             </Button>
           </Box>

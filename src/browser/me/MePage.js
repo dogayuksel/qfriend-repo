@@ -21,8 +21,8 @@ import LogQueue from './LogQueuePage';
 
 const Navbar = ({ pathname, isAdmin }) => (
   <Box
-  marginBottom={1}
-  marginHorizontal={-0.5}
+    marginVertical={1}
+    marginHorizontal={1}
   >
     <Link exactly to={pathname} paddingHorizontal={0.5}>
       <FormattedMessage {...linksMessages.me} />
@@ -32,8 +32,8 @@ const Navbar = ({ pathname, isAdmin }) => (
     </Link>
     {isAdmin &&
      <Link to={`${pathname}/logqueue`} paddingHorizontal={0.5}>
-      <FormattedMessage {...linksMessages.logQueue} />
-    </Link>
+       <FormattedMessage {...linksMessages.logQueue} />
+     </Link>
     }
   </Box>
 );
@@ -46,15 +46,17 @@ type MePageProps = {
 
 let MePage = ({ pathname, viewer, isAdmin }): MePageProps => (
   !viewer ?
-    <Redirect to="/" />
+  <Redirect to="/" />
   :
-    <Box>
-      <Title message={linksMessages.me} />
-      <Navbar isAdmin={isAdmin} pathname={pathname} />
-      <Match
-        exactly
-        pattern={pathname}
-        render={() => (
+  <Box
+    margin={1}
+  >
+    <Title message={linksMessages.me} />
+    <Navbar isAdmin={isAdmin} pathname={pathname} />
+    <Match
+      exactly
+      pattern={pathname}
+      render={() => (
           <Box>
             <Text>{viewer.displayName}</Text>
             <Box marginVertical={1}>
@@ -63,15 +65,15 @@ let MePage = ({ pathname, viewer, isAdmin }): MePageProps => (
                 height={100}
                 width={100}
                 title={viewer.displayName}
-              />
+                      />
             </Box>
             <SignOut />
           </Box>
         )}
-      />
-      <Match pattern={`${pathname}/settings`} component={Settings} />
-      <Match pattern={`${pathname}/logqueue`} component={LogQueue} />
-    </Box>
+    />
+    <Match pattern={`${pathname}/settings`} component={Settings} />
+    <Match pattern={`${pathname}/logqueue`} component={LogQueue} />
+  </Box>
 );
 
 export default connect(

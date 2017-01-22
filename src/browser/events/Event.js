@@ -98,12 +98,19 @@ class Event extends React.Component {
         </Box>
         {isAdmin && pathname === '/editevents' &&
          <Box marginBottom={1}>
-           <Link to={`${pathname}/event/${event.key}`}>
-             <Button>
+           <Link
+             marginRight={0.5}
+             to={`${pathname}/event/${event.key}`}
+           >
+             <Button
+               warning
+             >
                Edit
-             </Button>
+             </Button
+             >
            </Link>
            <Button
+             danger
              onClick={() => this.props.deleteEvent(event.key)}
            >
              Delete

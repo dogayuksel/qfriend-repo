@@ -10,11 +10,7 @@ import { Text,
          Heading,
          Button,
          Link,
-         Form,
-         Input,
-         Flex,
-         Select,
-         View } from '../app/components';
+         Form } from '../app/components';
 import { fields } from '../../common/lib/redux-fields';
 
 class NewEvent extends React.Component {
