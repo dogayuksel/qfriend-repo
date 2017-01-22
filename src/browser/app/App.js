@@ -8,11 +8,16 @@ import Helmet from 'react-helmet';
 import React from 'react';
 import favicon from '../../common/app/favicon';
 import start from '../../common/app/start';
-import { Box, Container, ThemeProvider } from './components';
 import { Match } from '../../common/app/components';
 import { Miss } from 'react-router';
 import { compose } from 'ramda';
 import { connect } from 'react-redux';
+import {
+  Baseline,
+  Box,
+  Container,
+  ThemeProvider,
+} from './components';
 
 // Pages
 import FieldsPage from '../fields/FieldsPage';
@@ -28,14 +33,12 @@ import EventPage from '../events/EventPage';
 import UsersPage from '../users/UsersPage';
 
 type AppProps = {
-  baselineShown: boolean,
   currentLocale: string,
   themeName: string,
   theme: Theme,
 };
 
 const App = ({
-  baselineShown,
   currentLocale,
   theme,
   themeName,
@@ -44,7 +47,8 @@ const App = ({
     key={themeName} // Enforce rerender.
     theme={theme}
   >
-    <Container>
+  <Baseline lineHeight={theme.typography.lineHeight}>
+  <Container>
       <Helmet
         htmlAttributes={{ lang: currentLocale }}
         meta={[
@@ -73,12 +77,6 @@ const App = ({
             href: "http://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css",
             rel: 'stylesheet',
           },
-          ...(baselineShown ? [{
-            href: `http://basehold.it/${theme.typography.lineHeight}/0/0/0${
-              process.env.NODE_ENV === 'production' ? '' : '/0.1'
-            }`,
-            rel: 'stylesheet',
-          }] : []),
         ]}
       />
       <Header />
@@ -98,14 +96,14 @@ const App = ({
         <Miss component={NotFoundPage} />
       </Box>
       <Footer />
-    </Container>
+  </Container>
+  </Baseline>
   </ThemeProvider>
 );
 
 export default compose(
   connect(
     (state: State) => ({
-      baselineShown: state.app.baselineShown,
       currentLocale: state.intl.currentLocale,
       themeName: state.app.currentTheme,
       theme: themes[state.app.currentTheme] || themes.defaultTheme,
