@@ -43,9 +43,10 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
   const convert = R.compose(R.map(R.zipObj(['venueKey', 'data'])), R.toPairs);
   let queueList = R.sort(diff, convert(queues));
 
-  var isFeatured = R.prop('isFeatured');
-  const featuredEventsList = R.filter(isFeatured, events);
-  const otherEventsList = R.reject(isFeatured, events);
+  var earlyCheck = (a, b) => {
+    return (a.beginsAt - b.beginsAt)
+  };
+  const sortedEvents = R.sort(earlyCheck, events);
 
   const settings = {
     dots: true,
@@ -89,11 +90,8 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
        <Box
          marginHorizontal={2}
        >
-         {featuredEventsList.length > 0 &&
+         {events.length > 0 &&
           <Box marginBottom={3}>
-            <Heading size={2}>
-              Featured Events
-            </Heading>
             <Slider {...settings}>
               {R.map((event) => {
                  return (
@@ -101,24 +99,7 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
                      <Event key={event.key} event={event} />
                    </div>
                  );
-               }, otherEventsList)
-              }
-            </Slider>
-          </Box>
-         }
-         {otherEventsList.length > 0 &&
-          <Box>
-            <Heading size={2}>
-              Other Events
-            </Heading>
-            <Slider {...settings}>
-              {R.map((event) => {
-                 return (
-                   <div key={event.key}>
-                     <Event key={event.key} event={event} />
-                   </div>
-                 );
-               }, otherEventsList)
+               }, sortedEvents)
               }
             </Slider>
           </Box>

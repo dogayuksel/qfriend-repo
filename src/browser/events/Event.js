@@ -67,12 +67,32 @@ class Event extends React.Component {
            <meta itemProp="description" content={venue.description} />
          </div>
         }
-        <Image
-          height={180}
-          width={180}
-          itemProp="image"
-          src={event.photoURL}
-        />
+        {event.isFeatured ?
+         <Box
+           width={8}
+           height={8}
+           border={true}
+           borderColor="primary"
+           borderWidth="4"
+           backgroundImage={event.photoURL}
+           backgroundSize="cover"
+           backgroundPosition="center center"
+           paddingHorizontal={1}
+           paddingVertical={1}
+         >
+         </Box>
+         :
+         <Box
+           width={8}
+           height={8}
+           backgroundImage={event.photoURL}
+           backgroundSize="cover"
+           backgroundPosition="center center"
+           paddingHorizontal={1}
+           paddingVertical={1}
+         >
+         </Box>
+        }
         <Link
           onClick={() => reportEventClick(event.key)}
           to={`/event/${event.key}`}
@@ -92,8 +112,9 @@ class Event extends React.Component {
             size={-1}
             itemProp="startDate"
             content={eventStartDate}
+            color={/ago/.test(countdown) ? 'warning' : 'white'}
           >
-            {'Starts ' + countdown}
+            {countdown}
           </Text>
         </Box>
         {isAdmin && pathname === '/editevents' &&
