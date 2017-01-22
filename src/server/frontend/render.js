@@ -1,11 +1,11 @@
-/* @flow */
+// @flow
 import App from '../../browser/app/App';
 import Helmet from 'react-helmet';
 import Html from './Html';
 import React from 'react';
 import ServerFetchProvider from './ServerFetchProvider';
 import config from '../config';
-import configureFela from '../../common/configureFela';
+import configureFela from '../../browser/configureFela';
 import configureStore from '../../common/configureStore';
 import createInitialState from './createInitialState';
 import serialize from 'serialize-javascript';

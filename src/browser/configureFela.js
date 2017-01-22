@@ -1,10 +1,9 @@
 // @flow
-// import logger from 'fela-plugin-logger';
-import webPreset from 'fela-preset-web';
 import validator from 'fela-plugin-validator';
+import webPreset from 'fela-preset-web';
 import { createRenderer } from 'fela';
 
-const browserStaticStyles = `
+const staticStyles = `
   ${/*
     Selected rules from necolas.github.io/normalize.css/5.0.0/normalize.css
     I removed obsolete and normalizing stuff because we need only fixes.
@@ -114,10 +113,6 @@ const browserStaticStyles = `
 `;
 
 const devPreset = [
-  // // It's pretty verbose, but sometimes also pretty useful.
-  // logger({
-  //   logMetaData: false,
-  // }),
   validator({
     logInvalid: true,
     deleteInvalid: true,
@@ -131,7 +126,7 @@ const configureFela = () => {
       ...(process.env.NODE_ENV !== 'production' ? devPreset : []),
     ],
   });
-  renderer.renderStatic(browserStaticStyles);
+  renderer.renderStatic(staticStyles);
   return renderer;
 };
 

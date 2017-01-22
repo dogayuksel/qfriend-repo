@@ -1,7 +1,7 @@
-
+// @flow
 import type { Theme } from './types';
 import openColor from './openColor';
-import typography from './typography';
+import typography from '../../../common/themes/typography';
 
 // www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/
 // Taken from from Bootstrap 4.
@@ -67,11 +67,6 @@ const theme: Theme = {
   },
   paragraph: {
     marginBottom: 1,
-  },
-  input: {
-    // // TODO: Must be states with separate color property.
-    // borderError: `solid 1px ${openColor.red7}`,
-    // border: `solid 1px ${openColor.gray4}`,
   },
 };
 

@@ -118,7 +118,7 @@ export default [
   },
   {
     "id": "auth.email.passwordRecoveryLegend",
-    "defaultMessage": "Email Password Recovery",
+    "defaultMessage": "Password Recovery",
   },
   {
     "id": "auth.email.recoveryEmailSent",

@@ -1,10 +1,9 @@
 // @flow
 import type { Theme } from './types';
 import openColor from './openColor';
-import typography from './typography';
+import typography from '../../../common/themes/typography';
 import { nativeFontFamily } from './defaultTheme';
 
-// TODO: Please pull request for something more beautiful.
 const theme: Theme = {
   typography: typography({
     fontSize: 18,
@@ -56,10 +55,6 @@ const theme: Theme = {
   },
   paragraph: {
     marginBottom: 1,
-  },
-  input: {
-    // borderError: `solid 1px ${openColor.red7}`,
-    // border: `solid 1px ${openColor.gray4}`,
   },
 };
 
