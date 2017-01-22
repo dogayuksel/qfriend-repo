@@ -62,7 +62,7 @@ const margin = {
 
 const Checkbox = ({
   checkboxStyle,
-  color = 'black',
+  color = 'white',
   disabled,
   display = 'flex',
   field,

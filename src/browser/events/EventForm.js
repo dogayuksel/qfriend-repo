@@ -57,56 +57,64 @@ class EventForm extends React.Component {
             maxLength={100}
             label="Event Name"
             type="text"
-            placeholder="Shorten if necessary"
+            placeholder="Short Name"
           />
           <Input
             field={fields.description}
-            maxLength={300}
+            maxLength={10000}
             label="Event description"
             type="text"
-            placeholder="Something about the event"
-            rows={3}
+            placeholder="Details of the event"
+            rows={7}
           />
           <Input
             field={fields.photoURL}
             label="Photo URL"
             type="text"
-            placeholder=""
+            placeholder="http://..."
           />
           <Input
             field={fields.residentAdvisorURL}
             label="Resident Advisor URL"
             type="url"
-            placeholder=""
+            placeholder="http://..."
           />
           <Input
             field={fields.facebookEventURL}
             label="Facebook event URL"
             type="url"
-            placeholder=""
+            placeholder="http://..."
           />
-          <Checkbox
-            field={fields.isFeatured}
-            label="Featured event?"
-          />
-          <Select
-            marginBottom={3}
-            value={parseInt(fields.venueKey.value, 10)}
-            name="Venue"
-            options={venueMap}
-            onChange={(selection) =>
-              fields.$setValue('venueKey',
-                               selection ? "" + selection.value : null)}
-            placeholder=""
-          />
-          <Box>
+          <Box paddingBottom={1}>
+            <Checkbox
+              field={fields.isFeatured}
+              label="Featured event?"
+            />
+          </Box>
+          <Box width={7}>
+            <Select
+              placeholder="Select venue"
+              value={parseInt(fields.venueKey.value, 10)}
+              name="Venue"
+              options={venueMap}
+              onChange={(selection) =>
+                fields.$setValue('venueKey',
+                                 selection ? "" + selection.value : null)}
+            />
+          </Box>
+          <Box
+            display="flex"
+            marginVertical={0.5}
+          >
             <Input
+              width={2}
               field={fields.hours}
               label="hour"
               type="text"
               placeholder=""
             />
             <Input
+              width={2}
               field={fields.minutes}
               label="minute"
               type="text"

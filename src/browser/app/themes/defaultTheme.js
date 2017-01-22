@@ -27,8 +27,8 @@ const theme: Theme = {
     success: openColor.green5,
     warning: openColor.orange6,
     danger: openColor.red6,
-    black: openColor.gray2,
-    white: openColor.black,
+    black: openColor.black,
+    white: openColor.gray2,
     gray: openColor.gray5,
     open: openColor,
   },
@@ -56,6 +56,7 @@ const theme: Theme = {
   text: {
     bold: 600,
     fontFamily: nativeFontFamily,
+    textColor: openColor.gray2,
   },
   block: {
     marginBottom: 1,

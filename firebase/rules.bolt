@@ -62,7 +62,7 @@ type QueueEntry {
 type Event {
   beginsAt: Number,
   name: LongString,
-  description: LongString,
+  description: ExtraLongString,
   photoURL: LongString,
   residentAdvisorURL: LongString,
   facebookEventURL: LongString,

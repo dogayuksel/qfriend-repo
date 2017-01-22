@@ -53,6 +53,7 @@ const enforceTextLook = {
     outline: 'none', // Input doesn't need the outline, focus state is obvious.
     padding: 0,
     width: '100%',
+    backgroundColor: 'black',
   },
 };
 

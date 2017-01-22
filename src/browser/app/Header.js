@@ -11,7 +11,7 @@ const HeaderLink = ({ exactly, to, message }) => (
   <Link
     backgroundColor="primary"
     bold
-    color="white"
+    color="black"
     exactly={exactly}
     paddingHorizontal={0.5}
     paddingVertical={0.5}
@@ -51,7 +51,7 @@ const Header = ({
       target="_blank"
       to="https://www.facebook.com/QFriendBerlin/"
     >
-      <Text bold color="white">Facebook</Text>
+      <Text bold color="black">Facebook</Text>
     </Link>
     {viewer &&
      <HeaderLink to="/me" message={linksMessages.me} />
