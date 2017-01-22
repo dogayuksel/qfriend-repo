@@ -1,79 +1,78 @@
-/* @flow */
-import type { State } from '../../common/types';
-import Gravatar from 'react-gravatar';
+// @flow
+import type { State, User } from '../../common/types';
 import React from 'react';
 import SignOut from '../auth/SignOut';
+import getUserPhotoUrl from '../../common/users/getUserPhotoUrl';
 import linksMessages from '../../common/app/linksMessages';
-import { Block, Image, Link, Space, Text, Title, View } from '../app/components';
 import { FormattedMessage } from 'react-intl';
 import { Match, Redirect } from 'react-router';
 import { connect } from 'react-redux';
+import {
+  Box,
+  Image,
+  Link,
+  Text,
+  Title,
+} from '../app/components';
 
 // Pages
 import Settings from './SettingsPage';
 import LogQueue from './LogQueuePage';
 
 const Navbar = ({ pathname, isAdmin }) => (
-  <Block>
-    <Link exactly to={pathname}>
+  <Box
+  marginBottom={1}
+  marginHorizontal={-0.5}
+  >
+    <Link exactly to={pathname} paddingHorizontal={0.5}>
       <FormattedMessage {...linksMessages.me} />
     </Link>
-    <Space x={2} />
-    <Link to={`${pathname}/settings`}>
+    <Link to={`${pathname}/settings`} paddingHorizontal={0.5}>
       <FormattedMessage {...linksMessages.settings} />
     </Link>
-    <Space x={2} />
     {isAdmin &&
-     <Link to={`${pathname}/logqueue`}>
+     <Link to={`${pathname}/logqueue`} paddingHorizontal={0.5}>
       <FormattedMessage {...linksMessages.logQueue} />
     </Link>
     }
-  </Block>
+  </Box>
 );
 
-Navbar.propTypes = {
-  isAdmin: React.PropTypes.bool,
-  pathname: React.PropTypes.string.isRequired,
+type MePageProps = {
+  pathname: string,
+  viewer: User,
+  isAdmin: boolean,
 };
 
-let MePage = ({ pathname, viewer, isAdmin }) => (
+let MePage = ({ pathname, viewer, isAdmin }): MePageProps => (
   !viewer ?
     <Redirect to="/" />
   :
-    <View>
+    <Box>
       <Title message={linksMessages.me} />
       <Navbar isAdmin={isAdmin} pathname={pathname} />
       <Match
         exactly
         pattern={pathname}
         render={() => (
-          <View>
+          <Box>
             <Text>{viewer.displayName}</Text>
-            <Block>
-              {viewer.photoURL ?
-                <Image role="presentation" src={viewer.photoURL} />
-              :
-                <Gravatar
-                  default="retro"
-                  email={viewer.email}
-                  rating="x"
-                  size={100}
-                />
-              }
-            </Block>
+            <Box marginVertical={1}>
+              <Image
+                src={getUserPhotoUrl(viewer)}
+                height={100}
+                width={100}
+                title={viewer.displayName}
+              />
+            </Box>
             <SignOut />
-          </View>
+          </Box>
         )}
       />
       <Match pattern={`${pathname}/settings`} component={Settings} />
       <Match pattern={`${pathname}/logqueue`} component={LogQueue} />
-    </View>
+    </Box>
 );
-
-MePage.propTypes = {
-  pathname: React.PropTypes.string.isRequired,
-  viewer: React.PropTypes.object,
-};
 
 export default connect(
   (state: State) => ({

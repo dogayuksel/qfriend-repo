@@ -1,20 +1,19 @@
-/* @flow */
+// @flow
 import type { State } from '../../common/types';
 import QueuesTonight from './QueuesTonight';
 import React from 'react';
 import { reportEventClick } from '../../common/events/actions';
 import { connect } from 'react-redux';
 import {
-  Block,
+  Box,
   PageHeader,
   Title,
-  View,
   Text,
   Link,
 } from '../app/components';
 
 const TonightPage = ({ queues, reportEventClick }) => (
-  <View>
+  <Box>
     <Title message="Live queue updates from famous Berlin Clubs" />
     <PageHeader
       description={Object.keys(queues).length
@@ -22,10 +21,10 @@ const TonightPage = ({ queues, reportEventClick }) => (
                  : 'No queues right now... We will be live this saturday!'}
       heading={Object.keys(queues).length ? 'Tonight' : 'Events'}
     />
-    <Block>
+    <Box>
       <QueuesTonight />
-    </Block>
-  </View>
+    </Box>
+  </Box>
 );
 
 export default connect((state: State) => ({

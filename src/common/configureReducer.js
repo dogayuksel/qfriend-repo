@@ -5,7 +5,6 @@ import auth from './auth/reducer';
 import config from './config/reducer';
 import device from './device/reducer';
 import intl from './intl/reducer';
-import themes from './themes/reducer';
 import todos from './todos/reducer';
 import venues from './venues/reducer';
 import queues from './queues/reducer';
@@ -44,7 +43,6 @@ const configureReducer = (initialState: Object) => {
     device,
     fields,
     intl,
-    themes,
     todos,
     venues,
     queues,

@@ -1,18 +1,21 @@
-/* @flow */
+// @flow
 import React from 'react';
 import SwitchLocale from '../intl/SwitchLocale';
 import linksMessages from '../../common/app/linksMessages';
-import { Block, Title, View } from '../app/components';
 import { FormattedMessage } from 'react-intl';
+import {
+  Box,
+  Paragraph,
+  Title,
+} from '../app/components';
 
 const SettingsPage = () => (
-  <View>
+  <Box>
     <Title message={linksMessages.settings} />
-    <Block>
+    <Paragraph>
       <FormattedMessage {...linksMessages.settings} />
-    </Block>
-    <SwitchLocale />
-  </View>
+    </Paragraph>
+  </Box>
 );
 
 export default SettingsPage;

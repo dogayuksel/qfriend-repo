@@ -3,7 +3,7 @@ import type { State } from '../../common/types';
 import React from 'react';
 import moment from 'moment';
 import R from 'ramda';
-import { Button, Stat, Text, View, Flex } from '../app/components';
+import { Button, Text, Box } from '../app/components';
 import { connect } from 'react-redux';
 import { checkAllQueues, deleteQueueEntry } from '../../common/queues/actions';
 import { firebase } from '../../common/lib/redux-firebase';
@@ -45,29 +45,27 @@ class QueueData extends React.Component {
     }
 
     return (
-      <View>
+      <Box>
         {!queue || queue.length === 0 ?
          <Text>No queues yet.</Text>
          :
-         <Flex column align="center">
-           <Stat
-             mb={1} pl={1}
-             value={lastEntry.value}
-             label={this.genText(updateTime)}
-             unit="mins"
-           />
+         <Box display="flex" alignItems="center">
+           <Box display="flex" flexDirection="column">
+             <Text>{lastEntry.value}</Text>
+             <Text>{this.genText(updateTime)}</Text>
+             <Text>"mins"</Text>
+           </Box>
            <Button
-             pill mb={2}
-             theme="error"
-             type="button"
+             danger
+             marginLeft={1}
              disabled={disabled}
              onClick={() => deleteQueueEntry(lastEntry.key)}
            >
-             <Text small>delete</Text>
+             <Text>Delete</Text>
            </Button>
-         </Flex>
+         </Box>
         }
-      </View>
+      </Box>
     );
   }
 }

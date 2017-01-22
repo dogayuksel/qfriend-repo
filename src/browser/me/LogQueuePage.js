@@ -6,7 +6,7 @@ import QueueEditView from '../queue/QueueEditView';
 import React from 'react';
 import ModifyButtons from './ModifyButtons';
 import linksMessages from '../../common/app/linksMessages';
-import { Flex, Block, Text, Form, Input, FieldError, Button, Title, View } from '../app/components';
+import { Text, Form, Input, Button, Title, Box } from '../app/components';
 import { ValidationError } from '../../common/lib/validation';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -80,16 +80,15 @@ class LogQueuePage extends React.Component {
     const { disabled, error } = this.state;
 
     return (
-      <View>
+      <Box>
         <Title message={linksMessages.me} />
-        <View>
+        <Box>
           <Text>make entries below</Text>
-          <Block>
+          <Box>
             {venues && venues.map(venue =>
-              <View key={venue.key}>
+              <Box key={venue.key}>
                 <Button
-                  mb={1}
-                  theme="secondary"
+                  warning
                   disabled={disabled}
                   onClick={() => setActiveEntry(venue.key)}
                 >
@@ -97,39 +96,35 @@ class LogQueuePage extends React.Component {
                 </Button>
                 {activeEntry === venue.key &&
                  <Form onSubmit={this.onFormSubmit}>
-                   <Flex align="center">
+                   <Box>
                      <QueueEditView
                        disabled={disabled}
                        venueKey={venue.key}
                      />
-                   </Flex>
-                   <FieldError error={error} prop="name" />
+                   </Box>
                    <Input
                      {...fields.value}
                      label="Queue time"
                      style={styles.valueField}
-                     aria-invalid={ValidationError.isInvalid(error, 'value')}
                      maxLength={10}
                      type="text"
                    />
                    <Button
-                     pill
-                     mb={3} ml={2}
-                     theme="primary"
+                     onClick={this.onFormSubmit}
+                     primary
                      disabled={disabled}
-                     type="submit"
                    >
                      <Text>Submit</Text>
                    </Button>
                    <ModifyButtons fields={fields} disabled={disabled} />
                  </Form>
                 }
-              </View>
+              </Box>
              )
             }
-          </Block>
-        </View>
-      </View>
+          </Box>
+        </Box>
+      </Box>
     );
   }
 }

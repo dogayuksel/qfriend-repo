@@ -1,6 +1,6 @@
-/* @flow */
+// @flow
 import React from 'react';
-import { Text, Footer } from '../app/components';
+import { Box, Text, Link } from './components';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
 const messages = defineMessages({
@@ -11,9 +11,13 @@ const messages = defineMessages({
 });
 
 const AppFooter = () => (
-  <Footer>
-    <Text>Wait less for a mess!</Text>
-  </Footer>
+  <Box
+  border="top"
+  marginTop={1}
+  paddingVertical={1}
+  >
+    <Text size={-1}>Wait less for a mess!</Text>
+  </Box>
 );
 
 export default AppFooter;

@@ -9,13 +9,9 @@ import { Text,
          Heading,
          Button,
          Link,
-         Checkbox,
          Form,
          Input,
-         Textarea,
-         Flex,
-         Select,
-         View } from '../app/components';
+         Box } from '../app/components';
 import { fields } from '../../common/lib/redux-fields';
 
 class EventForm extends React.Component {
@@ -48,18 +44,18 @@ class EventForm extends React.Component {
     const venueMap = R.map(pickMix, R.filter(activeFilter, venues));
 
     return (
-      <View mt={2} mb={3}>
+      <Box>
         <Link to="/editevents">
-          <Text mt={3} mb={2}>Back</Text>
+          <Text>Back</Text>
         </Link>
-        <Form mr={2} onSubmit={onSubmit}>
+        <Form onSubmit={onSubmit}>
           <Input
             {...fields.name}
             maxLength={100}
             label="Event Name"
             type="text"
           />
-          <Textarea
+          <Input
             {...fields.description}
             maxLength={300}
             label="Event description"
@@ -80,19 +76,19 @@ class EventForm extends React.Component {
             label="Facebook event URL"
             type="text"
           />
-          <Checkbox
+          <Input
             {...fields.isFeatured}
             checked={fields.isFeatured.value}
             label="Featured event?"
             theme="info"
           />
-          <Select
+          <Input
             mb={3}
             {...fields.venueKey}
             label="Venue"
             options={venueMap}
           />
-          <Flex>
+          <Box>
             <Input
               {...fields.hours}
               label="hour"
@@ -103,7 +99,7 @@ class EventForm extends React.Component {
               label="minute"
               type="number"
             />
-          </Flex>
+          </Box>
           <Calendar
             onChange={(value) => handleCalendar(value, fields)}
             onInit={(value) => handleCalendar(value, fields)}
@@ -120,16 +116,13 @@ class EventForm extends React.Component {
               }
             }}
           />
-          <Flex align="center">
-            <Button
-              theme="primary"
-              type="submit"
-            >
+          <Box>
+            <Button onClick={onSubmit}>
               Save
             </Button>
-          </Flex>
+          </Box>
         </Form>
-      </View>
+      </Box>
     );
   }
 }

@@ -1,7 +1,7 @@
 /* @flow */
 import type { State } from '../../common/types';
 import React from 'react';
-import { Stat, Text, View, Flex } from '../app/components';
+import { Text, Box } from '../app/components';
 import { connect } from 'react-redux';
 import { checkAllQueues } from '../../common/queues/actions';
 
@@ -62,17 +62,17 @@ class QueueView extends React.Component {
                        ((timeNow - lastEntry.loggedAt) / 60000) | 0;
 
     return (
-      <Flex align="center">
+      <Box>
         {!queue ?
          <Text>No queues yet.</Text>
          :
-         <Stat
-           value={this.genValueText(lastEntry.value)}
-           label={this.genUpdateText(updateTime)}
-           unit={this.genUnitText(lastEntry.value)}
-         />
+         <Box>
+           <Text>{this.genValueText(lastEntry.value)}</Text>
+           <Text>{this.genUpdateText(updateTime)}</Text>
+           <Text>{this.genUnitText(lastEntry.value)}</Text>
+         </Box>
         }
-      </Flex>
+      </Box>
     );
   }
 }

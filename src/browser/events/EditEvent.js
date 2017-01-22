@@ -12,9 +12,7 @@ import { Text,
          Link,
          Form,
          Input,
-         Flex,
-         Select,
-         View } from '../app/components';
+         Box } from '../app/components';
 import { fields } from '../../common/lib/redux-fields';
 
 class EditEvent extends React.Component {

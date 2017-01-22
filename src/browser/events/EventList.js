@@ -8,11 +8,10 @@ import { connect } from 'react-redux';
 import { getAllEvents } from '../../common/events/actions';
 import { listVenues } from '../../common/venues/actions';
 import { firebase } from '../../common/lib/redux-firebase';
-import { Flex,
+import { Box,
          Heading,
          Loading,
-         Text,
-         View } from '../app/components';
+         Text } from '../app/components';
 
 const styles = {
   eventList: {
@@ -27,7 +26,7 @@ let EventList = ({ events, pathname }) => {
   const eventsList = R.sort(diff, events);
 
   return (
-    <Flex align="center" wrap style={styles.eventList}>
+    <Box>
       {events && eventsList.map((event) =>
         <Event
           key={event.key}
@@ -36,7 +35,7 @@ let EventList = ({ events, pathname }) => {
         />
        )
       }
-    </Flex>
+    </Box>
   );
 };
 

@@ -16,11 +16,9 @@ import { Text,
          Link,
          Image,
          Input,
-         Space,
-         Flex,
-         Box,
-         Select,
-         View } from '../app/components';
+         PageHeader,
+         Paragraph,
+         Box } from '../app/components';
 
 const styles = {
   image: {
@@ -44,76 +42,77 @@ class EventPage extends React.Component {
     const eventStartDate = event && moment(event.beginsAt).format('LLLL');
 
     return (
-      <View
-        m={1}
+      <Box
         itemScope
         itemType="http://schema.org/MusicEvent"
       >
-        {event && venue ?
-         <View>
-           <View
-             itemProp="location"
-             itemScope
-             itemType="http://schema.org/MusicVenue"
+        {(event && venue) &&
+         <PageHeader
+           description={event.name}
+           heading={venue.title}
+         >
+           <meta itemProp="name" content={event.name} />
+         </PageHeader>
+        }
+      {event && venue ?
+       <Box>
+         <div
+           itemProp="location"
+           itemScope
+           itemType="http://schema.org/MusicVenue"
+         >
+           <meta itemProp="name" content={venue.title} />
+           <meta itemProp="address" content={venue.address} />
+           <meta itemProp="url" content={venue.facebookURL} />
+           <meta itemProp="description" content={venue.description} />
+         </div>
+         <Box
+           margin={1}
+           itemProp="image"
+           backgroundImage={event.photoURL}
+           backgroundSize='contain'
+           backgroundRepeat='no-repeat'
+           maxWidth={25}
+           height={20}
+         >
+         </Box>
+         <Box
+           marginVertical={2}
+           marginHorizontal={1}
+         >
+           <Paragraph
+             marginTop={1}
+             itemProp="startDate"
+             content={eventStartDate}
            >
-             <meta itemProp="name" content={venue.title} />
-             <meta itemProp="address" content={venue.address} />
-             <meta itemProp="url" content={venue.facebookURL} />
-             <meta itemProp="description" content={venue.description} />
-           </View>
-           <Image
-             m={1} mt={3}
-             itemProp="image"
-             src={event.photoURL}
-             style={styles.image}
-           />
-           <View mt={3}>
-             <Flex align="center">
-               <Heading
-                 style={styles.title}
-                 level={1}
-                 size={1}
-                 itemProp="name"
-               >
-                 {event.name}
-               </Heading>
-               <FacebookProvider appID="1000515043403983">
-                 <Share href={`http://qfriend.co/event/${event.key}`}>
-                   <Button
-                     pill
-                     ml={2}
-                     type="button"
-                     theme="secondary"
-                   >
-                     Share
-                   </Button>
-                 </Share>
-               </FacebookProvider>
-             </Flex>
-             <Text
-               mt={1}
-               small
-               itemProp="startDate"
-               content={eventStartDate}
+             {eventStartDate}
+           </Paragraph>
+           <Paragraph
+             marginBottom={2}
+           >
+             <Link
+               target="_blank"
+               to={`http://maps.google.com/?q=${venue.address}`}
+               onClick={() => reportEventClick('useMapsLink')}
              >
-               {eventStartDate}
-             </Text>
-             <Text
-               mb={2}
-               small
-             >
-               <Link
-                 target="_blank"
-                 to={`http://maps.google.com/?q=${venue.address}`}
-                 theme="secondary"
-                 onClick={() => reportEventClick('useMapsLink')}
-               >
-                 {venue.address}
-               </Link>
-             </Text>
-             <Venue venue={venue} event={null}/>
+               {venue.address}
+             </Link>
+           </Paragraph>
+           <Paragraph>
+             <FacebookProvider appID="1000515043403983">
+               <Share href={`http://qfriend.co/event/${event.key}`}>
+                 <Button
+                   success
+                 >
+                   Share Event On Facebook
+                 </Button>
+               </Share>
+             </FacebookProvider>
+           </Paragraph>
+           <Paragraph>
              {event.facebookEventURL ?
               <Link
+                marginRight={1}
                 target="_blank"
                 onClick={() => reportEventClick('facebook')}
                 to={event.facebookEventURL}
@@ -125,35 +124,34 @@ class EventPage extends React.Component {
               :
               null
              }
-             {event.facebookEventURL && event.residentAdvisorURL &&
-              <View mt={1}/>
-             }
-             {event.residentAdvisorURL ?
-              <Link
-                target="_blank"
-                onClick={() => reportEventClick('residentAdvisor')}
-                to={event.residentAdvisorURL}
-                itemProp="url"
-                theme="secondary"
-              >
-                resident advisor
-              </Link>
-              :
-              null
-             }
-           </View>
-         </View>
+        {event.residentAdvisorURL ?
+         <Link
+           target="_blank"
+           onClick={() => reportEventClick('residentAdvisor')}
+           to={event.residentAdvisorURL}
+           itemProp="url"
+           theme="secondary"
+         >
+           resident advisor
+         </Link>
          :
-         <Heading size={3} mt={4}>
-           Can't find that event
-         </Heading>
+         null
         }
+           </Paragraph>
+         </Box>
+         <Venue venue={venue} event={null} />
+       </Box>
+       :
+       <Heading>
+         Can't find that event
+       </Heading>
+      }
         <Link to="/">
-          <Button mt={4} theme="primary">
+          <Button primary>
             Back
           </Button>
         </Link>
-      </View>
+      </Box>
     );
   }
 }

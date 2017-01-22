@@ -4,39 +4,36 @@ import React from 'react';
 import EventList from './EventList';
 import EditEvent from './EditEvent';
 import NewEvent from './NewEvent';
-import { Flex,
+import { Box,
          Heading,
          Button,
          Link,
          Loading,
-         Text,
-         View } from '../app/components';
+         Text } from '../app/components';
 import { Match, Redirect } from 'react-router';
 
 const EditEventsPage = ({ pathname }: Object) => {
   return (
-    <View pl={2} mb={3} mt={3} pr={2}>
+    <Box>
       <Match
         exactly
         pattern={pathname}
         render={() => {
             return(
-              <View>
+              <Box>
                 <Link to={`${pathname}/newevent`}>
-                  <Button mb={3}
-                    theme="primary"
-                  >
+                  <Button>
                     New Event
                   </Button>
                 </Link>
                 <EventList pathname={pathname} />
-              </View>
+              </Box>
             );
           }}
       />
       <Match exactly pattern={`${pathname}/newevent`} component={NewEvent} />
       <Match pattern={`${pathname}/event/:eventKey`} component={EditEvent} />
-    </View>
+    </Box>
   );
 };
 

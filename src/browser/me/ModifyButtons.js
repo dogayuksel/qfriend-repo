@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import { Text, Button, View } from '../app/components';
+import { Text, Button, Box } from '../app/components';
 
 class ModifyButtons extends React.Component {
   static propTypes = {
@@ -29,48 +29,48 @@ class ModifyButtons extends React.Component {
   render() {
     const { disabled, fields } = this.props;
     return (
-      <View>
+      <Box>
         <Button
-          mb={3} ml={1} type="button"
-          theme="primary"
+          marginHorizontal={0.2}
+          primary
           disabled={disabled}
           onClick={() => this.modifyValue(fields, '0')}
         >
           <Text>0</Text>
         </Button>
         <Button
-          mb={3} ml={1} type="button"
-          theme="primary"
+          marginHorizontal={0.2}
+          primary
           disabled={disabled}
           onClick={() => this.modifyValue(fields, 'x2')}
         >
           <Text>x2</Text>
         </Button>
         <Button
-          mb={3} ml={1} type="button"
-          theme="primary"
+          marginHorizontal={0.2}
+          primary
           disabled={disabled}
           onClick={() => this.modifyValue(fields, '/2')}
         >
           <Text>/2</Text>
         </Button>
         <Button
-          mb={3} ml={1} type="button"
-          theme="primary"
+          marginHorizontal={0.2}
+          primary
           disabled={disabled}
           onClick={() => this.modifyValue(fields, '+10')}
         >
           <Text>+10</Text>
         </Button>
         <Button
-          mb={3} ml={1} type="button"
-          theme="primary"
+          marginHorizontal={0.2}
+          primary
           disabled={disabled}
           onClick={() => this.modifyValue(fields, '-10')}
         >
           <Text>-10</Text>
         </Button>
-      </View>
+      </Box>
     );
   }
 }

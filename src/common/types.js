@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 
 // Algebraic types are composable, so it makes sense to have them at one place.
 // blog.ploeh.dk/2016/11/28/easy-domain-modelling-with-types
@@ -18,19 +18,19 @@ export type Deps = {
 
 // Models
 
-export type Todo = {
+export type Todo = {|
   completed: boolean,
   createdAt: number,
   id: string,
   title: string,
-};
+|};
 
-export type User = {
+export type User = {|
   displayName: string,
   email: ?string,
   id: string,
   photoURL: ?string,
-};
+|};
 
 export type Venue = {
   key: number,
@@ -62,8 +62,13 @@ export type Queue = {
 }
 
 // Reducers
+// We can't use exact object type, because spread is not supported yet.
+// We can't use Strict<T> = T & $Shape<T>, because it breaks autocomplete.
+// TODO: Wait for Flow.
 
 export type AppState = {
+  baselineShown: boolean,
+  currentTheme: string,
   error: ?Error,
   menuShown: boolean,
   online: boolean,
@@ -96,12 +101,8 @@ export type IntlState = {
   messages: ?Object,
 };
 
-export type ThemeState = {
-  currentTheme: ?string,
-};
-
 export type TodosState = {
-  all: {[id: string]: Todo},
+  all: { [id: string]: Todo },
 };
 
 export type UsersState = {
@@ -138,7 +139,6 @@ export type State = {
   device: DeviceState,
   fields: any,
   intl: IntlState,
-  themes: ThemeState,
   todos: TodosState,
   users: UsersState,
   admin: AdminState,
@@ -158,7 +158,6 @@ export type Action =
   | { type: 'APP_START' }
   | { type: 'APP_STARTED' }
   | { type: 'APP_STOP' }
-  | { type: 'APP_STORAGE_LOADED' }
   | { type: 'CLEAR_ALL_COMPLETED_TODOS' }
   | { type: 'CLEAR_ALL_TODOS' }
   | { type: 'DELETE_TODO', payload: { id: string } }
@@ -200,4 +199,6 @@ export type Action =
   | { type: 'DELETE_QUEUE_ENTRY', payload: { key: string } }
   | { type: 'DELETE_QUEUE_ENTRY_DONE' }
   | { type: 'LIST_VENUES', payload: { venues: Object } }
-;
+  | { type: 'TOGGLE_BASELINE' }
+  ;
+

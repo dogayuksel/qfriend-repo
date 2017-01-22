@@ -1,29 +1,32 @@
-/* @flow */
-import React from 'react';
+// @flow
+import Box from './Box';
+import Heading from './Heading';
+import Paragraph from './Paragraph';
 import Image from './Image';
-import { Flex } from '../components';
-import { PageHeader } from 'rebass';
+import React from 'react';
 
-const styles = {
-  logoImage: {
-    width: '110px',
-    height: '110px',
-  },
-  pageHeader: {
-    maxWidth: '390px',
-  },
-};
+type PageHeaderProps = {|
+                        heading: string,
+                        description?: string,
+                       |};
 
-const PageHead = (props: Object) => (
-  <Flex>
-    <Image
-      mt={4} pt={2}
-      style={styles.logoImage}
-      src={require('./qfriend-logo.png')}
-      alt="logo"
-    />
-    <PageHeader mt={4} style={styles.pageHeader} {...props} />
-  </Flex>
+const PageHeader = ({ heading, description }: PageHeaderProps) => (
+  <Box
+    paddingTop={6}
+    paddingBottom={1}
+    paddingHorizontal={1}
+    backgroundImage={require('./hero-image.png')}
+    backgroundSize={'cover'}
+    backgroundPosition={'left bottom'}
+  >
+    <Heading size={2} marginBottom={0}>{heading}</Heading>
+    {description &&
+     <Paragraph
+       marginBottom={0}
+       maxWidth={28}
+     >{description}</Paragraph>
+    }
+  </Box>
 );
 
-export default PageHead;
+export default PageHeader;

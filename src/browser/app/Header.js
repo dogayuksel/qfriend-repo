@@ -1,57 +1,65 @@
-/* @flow */
-import type { State } from '../../common/types';
+// @flow
+import type { State, User } from '../../common/types';
 import React from 'react';
+import compose from 'ramda/src/compose';
 import linksMessages from '../../common/app/linksMessages';
+import { Image, Box, Link, Text } from '../app/components';
 import { FormattedMessage } from 'react-intl';
-import { Link, Space, Toolbar, Text } from '../app/components';
 import { connect } from 'react-redux';
 
-const styles = {
-  toolbar: {
-    flexWrap: 'wrap',
-  },
-  seperator: {
-    color: '#333',
-  },
+const HeaderLink = ({ exactly, to, message }) => (
+  <Link
+    backgroundColor="primary"
+    bold
+    color="white"
+    exactly={exactly}
+    paddingHorizontal={0.5}
+    paddingVertical={0.5}
+    to={to}
+  >
+    <FormattedMessage {...message} />
+  </Link>
+);
+
+type HeaderProps = {
+  viewer: ?User,
+  isAdmin: boolean,
 };
 
-const Header = ({ viewer, isAdmin }) => (
-  <Toolbar style={styles.toolbar}>
-  <Space x={1} />
-    <Link bold inverted exactly to="/">
-      <FormattedMessage {...linksMessages.home} />
-    </Link>
-    <Space x={2} />
+const Header = ({
+  viewer,
+  isAdmin
+}: HeaderProps ) => (
+  <Box
+    backgroundColor="primary"
+    display="flex"
+    flexWrap="wrap"
+  >
+    <Image
+      width={45}
+      height={42}
+      src={require('./qfriend-logo.png')}
+    />
+    <HeaderLink exactly to="/" message={linksMessages.home} />
     {isAdmin &&
-    <Link bold inverted to="/editevents">
-      <FormattedMessage {...linksMessages.editEvents} />
-    </Link>
+     <HeaderLink exactly to="/editevents" message={linksMessages.editEvents} />
     }
-    <Space x={1} auto />
     <Link
-      bold
-      inverted
-      exactly
+      backgroundColor="primary"
+      paddingHorizontal={0.5}
+      paddingVertical={0.5}
       target="_blank"
       to="https://www.facebook.com/QFriendBerlin/"
     >
-      fb
+      <Text bold color="white">Facebook</Text>
     </Link>
-    <Space x={2} />
-    <Text style={styles.seperator}>|</Text>
-    <Space x={2} />
     {viewer &&
-     <Link bold inverted to="/me">
-       <FormattedMessage {...linksMessages.me} />
-     </Link>
+     <HeaderLink to="/me" message={linksMessages.me} />
     }
     {!viewer &&
-     <Link bold inverted to="/signin">
-       <FormattedMessage {...linksMessages.signIn} />
-     </Link>
+     <HeaderLink to="/signin" message={linksMessages.signIn} />
     }
-    <Space x={1} />
-  </Toolbar>
+  </Box>
 );
 
 Header.propTypes = {

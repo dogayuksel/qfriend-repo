@@ -7,14 +7,10 @@ import { connect } from 'react-redux';
 import { Text,
          Heading,
          Image,
-         Card,
-         CardImage,
          Link,
-         Space,
          Button,
-         Flex,
-         Box,
-         View } from '../app/components';
+         Paragraph,
+         Box } from '../app/components';
 
 type timerState = {
   countdown: ?String,
@@ -54,15 +50,13 @@ class Event extends React.Component {
     const { reportEventClick } = this.props;
 
     return (
-      <Card
-        ml={1}
-        rounded
-        width={243}
+      <Box
+        paddingHorizontal={0.5}
         itemScope
         itemType="http://schema.org/MusicEvent"
       >
         {venue &&
-         <View
+         <div
            itemProp="location"
            itemScope
            itemType="http://schema.org/MusicVenue"
@@ -71,54 +65,52 @@ class Event extends React.Component {
            <meta itemProp="address" content={venue.address} />
            <meta itemProp="url" content={venue.facebookURL} />
            <meta itemProp="description" content={venue.description} />
-         </View>
+         </div>
         }
-        <View style={styles.imageContainer} mb={1}>
-          <CardImage itemProp="image" src={event.photoURL} />
-        </View>
+        <Image
+          height={180}
+          width={180}
+          itemProp="image"
+          src={event.photoURL}
+        />
         <Link
           onClick={() => reportEventClick(event.key)}
           to={`/event/${event.key}`}
         >
-          <Heading
-            level={2}
-            size={3}
+          <Paragraph
             itemProp="name"
+            maxWidth={8}
           >
             {event.name}
-          </Heading>
+          </Paragraph>
         </Link>
-        <Flex mr={1} justify='space-between' align='flex-end'>
-          <Box>
-            <Text>
-              {venue && venue.title}
-            </Text>
-            <Text
-              small
-              itemProp="startDate"
-              content={eventStartDate}
-            >
-              {countdown}
-            </Text>
-          </Box>
-        </Flex>
+        <Box display="flex" flexDirection="column">
+          <Text>
+            {venue && venue.title}
+          </Text>
+          <Text
+            size={-1}
+            itemProp="startDate"
+            content={eventStartDate}
+          >
+            {'Starts ' + countdown}
+          </Text>
+        </Box>
         {isAdmin && pathname === '/editevents' &&
-         <View mt={1}>
+         <Box marginBottom={1}>
            <Link to={`${pathname}/event/${event.key}`}>
-             <Button theme="info">
+             <Button>
                Edit
              </Button>
            </Link>
            <Button
-             ml={1}
-             theme="error"
              onClick={() => this.props.deleteEvent(event.key)}
            >
              Delete
            </Button>
-         </View>
+         </Box>
         }
-      </Card>
+      </Box>
     );
   }
 }

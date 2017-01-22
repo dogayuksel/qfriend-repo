@@ -1,22 +1,21 @@
-/* @flow */
+// @flow
 import type { State } from '../../common/types';
-import './App.css';
+import type { Theme } from './themes/types';
 import * as themes from './themes';
 import Footer from './Footer';
 import Header from './Header';
 import Helmet from 'react-helmet';
-import R from 'ramda';
 import React from 'react';
 import favicon from '../../common/app/favicon';
 import start from '../../common/app/start';
-import { Box, Container, Flex } from '../app/components';
-import { Match, ThemeProvider } from '../../common/app/components';
+import { Box, Container, ThemeProvider } from './components';
+import { Match } from '../../common/app/components';
 import { Miss } from 'react-router';
+import { compose } from 'ramda';
 import { connect } from 'react-redux';
 
 // Pages
 import FieldsPage from '../fields/FieldsPage';
-import UsersPage from '../users/UsersPage';
 import HomePage from '../home/HomePage';
 import IntlPage from '../intl/IntlPage';
 import MePage from '../me/MePage';
@@ -26,40 +25,29 @@ import SignInPage from '../auth/SignInPage';
 import TodosPage from '../todos/TodosPage';
 import EditEventsPage from '../events/EditEventsPage';
 import EventPage from '../events/EventPage';
+import UsersPage from '../users/UsersPage';
 
-
-const styles = {
-  container: {
-    minHeight: '100vh',
-  },
-  page: {
-    flex: 1,
-  },
+type AppProps = {
+  baselineShown: boolean,
+  currentLocale: string,
+  themeName: string,
+  theme: Theme,
 };
 
-// v4-alpha.getbootstrap.com/getting-started/introduction/#starter-template
-const bootstrap4Metas: any = [
-  { charset: 'utf-8' },
-  {
-    name: 'viewport',
-    content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, shrink-to-fit=no',
-  },
-  {
-    'http-equiv': 'x-ua-compatible',
-    content: 'ie=edge',
-  },
-];
-
-const App = ({ currentLocale, currentTheme }) => (
+const App = ({
+  baselineShown,
+  currentLocale,
+  theme,
+  themeName,
+}: AppProps) => (
   <ThemeProvider
-    key={currentTheme} // github.com/yahoo/react-intl/issues/234#issuecomment-163366518
-    theme={themes[currentTheme] || themes.initial}
+    key={themeName} // Enforce rerender.
+    theme={theme}
   >
     <Container>
       <Helmet
         htmlAttributes={{ lang: currentLocale }}
         meta={[
-          ...bootstrap4Metas,
           {
             name: 'description',
             content: 'Live queue updates from the best clubs of Berlin. Berghain, Tresor, about blank, Renate and many more. Place to check before heading for Berlin Nightlife',
@@ -68,44 +56,59 @@ const App = ({ currentLocale, currentTheme }) => (
             property: 'og:title',
             content: 'Live queue updates from famous Berlin Clubs'
           },
+          // v4-alpha.getbootstrap.com/getting-started/introduction/#starter-template
+          { charset: 'utf-8' },
+          { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
+          { 'http-equiv': 'x-ua-compatible', content: 'ie=edge' },
           ...favicon.meta,
         ]}
         link={[
           ...favicon.link,
+          // To test vertical rhythm visually.
+          {
+            href: "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css",
+            rel: 'stylesheet',
+          },
+          {
+            href: "http://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css",
+            rel: 'stylesheet',
+          },
+          ...(baselineShown ? [{
+            href: `http://basehold.it/${theme.typography.lineHeight}/0/0/0${
+              process.env.NODE_ENV === 'production' ? '' : '/0.1'
+            }`,
+            rel: 'stylesheet',
+          }] : []),
         ]}
       />
-      <Flex flexColumn style={styles.container}>
-        <Header />
-        <Box style={styles.page}>
-          <Match exactly pattern="/" component={HomePage} />
-          <Match pattern="/event/:eventId" component={EventPage} />
-          <Match pattern="/fields" component={FieldsPage} />
-          <Match pattern="/users" component={UsersPage} />
-          <Match pattern="/intl" component={IntlPage} />
-          <Match pattern="/offline" component={OfflinePage} />
-          <Match pattern="/signin" component={SignInPage} />
-          <Match pattern="/todos" component={TodosPage} />
-          <Match authorized pattern="/editevents" component={EditEventsPage} />
-          <Match authorized pattern="/me" component={MePage} />
-          <Miss component={NotFoundPage} />
-        </Box>
-        <Footer />
-      </Flex>
-
+      <Header />
+      <Box
+        flex={1} // make footer sticky
+      >
+        <Match exactly pattern="/" component={HomePage} />
+        <Match pattern="/event/:eventId" component={EventPage} />
+        <Match pattern="/users" component={UsersPage} />
+        <Match pattern="/todos" component={TodosPage} />
+        <Match pattern="/fields" component={FieldsPage} />
+        <Match pattern="/intl" component={IntlPage} />
+        <Match pattern="/offline" component={OfflinePage} />
+        <Match pattern="/signin" component={SignInPage} />
+        <Match authorized pattern="/editevents" component={EditEventsPage} />
+        <Match authorized pattern="/me" component={MePage} />
+        <Miss component={NotFoundPage} />
+      </Box>
+      <Footer />
     </Container>
   </ThemeProvider>
 );
 
-App.propTypes = {
-  currentLocale: React.PropTypes.string.isRequired,
-  currentTheme: React.PropTypes.string,
-};
-
-export default R.compose(
+export default compose(
   connect(
     (state: State) => ({
+      baselineShown: state.app.baselineShown,
       currentLocale: state.intl.currentLocale,
-      currentTheme: state.themes.currentTheme,
+      themeName: state.app.currentTheme,
+      theme: themes[state.app.currentTheme] || themes.defaultTheme,
     }),
   ),
   start,

@@ -4,6 +4,7 @@ import React from 'react';
 
 type Props = {
   appCssFilename: string,
+  bodyCss: string,
   bodyHtml: string,
   helmet: Object,
   isProduction: boolean,
@@ -11,6 +12,7 @@ type Props = {
 
 const Html = ({
   appCssFilename,
+  bodyCss,
   bodyHtml,
   helmet,
   isProduction,
@@ -25,19 +27,10 @@ const Html = ({
       {appCssFilename &&
         <link href={appCssFilename} rel="stylesheet" />
       }
+      <style dangerouslySetInnerHTML={{ __html: bodyCss }} id="stylesheet" />
     </head>
-    <body
-      dangerouslySetInnerHTML={{ __html: bodyHtml }}
-    />
+    <body dangerouslySetInnerHTML={{ __html: bodyHtml }} />
   </html>
 );
-
-// TODO: Use babel-plugin-flow-react-proptypes one day.
-Html.propTypes = {
-  appCssFilename: React.PropTypes.string,
-  bodyHtml: React.PropTypes.string.isRequired,
-  helmet: React.PropTypes.object.isRequired,
-  isProduction: React.PropTypes.bool.isRequired,
-};
 
 export default Html;

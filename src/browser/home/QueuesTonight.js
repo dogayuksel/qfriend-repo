@@ -6,16 +6,16 @@ import React from 'react';
 import moment from 'moment';
 import R from 'ramda';
 import { connect } from 'react-redux';
+import Slider from 'react-slick';
 import { listVenues } from '../../common/venues/actions';
 import { checkAllQueues } from '../../common/queues/actions';
 import { getAllEvents } from '../../common/events/actions';
 import { firebase } from '../../common/lib/redux-firebase';
 import { Loading,
-         Block,
          Heading,
          Text,
-         Flex,
-         View } from '../app/components';
+         Title,
+         Box } from '../app/components';
 
 const styles = {
   eventList: {
@@ -47,61 +47,93 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
   const featuredEventsList = R.filter(isFeatured, events);
   const otherEventsList = R.reject(isFeatured, events);
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    responsive: [
+      {
+        breakpoint: 960,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 700,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 490,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ],
+  };
+
   return (
-    <View>
+    <Box>
       {!loaded ?
-      <Loading />
+       <Loading />
        : !queueList || queueList.length === 0 ?
-       <Block>
+       <Box
+         marginHorizontal={2}
+       >
          {featuredEventsList.length > 0 &&
-          <Block>
-            <Heading
-              style={styles.subTitles}
-              level={2} mb={2} pl={3} pr={1}
-            >
+          <Box marginBottom={3}>
+            <Heading size={2}>
               Featured Events
             </Heading>
-            <Flex align='baseline' wrap style={styles.eventList}>
-           {R.map((event) => {
-              return (
-               <Event key={event.key} event={event} />
-             );
-            }, featuredEventsList)
-           }
-            </Flex>
-           </Block>
-         }
-         {otherEventsList.length > 0 &&
-          <Block>
-            <Heading
-              style={styles.subTitles}
-              mt={4}
-              level={2}
-              mb={2} pl={3} pr={1}
-            >
-              Other Events
-            </Heading>
-            <Flex align='baseline' wrap style={styles.eventList}>
+            <Slider {...settings}>
               {R.map((event) => {
                  return (
-                   <Event key={event.key} event={event} />
+                   <div key={event.key}>
+                     <Event key={event.key} event={event} />
+                   </div>
                  );
                }, otherEventsList)
               }
-            </Flex>
-           </Block>
+            </Slider>
+          </Box>
          }
-        </Block>
-    :
-   R.map(item => {
-     const venue = R.find(R.propEq('key', parseInt(item['venueKey'], 10)))(venues);
-     const event = R.find(R.propEq('venueKey', item['venueKey']))(events);
-     return (
-       <Venue key={item['venueKey']} venue={venue} event={event} />
-     );
-   })(queueList)
+         {otherEventsList.length > 0 &&
+          <Box>
+            <Heading size={2}>
+              Other Events
+            </Heading>
+            <Slider {...settings}>
+              {R.map((event) => {
+                 return (
+                   <div key={event.key}>
+                     <Event key={event.key} event={event} />
+                   </div>
+                 );
+               }, otherEventsList)
+              }
+            </Slider>
+          </Box>
+         }
+       </Box>
+       :
+       R.map(item => {
+         const venue = R.find(R.propEq('key', parseInt(item['venueKey'], 10)))(venues);
+         const event = R.find(R.propEq('venueKey', item['venueKey']))(events);
+         return (
+           <Venue key={item['venueKey']} venue={venue} event={event} />
+         );
+       })(queueList)
       }
-    </View>
+    </Box>
   );
 };
 
@@ -122,8 +154,8 @@ QueuesTonight = firebase((database, props) => {
 QueuesTonight = firebase((database, props) => {
   const timeThresh = moment().subtract(6, 'hours').valueOf();
   const queuesRef = database.child('queues')
-                               .orderByChild('loggedAt')
-                               .startAt(timeThresh);
+                            .orderByChild('loggedAt')
+                            .startAt(timeThresh);
   return [
     [queuesRef, 'on', 'value', props.checkAllQueues],
   ];

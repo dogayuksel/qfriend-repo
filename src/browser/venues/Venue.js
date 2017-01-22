@@ -2,12 +2,11 @@
 import QueueView from '../queue/QueueView';
 import Gravatar from 'react-gravatar';
 import React from 'react';
-import { Flex,
-         Heading,
+import { Heading,
          Loading,
          Link,
          Text,
-         View } from '../app/components';
+         Box } from '../app/components';
 
 type VenueProps = {
   event: ?Object,
@@ -38,12 +37,10 @@ const styles = {
 
 const Venue = ({ event, venue: { key, title, description } }: VenueProps) => {
   return (
-    <Flex
-      mb={3}
-      justify="space-between"
+    <Box
       style={styles.venueItem}
     >
-      <Flex align="center" style={styles.title}>
+      <Box align="center" style={styles.title}>
         <Gravatar
           default="retro"
           email={title && `${title}@gmail.com`}
@@ -51,7 +48,7 @@ const Venue = ({ event, venue: { key, title, description } }: VenueProps) => {
           style={styles.gravatar}
           title={description}
         />
-        <Flex column>
+        <Box>
           <Heading
             size={3}
             style={styles.title}
@@ -67,10 +64,10 @@ const Venue = ({ event, venue: { key, title, description } }: VenueProps) => {
              details
            </Link>
           }
-        </Flex>
-      </Flex>
+        </Box>
+      </Box>
       <QueueView venueKey={key} />
-    </Flex>
+    </Box>
   );
 };
 
