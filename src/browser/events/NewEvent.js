@@ -62,7 +62,6 @@ NewEvent = fields({
     'minutes',
   ],
   getInitialState: () => ({
-    venueKey: "1",
     hours: 23,
     minutes: 45,
     isFeatured: false,

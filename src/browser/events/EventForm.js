@@ -3,6 +3,8 @@ import type { State } from '../../common/types';
 import React from 'react';
 import { Calendar } from 'react-date-range';
 import moment from 'moment';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 import R from 'ramda';
 import { connect } from 'react-redux';
 import { Text,
@@ -38,7 +40,7 @@ class EventForm extends React.Component {
             venues } = this.props;
 
     const pickMix = (venue) => ({
-      children: venue['title'],
+      label: venue['title'],
       value: venue['key'],
     });
     const activeFilter = (venue) => venue.active === 1;
@@ -87,11 +89,14 @@ class EventForm extends React.Component {
             field={fields.isFeatured}
             label="Featured event?"
           />
-          <Input
+          <Select
             marginBottom={3}
-            field={fields.venueKey}
-            label="Venue"
+            value={parseInt(fields.venueKey.value, 10)}
+            name="Venue"
             options={venueMap}
+            onChange={(selection) =>
+              fields.$setValue('venueKey',
+                               selection ? "" + selection.value : null)}
             placeholder=""
           />
           <Box>
