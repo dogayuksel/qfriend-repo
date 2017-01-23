@@ -30,25 +30,23 @@ const styles = {
 };
 
 let QueuesTonight = ({ loaded, venues, queues, events }) => {
-  const diff = (a, b) => {
-    const venueAVal = R.takeLast(1, R.map(R.prop('value'), a['data']))[0];
-    const venueBVal = R.takeLast(1, R.map(R.prop('value'), b['data']))[0];
-    if ( venueAVal === venueBVal ) {
-      const venueALog = R.takeLast(1, R.map(R.prop('loggedAt'), a['data']))[0];
-      const venueBLog = R.takeLast(1, R.map(R.prop('loggedAt'), b['data']))[0];
-      return -1 * (venueALog - venueBLog);
-    }
-    return -1 * ( venueAVal - venueBVal );
-  };
-  const convert = R.compose(R.map(R.zipObj(['venueKey', 'data'])), R.toPairs);
-  let queueList = R.sort(diff, convert(queues));
-
   const earlyCheck = (a, b) => a.beginsAt - b.beginsAt;
   const sortedEvents = R.sort(earlyCheck, events);
+  const eventMap = {};
+  const timeIt = (event) => {
+    const eventDate = moment(event.beginsAt).format("MMMM Do");
+    if (eventDate in eventMap) {
+      eventMap[eventDate].push(event);
+    } else {
+      eventMap[eventDate] = [];
+      eventMap[eventDate].push(event);
+    }
+  }
+  const days = R.map(timeIt, sortedEvents);
 
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
@@ -58,8 +56,6 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
-          infinite: true,
-          dots: true
         }
       },
       {
@@ -67,14 +63,13 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
-          initialSlide: 2
         }
       },
       {
         breakpoint: 490,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
+          slidesToScroll: 1,
         }
       }
     ],
@@ -88,19 +83,33 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
        <Box
          marginHorizontal={2}
        >
-         {events.length > 0 &&
-          <Box marginBottom={3}>
-            <Slider {...settings}>
-              {R.map((event) => {
-                 return (
-                   <div key={event.key}>
-                     <Event key={event.key} event={event} />
-                   </div>
-                 );
-               }, sortedEvents)
-              }
-            </Slider>
-          </Box>
+         {Object.keys(eventMap) && Object.keys(eventMap).map((value, index) => {
+            return(
+              <Box
+                key={index}
+                marginTop={1}
+                marginBottom={3}
+              >
+                <Text
+                  size={2}
+                  marginLeft={1}
+                  marginBottom={1}
+                >
+                  {value}
+                </Text>
+                <Slider {...settings}>
+                  {R.map((event) => {
+                     return (
+                       <div key={event.key}>
+                         <Event key={event.key} event={event} />
+                       </div>
+                     );
+                   }, eventMap[value])
+                  }
+                </Slider>
+              </Box>
+            );
+          })
          }
        </Box>
       }

@@ -55,7 +55,7 @@ class EventPage extends React.Component {
          </PageHeader>
         }
       {event && venue ?
-       <Box>
+       <Box margin={1}>
          <div
            itemProp="location"
            itemScope
@@ -73,7 +73,7 @@ class EventPage extends React.Component {
            backgroundSize='contain'
            backgroundRepeat='no-repeat'
            maxWidth={25}
-           height={20}
+           height={15}
          >
          </Box>
          <Box
@@ -139,14 +139,13 @@ class EventPage extends React.Component {
         }
            </Paragraph>
          </Box>
-         <Venue venue={venue} event={null} />
        </Box>
        :
        <Heading>
          Can't find that event
        </Heading>
       }
-        <Link to="/">
+        <Link margin={1} to="/">
           <Button primary>
             Back
           </Button>
