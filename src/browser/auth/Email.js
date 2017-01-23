@@ -34,7 +34,7 @@ type EmailProps = {
 
 // blog.mariusschulz.com/2016/03/20/how-to-remove-webkits-banana-yellow-autofill-background
 const overrideWebkitYellowAutofill = {
-  WebkitBoxShadow: 'inset 0 0 0px 9999px white',
+  WebkitBoxShadow: 'inset 0 0 0px 9999px black',
 };
 
 const Button = ({ ...props }) => (

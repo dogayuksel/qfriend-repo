@@ -14,6 +14,7 @@ import {
   Loading,
   PageHeader,
   Title,
+  Text,
 } from '../app/components';
 
 type SignInPageProps = {
@@ -43,14 +44,16 @@ const SignInPage = ({
     <Box>
       <Title message={linksMessages.signIn} />
       <PageHeader heading={intl.formatMessage(linksMessages.signIn)} />
-      <Social />
-      <Box marginVertical={1}>
-        <Email />
+      <Box margin={1}>
+        <Social />
+        <Box marginVertical={1}>
+          <Email />
+        </Box>
+        <SignInError />
+        {disabled &&
+         <Loading marginVertical={1} />
+        }
       </Box>
-      <SignInError />
-      {disabled &&
-        <Loading marginVertical={1} />
-      }
     </Box>
 );
 
