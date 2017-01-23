@@ -4,7 +4,7 @@ import React from 'react';
 import { Calendar } from 'react-date-range';
 import moment from 'moment';
 import Select from 'react-select';
-import 'react-select/dist/react-select.css';
+/* import './react-select.css';*/
 import R from 'ramda';
 import { connect } from 'react-redux';
 import { Text,
