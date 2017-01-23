@@ -7,6 +7,13 @@ import { checkAllQueues } from '../../common/queues/actions';
 
 const hourToMinute = 90;
 
+const makeColor = (time) => {
+  if (time < 15) return 'gray';
+  if (time < 45) return 'success';
+  if (time < 90) return 'warning';
+  return 'danger';
+}
+
 class QueueView extends React.Component {
 
   static propTypes = {
@@ -66,10 +73,31 @@ class QueueView extends React.Component {
         {!queue ?
          <Text>No queues yet.</Text>
          :
-         <Box>
-           <Text>{this.genValueText(lastEntry.value)}</Text>
-           <Text>{this.genUpdateText(updateTime)}</Text>
-           <Text>{this.genUnitText(lastEntry.value)}</Text>
+         <Box
+           display="flex"
+           flexDirection="column"
+           justifyContent="center"
+           alignItems="center"
+           paddingVertical={0.1}
+           paddingHorizontal={0.1}
+           backgroundColor={makeColor(lastEntry.value)}
+           border={true}
+           borderColor={makeColor(lastEntry.value)}
+           borderRadius={40}
+         >
+           <Box marginVertical={0}>
+             <Text color="black" size={0}>
+               {this.genValueText(lastEntry.value)}
+             </Text>
+             <Text color="black" size={0}>
+               {this.genUnitText(lastEntry.value)}
+             </Text>
+           </Box>
+           <Box marginTop={-0.45}>
+             <Text color="black" size={-2}>
+               {this.genUpdateText(updateTime)}
+             </Text>
+           </Box>
          </Box>
         }
       </Box>

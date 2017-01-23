@@ -43,9 +43,7 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
   const convert = R.compose(R.map(R.zipObj(['venueKey', 'data'])), R.toPairs);
   let queueList = R.sort(diff, convert(queues));
 
-  var earlyCheck = (a, b) => {
-    return (a.beginsAt - b.beginsAt)
-  };
+  const earlyCheck = (a, b) => a.beginsAt - b.beginsAt;
   const sortedEvents = R.sort(earlyCheck, events);
 
   const settings = {
@@ -86,7 +84,7 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
     <Box>
       {!loaded ?
        <Loading />
-       : !queueList || queueList.length === 0 ?
+       :
        <Box
          marginHorizontal={2}
        >
@@ -105,14 +103,6 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
           </Box>
          }
        </Box>
-       :
-       R.map(item => {
-         const venue = R.find(R.propEq('key', parseInt(item['venueKey'], 10)))(venues);
-         const event = R.find(R.propEq('venueKey', item['venueKey']))(events);
-         return (
-           <Venue key={item['venueKey']} venue={venue} event={event} />
-         );
-       })(queueList)
       }
     </Box>
   );

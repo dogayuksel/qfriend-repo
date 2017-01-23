@@ -2,6 +2,7 @@
 import type { State } from '../../common/types';
 import React from 'react';
 import moment from 'moment';
+import QueueView from '../queue/QueueView';
 import { deleteEvent, reportEventClick } from '../../common/events/actions';
 import { connect } from 'react-redux';
 import { Text,
@@ -74,23 +75,37 @@ class Event extends React.Component {
            border={true}
            borderColor="primary"
            borderWidth="4"
+           display="flex"
+           flexDirection="column-reverse"
            backgroundImage={event.photoURL}
            backgroundSize="cover"
            backgroundPosition="center center"
            paddingHorizontal={1}
            paddingVertical={1}
          >
+           {/ago/.test(countdown) ?
+            <QueueView venueKey={parseInt(event.venueKey, 10)} />
+            :
+            null
+           }
          </Box>
          :
          <Box
            width={8}
            height={8}
+           display="flex"
+           flexDirection="column-reverse"
            backgroundImage={event.photoURL}
            backgroundSize="cover"
            backgroundPosition="center center"
            paddingHorizontal={1}
            paddingVertical={1}
          >
+           {/ago/.test(countdown) ?
+            <QueueView venueKey={parseInt(event.venueKey, 10)} />
+            :
+            null
+           }
          </Box>
         }
         <Link
