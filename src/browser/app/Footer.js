@@ -12,11 +12,16 @@ const messages = defineMessages({
 
 const AppFooter = () => (
   <Box
-  border="top"
-  marginTop={1}
-  paddingVertical={1}
+    border="top"
+    marginTop={1}
+    paddingVertical={1}
   >
-    <Text size={-1}>Wait less for a mess!</Text>
+    <Text
+      marginHorizontal={1}
+      size={-1}
+    >
+      Wait less for a mess!
+    </Text>
   </Box>
 );
 

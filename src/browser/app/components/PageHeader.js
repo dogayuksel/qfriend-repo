@@ -3,6 +3,8 @@ import Box from './Box';
 import Heading from './Heading';
 import Paragraph from './Paragraph';
 import Image from './Image';
+import Button from './Button';
+import Link from './Link';
 import React from 'react';
 
 type PageHeaderProps = {|
@@ -19,13 +21,28 @@ const PageHeader = ({ heading, description }: PageHeaderProps) => (
     backgroundSize={'cover'}
     backgroundPosition={'left bottom'}
   >
-    <Heading size={2} marginBottom={0}>{heading}</Heading>
-    {description &&
-     <Paragraph
-       marginBottom={0}
-       maxWidth={28}
-     >{description}</Paragraph>
-    }
+    <Box
+      display="flex"
+      justifyContent="space-between"
+      flexWrap="wrap"
+    >
+      <Box>
+        <Heading size={2} marginBottom={0}>{heading}</Heading>
+        {description &&
+         <Paragraph
+           marginBottom={0}
+           maxWidth={28}
+         >{description}</Paragraph>
+        }
+      </Box>
+      <Box>
+        <Button primary>
+          <Link bold color="black" to="https://www.messenger.com/t/qfriendberlin">
+            Report Queue
+          </Link>
+        </Button>
+      </Box>
+    </Box>
   </Box>
 );
 
