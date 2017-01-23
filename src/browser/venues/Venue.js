@@ -1,6 +1,5 @@
 /* @flow */
 import QueueView from '../queue/QueueView';
-import Gravatar from 'react-gravatar';
 import React from 'react';
 import { Heading,
          Loading,
@@ -41,13 +40,6 @@ const Venue = ({ event, venue: { key, title, description } }: VenueProps) => {
       style={styles.venueItem}
     >
       <Box align="center" style={styles.title}>
-        <Gravatar
-          default="retro"
-          email={title && `${title}@gmail.com`}
-          rating="x"
-          style={styles.gravatar}
-          title={description}
-        />
         <Box>
           <Heading
             size={3}
