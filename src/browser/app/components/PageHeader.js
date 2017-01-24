@@ -37,7 +37,7 @@ const PageHeader = ({ heading, description }: PageHeaderProps) => (
       </Box>
       <Box>
         <Button primary>
-          <Link bold color="black" to="https://www.messenger.com/t/qfriendberlin">
+          <Link bold color="black" to="https://m.me/qfriendberlin">
             Report Queue
           </Link>
         </Button>

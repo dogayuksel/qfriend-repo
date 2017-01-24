@@ -54,6 +54,7 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
       {
         breakpoint: 960,
         settings: {
+          speed: 600,
           slidesToShow: 3,
           slidesToScroll: 3,
         }
@@ -61,6 +62,7 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
       {
         breakpoint: 700,
         settings: {
+          speed: 700,
           slidesToShow: 2,
           slidesToScroll: 2,
         }
@@ -68,6 +70,7 @@ let QueuesTonight = ({ loaded, venues, queues, events }) => {
       {
         breakpoint: 490,
         settings: {
+          speed: 800,
           slidesToShow: 1,
           slidesToScroll: 1,
         }
