@@ -5,6 +5,8 @@ import Paragraph from './Paragraph';
 import Image from './Image';
 import Button from './Button';
 import Link from './Link';
+import Text from './Text';
+import MessageUsButton from './MessageUsButton';
 import React from 'react';
 
 type PageHeaderProps = {|
@@ -35,12 +37,14 @@ const PageHeader = ({ heading, description }: PageHeaderProps) => (
          >{description}</Paragraph>
         }
       </Box>
-      <Box>
-        <Button primary>
-          <Link bold color="black" to="https://m.me/qfriendberlin">
-            Report Queue
-          </Link>
-        </Button>
+      <Box
+        display="flex"
+        flexDirection="column"
+      >
+        <Text marginTop={2} bold>Report Queues</Text>
+        <Box>
+          <MessageUsButton color="white" size="large"/>
+        </Box>
       </Box>
     </Box>
   </Box>
