@@ -66,9 +66,9 @@ class EventPage extends React.Component {
            <meta itemProp="url" content={venue.facebookURL} />
            <meta itemProp="description" content={venue.description} />
          </div>
-         <Paragraph>
+         <Text>
            {event.description}
-         </Paragraph>
+         </Text>
          <Box
            margin={1}
            itemProp="image"
