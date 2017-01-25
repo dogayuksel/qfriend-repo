@@ -123,14 +123,16 @@ class Event extends React.Component {
           <Text>
             {venue && venue.title}
           </Text>
-          <Text
-            size={-1}
-            itemProp="startDate"
-            content={eventStartDate}
-            color={/ago/.test(countdown) ? 'warning' : 'white'}
-          >
-            {countdown}
-          </Text>
+          {(/ago/.test(countdown) || /hours/.test(countdown)) &&
+           <Text
+             size={-1}
+             itemProp="startDate"
+             content={eventStartDate}
+             color={/ago/.test(countdown) ? 'warning' : 'white'}
+           >
+             {countdown}
+           </Text>
+          }
         </Box>
         {isAdmin && pathname === '/editevents' &&
          <Box marginBottom={1}>
