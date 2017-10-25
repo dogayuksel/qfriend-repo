@@ -1,18 +1,15 @@
 // @flow
+import React from 'react';
+import { connect } from 'react-redux';
 import type { State } from '../../common/types';
 import QueuesTonight from './QueuesTonight';
-import React from 'react';
-import { reportEventClick } from '../../common/events/actions';
-import { connect } from 'react-redux';
 import {
   Box,
   PageHeader,
   Title,
-  Text,
-  Link,
 } from '../app/components';
 
-const TonightPage = ({ queues, reportEventClick }) => (
+const TonightPage = ({ queues }) => (
   <Box>
     <Title message="Live queue updates from famous Berlin Clubs" />
     <PageHeader
@@ -29,4 +26,4 @@ const TonightPage = ({ queues, reportEventClick }) => (
 
 export default connect((state: State) => ({
   queues: state.queues.queueMap,
-}), { reportEventClick })(TonightPage);
+}))(TonightPage);
