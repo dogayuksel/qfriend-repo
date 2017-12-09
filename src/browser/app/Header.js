@@ -1,13 +1,19 @@
 // @flow
-import type { State, User } from '../../common/types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+
+import type { State, User } from '../../common/types';
 import linksMessages from '../../common/app/linksMessages';
 import { Image, Box, Link, Text } from '../app/components';
-import { FormattedMessage } from 'react-intl';
-import { compose } from 'ramda';
-import { connect } from 'react-redux';
 
-const HeaderLink = ({ exactly, to, message }) => (
+type HeaderLinkProps = {
+  exactly?: boolean,
+  to: string,
+  message: Object,
+}
+
+const HeaderLink = ({ exactly, to, message }: HeaderLinkProps): Link => (
   <Link
     backgroundColor="primary"
     bold
@@ -28,8 +34,8 @@ type HeaderProps = {
 
 const Header = ({
   viewer,
-  isAdmin
-}: HeaderProps ) => (
+  isAdmin,
+}: HeaderProps) => (
   <Box
     backgroundColor="primary"
     display="flex"
@@ -44,11 +50,13 @@ const Header = ({
     {isAdmin &&
      <HeaderLink exactly to="/editevents" message={linksMessages.editEvents} />
     }
+    {isAdmin &&
+     <HeaderLink exactly to="/viewqueues" message={linksMessages.viewQueues} />
+    }
     <Link
       backgroundColor="primary"
       paddingHorizontal={0.5}
       paddingVertical={0.5}
-      target="_blank"
       to="https://www.facebook.com/QFriendBerlin/"
     >
       <Text bold color="black">Facebook</Text>

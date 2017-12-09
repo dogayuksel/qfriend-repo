@@ -22,6 +22,10 @@ const LinkMessages = defineMessages({
     defaultMessage: 'Edit Events',
     id: 'app.links.editEvents',
   },
+  viewQueues: {
+    defaultMessage: 'View Queues',
+    id: 'app.links.viewQueues',
+  },
   me: {
     defaultMessage: 'Me',
     id: 'app.links.me',
