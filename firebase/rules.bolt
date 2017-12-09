@@ -62,6 +62,7 @@ type QueueEntry {
 type Event {
   beginsAt: Number,
   name: LongString,
+  facebookEventId: String,
   description: ExtraLongString,
   photoURL: LongString,
   residentAdvisorURL: LongString,
@@ -108,7 +109,7 @@ path /events {
 }
 
 path /events {
-  index() {[ "beginsAt", "venueKey" ]}
+  index() {[ "beginsAt", "venueKey", "facebookEventId" ]}
 }
 
 path /queues/{queue} is QueueEntry {
