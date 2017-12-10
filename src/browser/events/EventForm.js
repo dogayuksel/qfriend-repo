@@ -4,7 +4,11 @@ import React from 'react';
 import { Calendar } from 'react-date-range';
 import moment from 'moment';
 import Select from 'react-select';
-/* import './react-select.css';*/
+
+// https://javascriptplayground.com/blog/
+//   2016/07/css-modules-webpack-react/
+import styles from './custom-select-calendar-styles.css';
+
 import R from 'ramda';
 import { connect } from 'react-redux';
 import { Text,
