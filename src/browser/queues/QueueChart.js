@@ -6,8 +6,17 @@ import { select } from 'd3-selection';
 
 import { Box } from '../app/components';
 
+type DataPoint = {
+  x: number,
+  y: number,
+}
+
+type QueuesData = {
+  [date: string]: Array<DataPoint>,
+}
+
 type Props = {
-  queuesData: Object,
+  queuesData: QueuesData,
   size: [number, number],
 }
 
@@ -17,10 +26,14 @@ export default class QueueChart extends React.Component<Props> {
     this.createBarChart.call(this);
   }
 
+  componentDidUpdate() {
+    this.createBarChart.call(this);
+  }
+
   node: ?HTMLElement;
 
   createBarChart() {
-    const data = this.props.queuesData;
+    const queuesData = this.props.queuesData;
     const node = this.node;
     const svg = select(node);
 
@@ -29,7 +42,7 @@ export default class QueueChart extends React.Component<Props> {
       .range([0, 600]);
 
     const yScale = scaleLinear()
-      .domain([0, 200])
+      .domain([0, 300])
       .range([300, 0]);
 
     const qline = line()
@@ -61,12 +74,14 @@ export default class QueueChart extends React.Component<Props> {
     svg.selectAll('text')
        .attr('fill', 'white');
 
-    svg.append('path')
-       .attr('d', qline(data))
-       .attr('transform', 'translate(30, -20)')
-       .attr('fill', 'none')
-       .attr('stroke', 'white')
-       .attr('stroke-width', '3');
+    Object.keys(queuesData).forEach((date) => {
+      svg.append('path')
+         .attr('d', qline(queuesData[date]))
+         .attr('transform', 'translate(30, -20)')
+         .attr('fill', 'none')
+         .attr('stroke', 'white')
+         .attr('stroke-width', '3');
+    });
   }
 
   render() {

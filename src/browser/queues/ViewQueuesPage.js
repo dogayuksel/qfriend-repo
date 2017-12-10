@@ -12,21 +12,37 @@ type Props = {
   queues: Object,
 }
 
+type DataPoint = {
+  x: number,
+  y: number,
+}
+
 let ViewQueuesPage = (props: Props) => {
   const venueKey = 1;
 
-  const preparePlotData = () => {
-    const { queues } = props;
-    const data = queues[venueKey] && queues[venueKey].map(queue => {
-      const time = moment(queue.loggedAt);
-      const date = time.format('YYYYMMDD');
-      return queue.value;
-    });
-    return data;
-  };
+  const data = {};
+  const { queues } = props;
 
-  const data = preparePlotData();
-  console.log(data);
+  const prepareDataPoint = (hour: number, minute: number, value: number): DataPoint => ({
+    x: (hour + (minute / 60)),
+    y: value,
+  });
+
+  /* eslint-disable no-unused-expressions */
+  queues[venueKey] && queues[venueKey].forEach(queue => {
+    const time = moment(queue.loggedAt);
+    const date: string = time.format('YYYYMMDD');
+    const hour: number = time.hours();
+    const minute: number = time.minutes();
+    const dataPoint = prepareDataPoint(hour, minute, queue.value);
+    if (data[date]) {
+      data[date].push(dataPoint);
+    } else {
+      data[date] = [];
+      data[date].push(dataPoint);
+    }
+  });
+  /* eslint-enable no-unused-expressions */
 
   return (
     <Box margin={1}>
@@ -34,12 +50,7 @@ let ViewQueuesPage = (props: Props) => {
         Queue chart for {venueKey}
       </Text>
       <QueueChart
-        queuesData={[
-          { y: 10, x: 0.3 },
-          { y: 40, x: 1.2 },
-          { y: 70, x: 2.5 },
-          { y: 30, x: 3.3 },
-        ]}
+        queuesData={data}
       />
     </Box>
   );
