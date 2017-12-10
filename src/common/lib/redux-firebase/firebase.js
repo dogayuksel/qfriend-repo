@@ -10,7 +10,7 @@ import React from 'react';
 //   ]
 // })(OnlineUsers);
 
-type Query = [Object, string, string, Function, Function | void];
+type Query = [Object, string, string, Function] | [Object, string, string, Function, Function];
 type onMount = (database: Object, props: any) => void | Array<Query>;
 
 // Higher order component for Firebase declarative queries.

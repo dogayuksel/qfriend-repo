@@ -1,60 +1,54 @@
 /* @flow */
-import type { State } from '../../common/types';
 import React from 'react';
-import Venue from '../venues/Venue';
 import moment from 'moment';
+import { connect } from 'react-redux';
 import FacebookProvider, { Share } from 'react-facebook';
+
+import type { State, Event, Venue } from '../../common/types';
 import { listVenues } from '../../common/venues/actions';
 import { checkAllQueues } from '../../common/queues/actions';
-import { getAllEvents } from '../../common/events/actions';
 import { firebase } from '../../common/lib/redux-firebase';
-import { reportEventClick } from '../../common/events/actions';
-import { connect } from 'react-redux';
-import { Text,
-         Heading,
-         Button,
-         Link,
-         Image,
-         Input,
-         PageHeader,
-         Paragraph,
-         Box } from '../app/components';
+import {
+  reportEventClick,
+  getAllEvents,
+} from '../../common/events/actions';
+import {
+  Text,
+  Heading,
+  Button,
+  Link,
+  PageHeader,
+  Paragraph,
+  Box,
+} from '../app/components';
 
-const styles = {
-  image: {
-    maxWidth: '80vw',
-    maxHeight: '50vh',
-  },
-  title: {
-    maxWidth: '550px',
-  },
+type Props = {
+  venues: [Venue],
+  event: Event,
+  reportEventClick: (eventName: string) => void,
+  children: any,
 }
 
-class EventPage extends React.Component {
+let EventPage = (props: Props) => {
+  const { venues, event, reportEventClick } = props;
+  const venue = event && venues.find(value => `${value.key}` === event.venueKey);
+  const eventStartDate = event && moment(event.beginsAt).format('LLLL');
 
-  static propTypes = {
-    event: React.PropTypes.object,
-  };
-
-  render() {
-    const { isAdmin, venues, event, reportEventClick } = this.props;
-    const venue = event && venues.find(value => `${value.key}` === event.venueKey);
-    const eventStartDate = event && moment(event.beginsAt).format('LLLL');
-
-    return (
-      <Box
-        itemScope
-        itemType="http://schema.org/MusicEvent"
-      >
-        {(event && venue) &&
+  return (
+    <Box
+      itemScope
+      itemType="http://schema.org/MusicEvent"
+    >
+      {(event && venue) &&
+       <Box>
+         <meta itemProp="name" content={event.name} />
          <PageHeader
            description={event.name}
            heading={venue.title}
-         >
-           <meta itemProp="name" content={event.name} />
-         </PageHeader>
-        }
-      {event && venue ?
+         />
+       </Box>
+      }
+      {(event && venue) ?
        <Box margin={1}>
          <div
            itemProp="location"
@@ -73,12 +67,11 @@ class EventPage extends React.Component {
            margin={1}
            itemProp="image"
            backgroundImage={event.photoURL}
-           backgroundSize='contain'
-           backgroundRepeat='no-repeat'
+           backgroundSize="contain"
+           backgroundRepeat="no-repeat"
            maxWidth={25}
            height={15}
-         >
-         </Box>
+         />
          <Box
            marginVertical={2}
            marginHorizontal={1}
@@ -113,7 +106,7 @@ class EventPage extends React.Component {
              </FacebookProvider>
            </Paragraph>
            <Paragraph>
-             {event.facebookEventURL ?
+             {event.facebookEventURL &&
               <Link
                 marginRight={1}
                 target="_blank"
@@ -124,39 +117,35 @@ class EventPage extends React.Component {
               >
                 facebook
               </Link>
-              :
-              null
              }
-        {event.residentAdvisorURL ?
-         <Link
-           target="_blank"
-           onClick={() => reportEventClick('residentAdvisor')}
-           to={event.residentAdvisorURL}
-           itemProp="url"
-           theme="secondary"
-         >
-           resident advisor
-         </Link>
-         :
-         null
-        }
+             {event.residentAdvisorURL &&
+              <Link
+                target="_blank"
+                onClick={() => reportEventClick('residentAdvisor')}
+                to={event.residentAdvisorURL}
+                itemProp="url"
+                theme="secondary"
+              >
+                resident advisor
+              </Link>
+             }
            </Paragraph>
          </Box>
        </Box>
        :
-       <Heading>
-         Can't find that event
+       <Heading margin={1}>
+         Can&apos;t find that event
        </Heading>
       }
-        <Link margin={1} to="/">
-          <Button primary>
-            Back
-          </Button>
-        </Link>
-      </Box>
-    );
-  }
-}
+      <Link margin={1} to="/">
+        <Button primary>
+          Back
+        </Button>
+      </Link>
+    </Box>
+  );
+};
+
 
 EventPage = firebase((database, props) => {
   const locationsRef = database.child('locations');
@@ -188,11 +177,14 @@ EventPage = firebase((database, props) => {
 export default connect((state: State, props) => {
   const { eventId } = props.params;
   return {
-    event: state.events.eventList.find(value => value.key === eventId),
-    isAdmin: state.admin.isAdmin,
+    event: state.events.eventList &&
+           state.events.eventList.find(
+             value => value.key === eventId),
     venues: state.venues.venueList,
   };
-}, { reportEventClick,
-     listVenues,
-     checkAllQueues,
-     getAllEvents })(EventPage);
+}, {
+  reportEventClick,
+  listVenues,
+  checkAllQueues,
+  getAllEvents,
+})(EventPage);

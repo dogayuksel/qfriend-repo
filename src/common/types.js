@@ -37,7 +37,7 @@ export type Venue = {
   title: string,
   description: string,
   facebookURL: string,
-  adress: string,
+  address: string,
   latlng: {lattitude: number, longitude: number},
 };
 
