@@ -37,6 +37,8 @@ export default class QueueChart extends React.Component<Props> {
     const node = this.node;
     const svg = select(node);
 
+    svg.selectAll('*').remove();
+
     const xScale = scaleLinear()
       .domain([0, 6])
       .range([0, 600]);
