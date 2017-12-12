@@ -9,12 +9,17 @@ import { firebase } from '../../common/lib/redux-firebase';
 import { checkAllQueues } from '../../common/queues/actions';
 import QueueChart from './QueueChart';
 
+/* eslint-disable no-unused-vars */
+import styles from './custom-select-calendar-styles.css';
+/* eslint-enable no-unused-vars */
+
 type Props = {
   queues: Object,
 }
 
 type ComponentState = {
   venueKey: number,
+  weekDay: string,
 }
 
 type DataPoint = {
@@ -28,6 +33,7 @@ class ViewQueuesPage extends React.Component<Props, ComponentState> {
     super(props);
     this.state = {
       venueKey: 1,
+      weekDay: 'Saturday',
     };
   }
 
@@ -39,11 +45,15 @@ class ViewQueuesPage extends React.Component<Props, ComponentState> {
   render() {
     const data = {};
     const { queues } = this.props;
-    const { venueKey } = this.state;
+    const { venueKey, weekDay } = this.state;
 
     /* eslint-disable no-unused-expressions */
     queues[venueKey] && queues[venueKey].forEach(queue => {
       const time = moment(queue.loggedAt);
+      const queueWeekDay: string = time.format('dddd');
+      if (queueWeekDay !== weekDay) {
+        return;
+      }
       const date: string = time.format('YYYYMMDD');
       const hour: number = time.hours();
       const minute: number = time.minutes();
@@ -61,31 +71,47 @@ class ViewQueuesPage extends React.Component<Props, ComponentState> {
 
     return (
       <Box margin={1}>
-        <Text>
-          Queue chart for {venueKey}
-        </Text>
-        <Select
-          placeholder="Select venue"
-          value={venueKey}
-          name="Venue"
-          options={[
-            { label: 1, value: 1 },
-            { label: 2, value: 2 },
-            { label: 3, value: 3 },
-          ]}
-          onChange={(selection) => {
-            this.setState({ venueKey: selection.value });
-          }}
-        />
+        <Box
+          style={{ width: '250px' }}
+        >
+          <Select
+            placeholder="Select venue"
+            value={venueKey}
+            name="Venue"
+            options={[
+              { label: 1, value: 1 },
+              { label: 2, value: 2 },
+              { label: 3, value: 3 },
+            ]}
+            onChange={(selection) => this.setState({ venueKey: selection.value })}
+          />
+          <Select
+            placeholder="Select week day"
+            value={weekDay}
+            name="WeekDay"
+            options={[
+              { label: 'Friday Night', value: 'Saturday' },
+              { label: 'Saturday Night', value: 'Sunday' },
+            ]}
+            onChange={(selection) => this.setState({ weekDay: selection.value })}
+          />
+        </Box>
         <QueueChart
           queuesData={data}
         />
+        <Box marginTop={1}>
+          <Text>
+            Total of {Object.keys(data).length} queues
+          </Text>
+        </Box>
       </Box>
     );
   }
 }
 
+/* eslint-disable no-class-assign */
 ViewQueuesPage = firebase((database, props) => {
+  /* eslint-enable no-class-assign */
   const queuesRef = database.child('queues');
   return [
     [queuesRef, 'on', 'value', props.checkAllQueues],

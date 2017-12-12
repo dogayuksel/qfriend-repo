@@ -1,5 +1,5 @@
 
-.Select, .rdr-Calendar {
+.Select {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
@@ -36,4 +36,8 @@
 .Select-option.is-focused {
     background-color: #222;
     color: #eee;
+}
+
+.Select-clear-zone {
+    display: none;
 }
