@@ -55,13 +55,13 @@ class ViewQueuesPage extends React.Component<Props, ComponentState> {
   });
 
   render() {
-    const data = {};
     const { queues, venues } = this.props;
     const { venueKey, weekDay } = this.state;
 
     const activeFilter = (venue) => venue.active === 1;
     const venueMap = R.map(this.pickMix, R.filter(activeFilter, venues));
 
+    const data = {};
     /* eslint-disable no-unused-expressions */
     queues[venueKey] && queues[venueKey].forEach(queue => {
       const time = moment(queue.loggedAt);
@@ -83,6 +83,8 @@ class ViewQueuesPage extends React.Component<Props, ComponentState> {
       }
     });
     /* eslint-enable no-unused-expressions */
+    // Sort queue entries by entry time
+    const sortedData = R.map(R.sortBy(R.prop('x')), data);
 
     return (
       <Box margin={1}>
@@ -107,9 +109,7 @@ class ViewQueuesPage extends React.Component<Props, ComponentState> {
             onChange={(selection) => this.setState({ weekDay: selection.value })}
           />
         </Box>
-        <QueueChart
-          queuesData={data}
-        />
+        <QueueChart queuesData={sortedData} />
         <Box marginTop={1}>
           <Text>
             Total of {Object.keys(data).length} queues
