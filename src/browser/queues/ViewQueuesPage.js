@@ -9,7 +9,9 @@ import { Text, Box } from '../app/components';
 import { firebase } from '../../common/lib/redux-firebase';
 import { listVenues } from '../../common/venues/actions';
 import { checkAllQueues } from '../../common/queues/actions';
+
 import QueueChart from './QueueChart';
+import QueuesTable from './QueuesTable';
 
 /* eslint-disable no-unused-vars */
 import styles from './custom-select-calendar-styles.css';
@@ -113,6 +115,7 @@ class ViewQueuesPage extends React.Component<Props, ComponentState> {
             Total of {Object.keys(data).length} queues
           </Text>
         </Box>
+        <QueuesTable data={data} />
       </Box>
     );
   }
