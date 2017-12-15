@@ -76,13 +76,32 @@ export default class QueueChart extends React.Component<Props> {
     svg.selectAll('text')
        .attr('fill', 'white');
 
+    const handleMouseOver = (d, i, element) => {
+      const path = element[0];
+      select(path).each(() =>
+        path.parentNode.append(path)
+      );
+      select(path)
+        .attr('stroke', '#ffde19')
+        .attr('stroke-width', '6');
+    };
+
+    const handleMouseOut = (d, i, element) => {
+      const path = element[0];
+      select(path)
+        .attr('stroke', 'white')
+        .attr('stroke-width', '3');
+    };
+
     Object.keys(queuesData).forEach((date) => {
       svg.append('path')
          .attr('d', qline(queuesData[date]))
          .attr('transform', 'translate(30, -20)')
          .attr('fill', 'none')
          .attr('stroke', 'white')
-         .attr('stroke-width', '3');
+         .attr('stroke-width', '3')
+         .on('mouseover', handleMouseOver)
+         .on('mouseout', handleMouseOut);
     });
   }
 
