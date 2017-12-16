@@ -18,7 +18,7 @@ import { Loading,
 let QueuesTonight = ({ loaded, events }) => {
   const earlyCheck = (a, b) => a.beginsAt - b.beginsAt;
   const sortedEvents = R.sort(earlyCheck, events);
-  const eventMap = R.groupBy((event) => moment(event.beginsAt).format('MMMM Do, dddd'), sortedEvents);
+  const eventMap = R.groupBy((event) => moment(event.beginsAt).format('MMMM Do-dddd'), sortedEvents);
 
   const settings = {
     dots: true,
@@ -62,9 +62,14 @@ let QueuesTonight = ({ loaded, events }) => {
        <Box marginHorizontal={2}>
          {Object.keys(eventMap).map((date, index) =>
            <Box key={index} marginTop={1} marginBottom={3}>
-             <Text size={2} marginLeft={1} marginBottom={1}>
-               {date}
-             </Text>
+             <Box marginLeft={1} display="flex" flexDirection="column">
+               <Text size={2} marginBottom={-0.5}>
+                 {date.split('-')[1]}
+               </Text>
+               <Text bold size={-1} marginLeft={0.05}>
+                 {date.split('-')[0]}
+            </Text>
+             </Box>
              <Slider {...settings}>
                {eventMap[date].map((event) => (
                  <div key={event.key}>
