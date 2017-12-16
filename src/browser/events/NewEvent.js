@@ -6,24 +6,16 @@ import { Calendar } from 'react-date-range';
 import moment from 'moment';
 import { saveEvent } from '../../common/events/actions';
 import { connect } from 'react-redux';
-import { Text,
-         Heading,
-         Button,
-         Link,
-         Form } from '../app/components';
 import { fields } from '../../common/lib/redux-fields';
 
 class NewEvent extends React.Component {
 
-  static propTypes = {
-    event: React.PropTypes.object,
-  };
-
   onFormSubmit = () => {
     const { fields } = this.props;
     const { hours, minutes, daymonth, ...event } = fields.$values();
-    event['beginsAt'] = moment(daymonth)
+    event.beginsAt = moment(daymonth)
       .add(hours, 'hours').add(minutes, 'minutes').valueOf();
+    event.facebookEventId = '';
     this.props.saveEvent(event, '', fields);
   }
 
@@ -65,6 +57,11 @@ NewEvent = fields({
     hours: 23,
     minutes: 45,
     isFeatured: false,
+    description: '',
+    name: '',
+    photoURL: '',
+    residentAdvisorURL: '',
+    facebookEventURL: '',
   }),
 })(NewEvent);
 

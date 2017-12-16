@@ -1,6 +1,7 @@
 /* @flow */
 import { Observable } from 'rxjs/Observable';
 import type { Action, Deps, Event } from '../types';
+import { appError } from '../app/actions';
 
 export const getAllEvents = (snap: Object): Action => {
   const events = snap.val();
@@ -30,6 +31,12 @@ export const saveEventDone = (): Action => {
   };
 };
 
+export const saveEventFail = (): Action => {
+  return {
+    type: 'SAVE_EVENT_FAILED',
+  };
+};
+
 export const deleteEvent = (eventKey: string): Action => {
   return {
     type: 'DELETE_EVENT',
@@ -43,55 +50,47 @@ export const deleteEventDone = (): Action => {
   };
 };
 
-const saveEventEpic = (action$: any, {firebase}: Deps) =>
+const saveEventEpic = (action$: any, { firebase }: Deps) =>
   action$
-  .filter((action: Action) => action.type === 'SAVE_EVENT')
-  .mergeMap(({ payload: { event, eventKey, fields } }) => {
-    if (!fields) {
+    .filter((action: Action) => action.type === 'SAVE_EVENT')
+    .mergeMap(({ payload: { event, eventKey, fields } }) => {
+      if (!fields) {
+        const promise = firebase
+          .child('events')
+          .child(eventKey)
+          .update({
+            ...event,
+          });
+        return Observable.from(promise)
+                         .map(saveEventDone)
+                         .catch(e => Observable.of(appError(e)));
+      } else {
+        const promise = firebase
+          .child('events')
+          .push(event);
+        return Observable.from(promise)
+                         .map(saveEventDone)
+                         .catch(e => Observable.of(appError(e)));
+      }
+    });
+
+
+const deleteEventEpic = (action$: any, {firebase}: Deps) =>
+  action$
+    .filter((action: Action) => action.type === 'DELETE_EVENT')
+    .mergeMap(({ payload: { eventKey } }) => {
       const promise = firebase
         .child('events')
         .child(eventKey)
-        .update({
-          ...event
-        })
+        .remove()
         .then(value => {
-          return saveEventDone();
+          return deleteEventDone();
         })
         .catch(e => {
           console.log(e);
         });
       return Observable.from(promise);
-    } else {
-      const promise = firebase
-        .child('events')
-        .push(event)
-        .then(value => {
-          fields.$reset();
-          return saveEventDone();
-        })
-        .catch(e => {
-          console.log(e);
-        })
-      return Observable.from(promise);
-    }
-  });
-
-const deleteEventEpic = (action$: any, {firebase}: Deps) =>
-  action$
-  .filter((action: Action) => action.type === 'DELETE_EVENT')
-  .mergeMap(({ payload: { eventKey } }) => {
-    const promise = firebase
-      .child('events')
-      .child(eventKey)
-      .remove()
-      .then(value => {
-        return deleteEventDone();
-      })
-      .catch(e => {
-        console.log(e);
-      });
-    return Observable.from(promise);
-  });
+    });
 
 export const epics = [
   saveEventEpic,

@@ -150,7 +150,7 @@ export type State = {
 // Actions
 
 export type Action =
-    { type: 'APP_ERROR', payload: { error: Error } }
+  { type: 'APP_ERROR', payload: { error: Error } }
   | { type: 'ADD_HUNDRED_TODOS', payload: { todos: Array<Todo> } }
   | { type: 'ADD_TODO', payload: { todo: Todo } }
   | { type: 'APP_ONLINE', payload: { online: boolean } }
@@ -199,6 +199,4 @@ export type Action =
   | { type: 'DELETE_QUEUE_ENTRY', payload: { key: string } }
   | { type: 'DELETE_QUEUE_ENTRY_DONE' }
   | { type: 'LIST_VENUES', payload: { venues: Object } }
-  | { type: 'TOGGLE_BASELINE' }
-  ;
-
+  | { type: 'TOGGLE_BASELINE' };

@@ -1,39 +1,31 @@
 /* @flow */
-import type { State } from '../../common/types';
 import React from 'react';
 import moment from 'moment';
-import QueueView from '../queue/QueueView';
-import { deleteEvent, reportEventClick } from '../../common/events/actions';
 import { connect } from 'react-redux';
+import QueueView from '../queue/QueueView';
+import type { State, Event, Venue } from '../../common/types';
+import { deleteEvent,
+         reportEventClick } from '../../common/events/actions';
 import { Text,
-         Heading,
-         Image,
          Link,
          Button,
          Paragraph,
          Box } from '../app/components';
 
-type timerState = {
-  countdown: ?String,
-};
-
-const styles = {
-  imageContainer: {
-    maxHeight: 160,
-    overflow: 'hidden',
-  }
+type ComponentState = {
+  countdown: string,
 }
 
-class Event extends React.Component {
+type Props = {
+  event: Event,
+  isAdmin: boolean,
+  venue: Venue,
+  pathname: string,
+  reportEventClick: typeof reportEventClick,
+  deleteEvent: typeof deleteEvent,
+}
 
-  static propTypes = {
-    event: React.PropTypes.object,
-    pathname: React.PropTypes.string,
-  };
-
-  state: timerState = {
-    countdown: null,
-  };
+class EventBlock extends React.Component<Props, ComponentState> {
 
   componentWillMount = () => {
     const { beginsAt } = this.props.event;
@@ -68,50 +60,32 @@ class Event extends React.Component {
            <meta itemProp="description" content={venue.description} />
          </div>
         }
-        {event.isFeatured ?
-         <Box
-           width={8}
-           height={8}
-           border={true}
-           borderColor="primary"
-           borderWidth="4"
-           display="flex"
-           flexDirection="column-reverse"
-           backgroundImage={event.photoURL}
-           backgroundSize="cover"
-           backgroundPosition="center center"
-           paddingHorizontal={1}
-           paddingVertical={1}
-         >
-           {/ago/.test(countdown) ?
-            <QueueView venueKey={parseInt(event.venueKey, 10)} />
-            :
-            null
-           }
-         </Box>
-         :
-         <Box
-           width={8}
-           height={8}
-           display="flex"
-           flexDirection="column-reverse"
-           backgroundImage={event.photoURL}
-           backgroundSize="cover"
-           backgroundPosition="center center"
-           paddingHorizontal={1}
-           paddingVertical={1}
-         >
-           {/ago/.test(countdown) ?
-            <QueueView venueKey={parseInt(event.venueKey, 10)} />
-            :
-            null
-           }
-         </Box>
-        }
         <Link
           onClick={() => reportEventClick(event.key)}
           to={`/event/${event.key}`}
         >
+          <Box
+            width={8}
+            height={8}
+            border={event.isFeatured && true}
+            borderColor="primary"
+            borderWidth="4"
+            display="flex"
+            flexDirection="column-reverse"
+            backgroundImage={event.photoURL}
+            backgroundSize="cover"
+            backgroundPosition="center center"
+            paddingHorizontal={1}
+            paddingVertical={1}
+            marginVertical={0.5}
+          >
+            {/ago/.test(countdown) ?
+             <QueueView venueKey={parseInt(event.venueKey, 10)} />
+             :
+             null
+            }
+          </Box>
+
           <Paragraph
             itemProp="name"
             maxWidth={8}
@@ -123,7 +97,9 @@ class Event extends React.Component {
           <Text>
             {venue && venue.title}
           </Text>
-          {(/ago/.test(countdown) || /hours/.test(countdown)) &&
+          {(/ago/.test(countdown) ||
+            /hours/.test(countdown) ||
+            /hour/.test(countdown)) &&
            <Text
              size={-1}
              itemProp="startDate"
@@ -140,12 +116,9 @@ class Event extends React.Component {
              marginRight={0.5}
              to={`${pathname}/event/${event.key}`}
            >
-             <Button
-               warning
-             >
+             <Button warning>
                Edit
-             </Button
-             >
+             </Button>
            </Link>
            <Button
              danger
@@ -167,4 +140,4 @@ export default connect((state: State, props) => {
     venue: (state.venues.venueList &&
             state.venues.venueList.find(value => `${value.key}` === venueKey)),
   };
-}, { deleteEvent, reportEventClick })(Event);
+}, { deleteEvent, reportEventClick })(EventBlock);

@@ -1,40 +1,48 @@
 /* @flow */
-import type { State } from '../../common/types';
 import React from 'react';
-import EventForm from './EventForm';
-import { Calendar } from 'react-date-range';
+import R from 'ramda';
 import moment from 'moment';
-import { saveEvent } from '../../common/events/actions'
 import { connect } from 'react-redux';
-import { Text,
-         Heading,
-         Button,
-         Link,
-         Form,
-         Input,
-         Box } from '../app/components';
+
+import type { State, Event } from '../../common/types';
+import EventForm from './EventForm';
+import { saveEvent } from '../../common/events/actions';
 import { fields } from '../../common/lib/redux-fields';
 
-class EditEvent extends React.Component {
+type Props = {
+  event: Event,
+  params: { eventKey: string },
+  isExact: boolean,
+  isAdmin: boolean,
+  saveEvent: typeof saveEvent,
+  fields: any,
+}
 
-  static propTypes = {
-    event: React.PropTypes.object,
-  };
+class EditEvent extends React.Component<Props> {
+
+  componentWillUnmount = () => {
+    this.props.fields.$reset();
+  }
 
   onFormSubmit = () => {
-    const { hours, minutes, daymonth, ...event } = this.props.fields.$values();
-    const eventKey = this.props.params.eventKey;
-    event['beginsAt'] = moment(daymonth)
+    const {
+      hours,
+      minutes,
+      daymonth,
+      ...event
+    } = this.props.fields.$values();
+    const { saveEvent, params: { eventKey } } = this.props;
+    const beginsAt = moment(daymonth)
       .add(hours, 'hours').add(minutes, 'minutes').valueOf();
-    this.props.saveEvent(event, eventKey, null);
+    const prepareEvent = R.compose(
+      R.assoc('beginsAt', beginsAt),
+    );
+    const newEvent = prepareEvent(event);
+    saveEvent(newEvent, eventKey, null);
   }
 
   handleSelect = (date, fields) => {
     fields.$setValue('daymonth', date.valueOf());
-  }
-
-  componentWillUnmount = () => {
-    this.props.fields.$reset();
   }
 
   render() {
@@ -61,7 +69,9 @@ class EditEvent extends React.Component {
   }
 }
 
+/* eslint-disable no-class-assign*/
 EditEvent = fields({
+  /* eslint-enable no-class-assign*/
   path: 'editEvent',
   fields: [
     'name',
@@ -93,10 +103,10 @@ EditEvent = fields({
                      .valueOf();
     return ({
       name,
-      description,
-      photoURL,
-      residentAdvisorURL,
-      facebookEventURL,
+      description: description || '',
+      photoURL: photoURL || '',
+      residentAdvisorURL: residentAdvisorURL || '',
+      facebookEventURL: facebookEventURL || '',
       venueKey,
       isFeatured,
       daymonth: rest,
@@ -110,7 +120,7 @@ export default connect((state: State, props) => {
   const { eventKey } = props.params;
   return {
     isAdmin: state.admin.isAdmin,
-    event: state.events.eventList.find((value) => value.key == eventKey),
+    event: state.events.eventList && state.events.eventList.find((value) => value.key === eventKey),
     venues: state.venues.venueList,
   };
-},{ saveEvent })(EditEvent);
+}, { saveEvent })(EditEvent);
