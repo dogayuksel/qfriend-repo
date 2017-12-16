@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import FacebookProvider, { Share } from 'react-facebook';
 
 import type { State, Event, Venue } from '../../common/types';
+import QueueView from '../queue/QueueView';
 import { listVenues } from '../../common/venues/actions';
 import { checkAllQueues } from '../../common/queues/actions';
 import { firebase } from '../../common/lib/redux-firebase';
@@ -84,7 +85,7 @@ let EventPage = (props: Props) => {
              {eventStartDate}
            </Paragraph>
            <Paragraph
-             marginBottom={2}
+             marginBottom={1}
            >
              <Link
                target="_blank"
@@ -94,13 +95,19 @@ let EventPage = (props: Props) => {
                {venue.address}
              </Link>
            </Paragraph>
+           <Box maxWidth={10} marginBottom={2}>
+             <Text marginLeft={1}>Estimated waiting time:</Text>
+             <QueueView venueKey={parseInt(event.venueKey, 10)} />
+           </Box>
            <Paragraph>
              <FacebookProvider appID="1000515043403983">
                <Share href={`http://qfriend.co/event/${event.key}`}>
                  <Button
-                   success
+                   success size={-2}
                  >
-                   Share Event On Facebook
+                   <Text color="black" bold size={-1}>
+                     Send Event to A Friend
+                   </Text>
                  </Button>
                </Share>
              </FacebookProvider>
@@ -137,7 +144,7 @@ let EventPage = (props: Props) => {
          Can&apos;t find that event
        </Heading>
       }
-      <Link margin={1} to="/">
+      <Link margin={2} to="/">
         <Button primary>
           Back
         </Button>
