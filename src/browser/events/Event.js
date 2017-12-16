@@ -95,11 +95,12 @@ class EventBlock extends React.Component<Props, ComponentState> {
         </Link>
         <Box display="flex" flexDirection="column">
           <Text>
-            {venue && venue.title}
+            {pathname !== '/venues' && venue && venue.title}
           </Text>
           {(/ago/.test(countdown) ||
             /hours/.test(countdown) ||
-            /hour/.test(countdown)) &&
+            /hour/.test(countdown) ||
+            pathname === '/venues') &&
            <Text
              size={-1}
              itemProp="startDate"

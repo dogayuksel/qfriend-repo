@@ -47,6 +47,7 @@ const Header = ({
       src={require('./qfriend-logo.png')}
     />
     <HeaderLink exactly to="/" message={linksMessages.home} />
+    <HeaderLink exactly to="/venues" message={linksMessages.venues} />
     {isAdmin &&
      <HeaderLink exactly to="/editevents" message={linksMessages.editEvents} />
     }
