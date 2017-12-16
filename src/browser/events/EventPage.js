@@ -61,9 +61,6 @@ let EventPage = (props: Props) => {
            <meta itemProp="url" content={venue.facebookURL} />
            <meta itemProp="description" content={venue.description} />
          </div>
-         <Text>
-           {event.description}
-         </Text>
          <Box
            margin={1}
            itemProp="image"
@@ -73,6 +70,10 @@ let EventPage = (props: Props) => {
            maxWidth={25}
            height={15}
          />
+         {event.description && event.description.split('\n').map((part) => (
+           <Paragraph marginLeft={1} color="white">{part}</Paragraph>
+         ))
+         }
          <Box
            marginVertical={2}
            marginHorizontal={1}
