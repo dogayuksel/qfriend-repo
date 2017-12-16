@@ -1,0 +1,9 @@
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-link {
+    text-align: right;
+}
