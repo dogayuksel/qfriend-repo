@@ -102,11 +102,9 @@ let EventPage = (props: Props) => {
            <Paragraph>
              <FacebookProvider appID="1000515043403983">
                <Share href={`http://qfriend.co/event/${event.key}`}>
-                 <Button
-                   success size={-2}
-                 >
+                 <Button success size={-1}>
                    <Text color="black" bold size={-1}>
-                     Send Event to A Friend
+                     Share Event on Facebook
                    </Text>
                  </Button>
                </Share>
