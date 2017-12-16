@@ -53,14 +53,6 @@ const Header = ({
     {isAdmin &&
      <HeaderLink exactly to="/viewqueues" message={linksMessages.viewQueues} />
     }
-    <Link
-      backgroundColor="primary"
-      paddingHorizontal={0.5}
-      paddingVertical={0.5}
-      to="https://www.facebook.com/QFriendBerlin/"
-    >
-      <Text bold color="black">Facebook</Text>
-    </Link>
     {viewer &&
      <HeaderLink to="/me" message={linksMessages.me} />
     }
