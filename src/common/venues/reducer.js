@@ -1,6 +1,6 @@
 /* @flow */
-import type { Action, VenuesState, Venue } from '../types';
 import R from 'ramda';
+import type { Action, VenuesState, Venue } from '../types';
 
 const initialState = {
   venueList: [],
@@ -15,18 +15,10 @@ const reducer = (
     case 'LIST_VENUES': {
       const { venues } = action.payload;
       if (!venues) {
-        return state
+        return state;
       }
-      const venueList = Object
-        .keys(venues)
-        .map( key => {
-          const venue: Venue = {
-            ...venues[key],
-            key: parseInt(key, 10),
-          };
-          return venue;
-        });
-      // TODO filter actives
+      const venueList: Array<Venue> = R.filter(
+        R.propEq('active', 1))(venues);
       return { ...state, venueList, venuesLoaded: true };
     }
 
