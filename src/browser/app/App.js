@@ -24,6 +24,7 @@ import {
 import FieldsPage from '../fields/FieldsPage';
 import HomePage from '../home/HomePage';
 import VenuesPage from '../venues/VenuesPage';
+import VenuePage from '../venues/VenuePage';
 import IntlPage from '../intl/IntlPage';
 import MePage from '../me/MePage';
 import NotFoundPage from '../notfound/NotFoundPage';
@@ -85,6 +86,7 @@ const App = ({
           <Match exactly pattern="/" component={HomePage} />
           <Match pattern="/event/:eventId" component={EventPage} />
           <Match pattern="/venues" component={VenuesPage} />
+          <Match pattern="/venue/:venueName" component={VenuePage} />
           <Match pattern="/users" component={UsersPage} />
           <Match pattern="/todos" component={TodosPage} />
           <Match pattern="/fields" component={FieldsPage} />

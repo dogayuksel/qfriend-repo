@@ -2,7 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { Box, Text, PageHeader } from '../app/components';
+import { Box, Text, Link, PageHeader } from '../app/components';
 
 import type { State, Venue, Event } from '../../common/types';
 import { listVenues } from '../../common/venues/actions';
@@ -24,6 +24,13 @@ const VenueBlock = ({ venue, events }) => (
        <Text size={2} marginLeft={1.5}>
          {venue.title}
        </Text>
+       <Link
+         to={`/venue/${venue.title}`}
+         marginLeft={1}
+         size={-1}
+       >
+         read more
+       </Link>
        <br />
        <Text size={-1} marginLeft={1.5}>
          Upcoming events:

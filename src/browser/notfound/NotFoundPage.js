@@ -1,8 +1,8 @@
 // @flow
 import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import linksMessages from '../../common/app/linksMessages';
 import messages from '../../common/notfound/messages';
-import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   Box,
   Link,
@@ -21,7 +21,7 @@ const NotFoundPage = ({ intl }: NotFoundPageProps) => (
       heading={intl.formatMessage(messages.h1)}
       description={intl.formatMessage(messages.p)}
     />
-    <Link exactly to="/">
+    <Link exactly to="/" margin={1}>
       <FormattedMessage {...messages.continue} />
     </Link>
   </Box>
