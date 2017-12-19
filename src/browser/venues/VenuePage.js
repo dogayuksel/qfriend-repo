@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import R from 'ramda';
 import {
   Box,
-  Text,
   Paragraph,
   Link,
   PageHeader } from '../app/components';
@@ -13,7 +12,7 @@ import { listVenues } from '../../common/venues/actions';
 
 type Props = {
   params: {
-    venueName: string,
+    shortName: string,
   },
   venue: Venue,
   listVenues: typeof listVenues,
@@ -53,8 +52,8 @@ VenuePage = firebase((database, props) => {
 })(VenuePage);
 
 export default connect((state: State, props) => {
-  const { venueName } = props.params;
+  const { shortName } = props.params;
   return {
-    venue: R.find(R.propEq('title', venueName))(state.venues.venueList),
+    venue: R.find(R.propEq('shortName', shortName))(state.venues.venueList),
   };
 }, { listVenues })(VenuePage);

@@ -86,7 +86,7 @@ const App = ({
           <Match exactly pattern="/" component={HomePage} />
           <Match pattern="/event/:eventId" component={EventPage} />
           <Match pattern="/venues" component={VenuesPage} />
-          <Match pattern="/venue/:venueName" component={VenuePage} />
+          <Match pattern="/venue/:shortName" component={VenuePage} />
           <Match pattern="/users" component={UsersPage} />
           <Match pattern="/todos" component={TodosPage} />
           <Match pattern="/fields" component={FieldsPage} />
