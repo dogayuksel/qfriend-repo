@@ -14,6 +14,7 @@ import { listVenues } from '../../common/venues/actions';
 import { getAllEvents } from '../../common/events/actions';
 import { firebase } from '../../common/lib/redux-firebase';
 import EventBlock from '../events/Event';
+import VenuesLinks from './VenuesLinks';
 
 type Props = {
   venues: Array<Venue>,
@@ -85,6 +86,7 @@ let VenuesPage = (props: Props) => {
           );
         })}
       </Box>
+      <VenuesLinks venues={venueList} />
     </Box>
   );
 };
