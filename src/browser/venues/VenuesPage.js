@@ -2,8 +2,13 @@ import React from 'react';
 import R from 'ramda';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { Box, Text, Link, PageHeader } from '../app/components';
 
+import {
+  Box,
+  Heading,
+  Link,
+  PageHeader,
+} from '../app/components';
 import type { State, Venue, Event } from '../../common/types';
 import { listVenues } from '../../common/venues/actions';
 import { getAllEvents } from '../../common/events/actions';
@@ -21,34 +26,35 @@ const VenueBlock = ({ venue, events }) => (
   <Box>
     {events.length > 0 ?
      <Box marginBottom={3}>
-       <Text size={2} marginLeft={1.5}>
+       <Heading size={2} marginLeft={1.5} marginBottom={-0.5}>
          {venue.title}
-       </Text>
+       </Heading>
        <Link
-         to={`/venue/${venue.title}`}
-         marginLeft={1}
+         marginLeft={1.5}
+         to={`/venue/${venue.shortName}`}
          size={-1}
        >
          read more
        </Link>
-       <br />
-       <Text size={-1} marginLeft={1.5}>
+       <Heading marginLeft={1.5} marginTop={1} marginBottom={0}>
          Upcoming events:
-       </Text>
+       </Heading>
        <Box display="flex" flexWrap="wrap">
          {events.map((event) => (
-           <EventBlock
-             pathname={'/venues'}
-             key={event.key}
-             event={event}
-           />
+           <Box marginBottom={2}>
+             <EventBlock
+               pathname={'/venues'}
+               key={event.key}
+               event={event}
+             />
+           </Box>
          ))}
+           </Box>
        </Box>
-     </Box>
      :
      null
     }
-  </Box>
+     </Box>
 );
 
 let VenuesPage = (props: Props) => {
