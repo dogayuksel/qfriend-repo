@@ -115,7 +115,7 @@ class ViewQueuesPage extends React.Component<Props, ComponentState> {
             Total of {Object.keys(data).length} queues
           </Text>
         </Box>
-        <QueuesTable data={data} />
+        <QueuesTable data={data} venueKey={venueKey} />
       </Box>
     );
   }

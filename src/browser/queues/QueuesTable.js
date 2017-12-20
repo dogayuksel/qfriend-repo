@@ -1,8 +1,13 @@
 /* @flow */
 import React from 'react';
+import moment from 'moment';
+import { connect } from 'react-redux';
 import R from 'ramda';
 
-import { Box, Text } from '../app/components';
+import { Box, Text, Link } from '../app/components';
+import { firebase } from '../../common/lib/redux-firebase';
+import { getAllEvents } from '../../common/events/actions';
+import type { State, Event } from '../../common/types';
 
 type DataPoint = {
   x: number,
@@ -15,12 +20,14 @@ type QueuesData = {
 
 type Props = {
   data: QueuesData,
+  events: Array<Event>,
+  venueKey: number,
 }
 
 type TableData = { [date: string]: number };
 
-const QueuesTable = (props: Props) => {
-  const { data } = props;
+let QueuesTable = (props: Props) => {
+  const { data, events } = props;
 
   const calculateAverage = R.compose(
     R.mean(),
@@ -36,6 +43,26 @@ const QueuesTable = (props: Props) => {
   );
   const dates: Array<string> = prepareDates(tableData);
 
+  const getEventDate = (timeStamp) => moment(timeStamp).add(1, 'days').format('YYYYMMDD');
+
+  const findFBEventAtDate = (date, events) => {
+    for (const eve of events) {
+      if (getEventDate(eve.beginsAt) === date) {
+        return eve.facebookEventURL;
+      }
+    }
+    return null;
+  };
+
+  const findRAEventAtDate = (date, events) => {
+    for (const eve of events) {
+      if (getEventDate(eve.beginsAt) === date) {
+        return eve.residentAdvisorURL;
+      }
+    }
+    return null;
+  };
+
   return (
     <Box
       display="flex"
@@ -44,12 +71,42 @@ const QueuesTable = (props: Props) => {
     >
       <Text bold>Date: Average Queue </Text>
       {dates.map(date =>
-        <Text key={date}>
-          {date}: {`${tableData[date].toFixed(0)}`.padStart(5)}
-        </Text>
+        <Box key={date}>
+          <Text>
+            {date}:&nbsp;
+          </Text>
+          <Text>
+            {`${tableData[date].toFixed(0)}`.padStart(5)}:&nbsp;
+          </Text>
+          <Text>
+            {findFBEventAtDate(date, events) &&
+             <Link to={findFBEventAtDate(date, events)}>
+               FB
+             </Link>
+            }
+            <Text>&nbsp;</Text>
+            {findRAEventAtDate(date, events) &&
+             <Link to={findRAEventAtDate(date, events)}>
+               RA
+             </Link>
+            }
+          </Text>
+        </Box>
       )}
     </Box>
   );
 };
 
-export default QueuesTable;
+QueuesTable = firebase((database, props) => {
+  const { venueKey } = props;
+  const eventsRef = database.child('events')
+                            .orderByChild('venueKey')
+                            .equalTo(`${venueKey}`);
+  return [
+    [eventsRef, 'on', 'value', props.getAllEvents],
+  ];
+})(QueuesTable);
+
+export default connect((state: State) => ({
+  events: state.events.eventList,
+}), { getAllEvents })(QueuesTable);

@@ -1,6 +1,6 @@
 /* @flow */
 import type { Action, EventsState, Event } from '../types';
-import R from 'ramda';
+/* import R from 'ramda';*/
 
 const initialState = {
   eventList: [],
@@ -20,7 +20,7 @@ const reducer = (
       }
       const eventList = Object
         .keys(events)
-        .map( key => {
+        .map(key => {
           const event: Event = {
             ...events[key],
             key,
