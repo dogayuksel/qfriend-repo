@@ -27,7 +27,7 @@ type Props = {
 type TableData = { [date: string]: number };
 
 let QueuesTable = (props: Props) => {
-  const { data, events } = props;
+  const { data, events, venueKey } = props;
 
   const calculateAverage = R.compose(
     R.mean(),
@@ -47,7 +47,8 @@ let QueuesTable = (props: Props) => {
 
   const findFBEventAtDate = (date, events) => {
     for (const eve of events) {
-      if (getEventDate(eve.beginsAt) === date) {
+      if (getEventDate(eve.beginsAt) === date &&
+          parseInt(eve.venueKey, 10) === venueKey) {
         return eve.facebookEventURL;
       }
     }
@@ -56,7 +57,8 @@ let QueuesTable = (props: Props) => {
 
   const findRAEventAtDate = (date, events) => {
     for (const eve of events) {
-      if (getEventDate(eve.beginsAt) === date) {
+      if (getEventDate(eve.beginsAt) === date &&
+          parseInt(eve.venueKey, 10) === venueKey) {
         return eve.residentAdvisorURL;
       }
     }
@@ -98,10 +100,10 @@ let QueuesTable = (props: Props) => {
 };
 
 QueuesTable = firebase((database, props) => {
-  const { venueKey } = props;
+  const timeThresh = moment([2017, 5]).format('X');
   const eventsRef = database.child('events')
-                            .orderByChild('venueKey')
-                            .equalTo(`${venueKey}`);
+                            .orderByChild('beginsAt')
+                            .endAt(timeThresh);
   return [
     [eventsRef, 'on', 'value', props.getAllEvents],
   ];
