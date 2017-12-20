@@ -1,0 +1,38 @@
+* Qfriend
+Repository of the qfriend website hosted here, [[https://qfriend.co/][qfriend]].
+
+* Development
+- Run
+#+begin_src
+gulp
+#+end_src
+- Go to the address [[http://localhost:3000][localhost:3000]]
+
+* Other Tasks
+** Dev Tasks
+- `gulp` run web app in development mode
+- `gulp ios` run iOS app in development mode
+- `gulp android` run Android app in development mode
+- `gulp -p` run web app in production mode
+- `gulp -f` run web app in development mode, but only browser source rebuilds on file changes
+- `gulp jest` run jest tests
+- `gulp jest-watch` continuous test running for TDD
+- `gulp eslint` eslint
+- `gulp eslint --fix` fix fixable eslint issues
+- `gulp messages-extract` extract messages for translation
+- `gulp messages-check` check missing and unused translations
+- `gulp messages-clear` remove unused translations
+- `gulp favicon` create universal favicon
+
+** Production Tasks
+- `gulp build -p` build app for production
+- `npm test` run all checks and tests
+- `node src/server` start app, remember to set NODE_ENV
+- `gulp to-html` render app to HTML for static hosting like [[https://www.firebase.com/features.html#features-hosting][Firebase]]
+- `gulp deploy-heroku` deploy [[https://www.heroku.com/][Heroku]] app
+- `gulp deploy-firebase` deploy [[https://firebase.google.com/][Firebase]] app
+- `gulp deploy-firebase-database` deploy Firebase database only
+
+* Credit
+  Based on the work of [[https://twitter.com/steida][Daniel Steigerwald]] and the Este community.
+
