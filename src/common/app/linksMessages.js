@@ -22,6 +22,10 @@ const LinkMessages = defineMessages({
     defaultMessage: 'Venues',
     id: 'app.links.venues',
   },
+  guides: {
+    defaultMessage: 'Guides',
+    id: 'app.links.guides',
+  },
   editEvents: {
     defaultMessage: 'Edit Events',
     id: 'app.links.editEvents',

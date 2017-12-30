@@ -34,6 +34,7 @@ import TodosPage from '../todos/TodosPage';
 import EditEventsPage from '../events/EditEventsPage';
 import ViewQueuesPage from '../queues/ViewQueuesPage';
 import EventPage from '../events/EventPage';
+import GuidesPage from '../guides/GuidesPage';
 import UsersPage from '../users/UsersPage';
 
 type AppProps = {
@@ -87,6 +88,7 @@ const App = ({
           <Match pattern="/event/:eventId" component={EventPage} />
           <Match pattern="/venues" component={VenuesPage} />
           <Match pattern="/venue/:shortName" component={VenuePage} />
+          <Match pattern="/guides" component={GuidesPage} />
           <Match pattern="/users" component={UsersPage} />
           <Match pattern="/todos" component={TodosPage} />
           <Match pattern="/fields" component={FieldsPage} />

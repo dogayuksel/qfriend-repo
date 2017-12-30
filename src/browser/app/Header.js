@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import type { State, User } from '../../common/types';
 import linksMessages from '../../common/app/linksMessages';
-import { Image, Box, Link, Text } from '../app/components';
+import { Image, Box, Link } from '../app/components';
 
 type HeaderLinkProps = {
   exactly?: boolean,
@@ -48,6 +48,7 @@ const Header = ({
     />
     <HeaderLink exactly to="/" message={linksMessages.home} />
     <HeaderLink exactly to="/venues" message={linksMessages.venues} />
+    <HeaderLink exactly to="/guides" message={linksMessages.guides} />
     {isAdmin &&
      <HeaderLink exactly to="/editevents" message={linksMessages.editEvents} />
     }
