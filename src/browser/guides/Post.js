@@ -20,8 +20,14 @@ const Post = ({ blogEntry }: Props) => (
       { blogEntry.date }
     </Heading>
     <Text>
-      {blogEntry.content.split('\n').map((part) => (
-        <Paragraph marginLeft={1} color="white">{part}</Paragraph>
+      {blogEntry.content.split('\n').map((part, key) => (
+        <Paragraph
+          marginLeft={1}
+          color="white"
+          key={key}
+        >
+          {part}
+        </Paragraph>
       ))
       }
     </Text>
