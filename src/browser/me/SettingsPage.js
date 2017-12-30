@@ -2,7 +2,6 @@
 import React from 'react';
 import SwitchLocale from '../intl/SwitchLocale';
 import linksMessages from '../../common/app/linksMessages';
-import { FormattedMessage } from 'react-intl';
 import {
   Box,
   Paragraph,
@@ -12,8 +11,9 @@ import {
 const SettingsPage = () => (
   <Box>
     <Title message={linksMessages.settings} />
+    <SwitchLocale />
     <Paragraph>
-      <FormattedMessage {...linksMessages.settings} />
+      You will soon access your newsletter settings here.
     </Paragraph>
   </Box>
 );

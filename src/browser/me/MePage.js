@@ -19,9 +19,9 @@ import {
 import Settings from './SettingsPage';
 import LogQueue from './LogQueuePage';
 
-const Navbar = ({ pathname, isAdmin }) => (
+const Navbar = ({ pathname }) => (
   <Box
-    marginVertical={1}
+    marginVertical={2}
     marginHorizontal={1}
   >
     <Link exactly to={pathname} paddingHorizontal={0.5}>
@@ -30,11 +30,23 @@ const Navbar = ({ pathname, isAdmin }) => (
     <Link to={`${pathname}/settings`} paddingHorizontal={0.5}>
       <FormattedMessage {...linksMessages.settings} />
     </Link>
-    {isAdmin &&
-     <Link to={`${pathname}/logqueue`} paddingHorizontal={0.5}>
-       <FormattedMessage {...linksMessages.logQueue} />
-     </Link>
-    }
+  </Box>
+);
+
+const AdminNavbar = ({ pathname }) => (
+  <Box
+    marginVertical={1}
+    marginHorizontal={1}
+  >
+    <Link to={`${pathname}/logqueue`} paddingHorizontal={0.5}>
+      <FormattedMessage {...linksMessages.logQueue} />
+    </Link>
+    <Link to="/editevents" paddingHorizontal={0.5}>
+      <FormattedMessage {...linksMessages.editEvents} />
+    </Link>
+    <Link to="/viewqueues" paddingHorizontal={0.5}>
+      <FormattedMessage {...linksMessages.viewQueues} />
+    </Link>
   </Box>
 );
 
@@ -44,32 +56,36 @@ type MePageProps = {
   isAdmin: boolean,
 };
 
-let MePage = ({ pathname, viewer, isAdmin }): MePageProps => (
+const MePage = ({ pathname, viewer, isAdmin }): MePageProps => (
   !viewer ?
   <Redirect to="/" />
   :
-  <Box
-    margin={1}
-  >
+  <Box marginLeft={2} marginTop={1}>
     <Title message={linksMessages.me} />
-    <Navbar isAdmin={isAdmin} pathname={pathname} />
+    {isAdmin &&
+     <Box marginTop={2}>
+       <Text marginLeft={2}>Admin Actions</Text>
+       <AdminNavbar pathname={pathname} />
+     </Box>
+    }
+    <Navbar pathname={pathname} />
     <Match
       exactly
       pattern={pathname}
       render={() => (
-          <Box>
-            <Text>{viewer.displayName}</Text>
-            <Box marginVertical={1}>
-              <Image
-                src={getUserPhotoUrl(viewer)}
-                height={100}
-                width={100}
-                title={viewer.displayName}
-                      />
-            </Box>
-            <SignOut />
+        <Box>
+          <Text>{viewer.displayName}</Text>
+          <Box marginVertical={1}>
+            <Image
+              src={getUserPhotoUrl(viewer)}
+                  height={100}
+                  width={100}
+                  title={viewer.displayName}
+            />
           </Box>
-        )}
+          <SignOut />
+        </Box>
+      )}
     />
     <Match pattern={`${pathname}/settings`} component={Settings} />
     <Match pattern={`${pathname}/logqueue`} component={LogQueue} />

@@ -34,7 +34,6 @@ type HeaderProps = {
 
 const Header = ({
   viewer,
-  isAdmin,
 }: HeaderProps) => (
   <Box
     backgroundColor="primary"
@@ -49,16 +48,9 @@ const Header = ({
     <HeaderLink exactly to="/" message={linksMessages.home} />
     <HeaderLink exactly to="/venues" message={linksMessages.venues} />
     <HeaderLink exactly to="/guides" message={linksMessages.guides} />
-    {isAdmin &&
-     <HeaderLink exactly to="/editevents" message={linksMessages.editEvents} />
-    }
-    {isAdmin &&
-     <HeaderLink exactly to="/viewqueues" message={linksMessages.viewQueues} />
-    }
-    {viewer &&
+    {viewer ?
      <HeaderLink to="/me" message={linksMessages.me} />
-    }
-    {!viewer &&
+     :
      <HeaderLink to="/signin" message={linksMessages.signIn} />
     }
   </Box>
@@ -71,6 +63,5 @@ Header.propTypes = {
 export default connect(
   (state: State) => ({
     viewer: state.users.viewer,
-    isAdmin: state.admin.isAdmin,
   }),
 )(Header);
