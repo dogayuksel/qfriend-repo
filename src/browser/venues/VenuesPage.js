@@ -42,20 +42,19 @@ const VenueBlock = ({ venue, events }) => (
        </Heading>
        <Box display="flex" flexWrap="wrap">
          {events.map((event) => (
-           <Box marginBottom={2}>
+           <Box marginBottom={2} key={event.key}>
              <EventBlock
                pathname={'/venues'}
-               key={event.key}
                event={event}
              />
            </Box>
          ))}
-           </Box>
        </Box>
+     </Box>
      :
      null
     }
-     </Box>
+  </Box>
 );
 
 let VenuesPage = (props: Props) => {

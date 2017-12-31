@@ -17,7 +17,7 @@ const VenuesLinks = (props: Props) => {
       justifyContent="space-between"
     >
       {venues.map((venue) =>
-        <Text>
+        <Text key={venue.key}>
           <Link
             size={-1}
             margin={1}
