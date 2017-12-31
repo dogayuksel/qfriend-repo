@@ -11,9 +11,10 @@ import { checkAllQueues } from '../../common/queues/actions';
 import { firebase } from '../../common/lib/redux-firebase';
 import {
   reportEventClick,
-  getAllEvents,
+  getOneEvent,
 } from '../../common/events/actions';
 import {
+  Title,
   Text,
   Heading,
   Button,
@@ -43,6 +44,7 @@ let EventPage = (props: Props) => {
       {(event && venue) &&
        <Box>
          <meta itemProp="name" content={event.name} />
+         <Title message={event.name} />
          <PageHeader
            description={event.name}
            heading={venue.title}
@@ -70,9 +72,12 @@ let EventPage = (props: Props) => {
            maxWidth={25}
            height={15}
          />
-         {event.description && event.description.split('\n').map((part) => (
-           <Paragraph marginLeft={1} color="white">{part}</Paragraph>
-         ))
+         {event.description &&
+          event.description.split('\n').map((part, index) => (
+            <Paragraph marginLeft={1} color="white" key={index}>
+              {part}
+            </Paragraph>
+          ))
          }
          <Box
            marginVertical={2}
@@ -171,12 +176,11 @@ EventPage = firebase((database, props) => {
 })(EventPage);
 
 EventPage = firebase((database, props) => {
-  const timeThresh = moment().subtract(12, 'hours').valueOf();
+  const { eventId } = props.params;
   const eventsRef = database.child('events')
-                            .orderByChild('beginsAt')
-                            .startAt(timeThresh);
+                            .child(eventId);
   return [
-    [eventsRef, 'on', 'value', props.getAllEvents],
+    [eventsRef, 'on', 'value', props.getOneEvent],
   ];
 })(EventPage);
 
@@ -192,5 +196,5 @@ export default connect((state: State, props) => {
   reportEventClick,
   listVenues,
   checkAllQueues,
-  getAllEvents,
+  getOneEvent,
 })(EventPage);

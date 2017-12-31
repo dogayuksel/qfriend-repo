@@ -121,7 +121,7 @@ export type VenuesState = {
 }
 
 export type EventsState = {
-  eventList: ?Array<Event>,
+  eventList: Array<Event>,
   eventsLoaded: boolean,
   eventBeingSaved: boolean,
 };
@@ -184,6 +184,10 @@ export type Action =
   | { type: 'SIGN_UP_FAIL', payload: { error: Error } }
   | { type: 'TOGGLE_TODO_COMPLETED', payload: { todo: Todo } }
   | { type: 'GET_ALL_EVENTS', payload: { events: Object } }
+  | { type: 'GET_ONE_EVENT', payload: {
+    event: Event,
+    eventKey: string
+  } }
   | { type: 'SAVE_EVENT', payload: {
     event: Event,
     eventKey: string,

@@ -11,6 +11,15 @@ export const getAllEvents = (snap: Object): Action => {
   };
 };
 
+export const getOneEvent = (snap: Object): Action => {
+  const event = snap.val();
+  const eventKey = snap.key;
+  return {
+    type: 'GET_ONE_EVENT',
+    payload: { event, eventKey },
+  };
+};
+
 export const reportEventClick = (linkType: string): Action => {
   return {
     type: 'REPORT_EVENT_LINK_CLICK',

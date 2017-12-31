@@ -40,6 +40,23 @@ const reducer = (
       return { ...state, eventList, eventsLoaded: true };
     }
 
+    case 'GET_ONE_EVENT': {
+      const { event, eventKey } = action.payload;
+      if (!event) {
+        return { ...state };
+      }
+      const { eventList } = state;
+      if (eventList.find((event) => event.key === eventKey)) {
+        return { ...state, eventsLoaded: true };
+      }
+      const newEvent: Event = {
+        ...event,
+        key: eventKey,
+      };
+      eventList.push(newEvent);
+      return { ...state, eventList, eventsLoaded: true };
+    }
+
     default:
       return state;
 
