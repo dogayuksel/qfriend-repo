@@ -53,6 +53,7 @@ const saveEventEpic = (action$: any, { firebase }: Deps) => {
     if (!fields) {
       return updateEvent(eventKey, event);
     }
+    fields.$reset();
     return saveNewEvent(event);
   };
 
@@ -61,9 +62,10 @@ const saveEventEpic = (action$: any, { firebase }: Deps) => {
     .mergeMap(saveEvent$)
     .delay(600)
     .map(saveEventDone)
-    .catch(e => Observable.of(appError(e)));
+    .catch(e => Observable.from(
+      [appError(e), saveEventFail()]
+    ));
 };
-
 
 const deleteEventEpic = (action$: any, { firebase }: Deps) =>
   action$

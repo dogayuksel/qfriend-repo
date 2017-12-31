@@ -18,7 +18,8 @@ const reducer = (
       return { ...state, eventBeingSaved: true };
     }
 
-    case 'SAVE_EVENT_DONE': {
+    case 'SAVE_EVENT_DONE':
+    case 'SAVE_EVENT_FAILED': {
       return { ...state, eventBeingSaved: false };
     }
 

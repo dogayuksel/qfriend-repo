@@ -11,13 +11,16 @@ import Select from 'react-select';
 import styles from './custom-select-calendar-styles.css';
 
 import type { State, Venue } from '../../common/types';
-import { Text,
-         Button,
-         Link,
-         Form,
-         Input,
-         Checkbox,
-         Box } from '../app/components';
+import {
+  Paragraph,
+  Text,
+  Button,
+  Link,
+  Form,
+  Input,
+  Checkbox,
+  Box,
+} from '../app/components';
 
 type Props = {
   fields: Object,
@@ -26,6 +29,7 @@ type Props = {
   onSubmit: () => void,
   handleCalendar: (date: moment<>, fields: Object) => void,
   venues: Array<Venue>,
+  error: ?Object,
 };
 
 const EventForm = ({
@@ -35,6 +39,7 @@ const EventForm = ({
   handleCalendar,
   venues,
   eventBeingSaved,
+  error,
 }: Props) => {
   const pickMix = (venue) => ({
     label: venue.title,
@@ -134,6 +139,16 @@ const EventForm = ({
             },
           }}
         />
+        {error &&
+         <Box marginVertical={1}>
+           <Paragraph color="warning">
+             {error.message}
+           </Paragraph>
+           <Paragraph color="warning">
+             Please, refresh the app.
+           </Paragraph>
+         </Box>
+        }
         <Box>
           <Button
             onClick={onSubmit}
@@ -155,4 +170,5 @@ const EventForm = ({
 export default connect((state: State) => ({
   eventBeingSaved: state.events.eventBeingSaved,
   venues: state.venues.venueList,
+  error: state.app.error,
 }))(EventForm);
