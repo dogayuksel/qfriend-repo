@@ -1,14 +1,14 @@
 /* @flow */
-import type { State } from '../../common/types';
 import React from 'react';
-import EventForm from './EventForm';
-import { Calendar } from 'react-date-range';
-import moment from 'moment';
-import { saveEvent } from '../../common/events/actions';
 import { connect } from 'react-redux';
+import moment from 'moment';
+
+import type { State } from '../../common/types';
+import EventForm from './EventForm';
+import { saveEvent } from '../../common/events/actions';
 import { fields } from '../../common/lib/redux-fields';
 
-class NewEvent extends React.Component {
+class NewEvent extends React.Component<{}> {
 
   onFormSubmit = () => {
     const { fields } = this.props;
@@ -24,13 +24,11 @@ class NewEvent extends React.Component {
   }
 
   render() {
-    const { isExact, isAdmin, event, fields } = this.props;
+    const { fields } = this.props;
 
     return (
       <EventForm
         fields={fields}
-        isAdmin={isAdmin}
-        isExact={isExact}
         onSubmit={this.onFormSubmit}
         handleCalendar={this.handleSelect}
       />
@@ -65,9 +63,7 @@ NewEvent = fields({
   }),
 })(NewEvent);
 
-export default connect((state: State, props) => {
-  return {
-    isAdmin: state.admin.isAdmin,
-    venues: state.venues.venueList,
-  };
-},{ saveEvent })(NewEvent);
+export default connect((state: State) => ({
+  isAdmin: state.admin.isAdmin,
+  venues: state.venues.venueList,
+}), { saveEvent })(NewEvent);

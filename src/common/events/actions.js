@@ -18,64 +18,54 @@ export const reportEventClick = (linkType: string): Action => {
   };
 };
 
-export const saveEvent = ( event: Event, eventKey: string, fields: ?Object ): Action => {
-  return {
-    type: 'SAVE_EVENT',
-    payload: { event, eventKey, fields },
-  };
-};
+export const saveEvent = (
+  event: Event, eventKey: string, fields: ?Object
+): Action => ({
+  type: 'SAVE_EVENT',
+  payload: { event, eventKey, fields },
+});
 
-export const saveEventDone = (): Action => {
-  return {
-    type: 'SAVE_EVENT_DONE',
-  };
-};
+export const saveEventDone = (): Action => ({
+  type: 'SAVE_EVENT_DONE',
+});
 
-export const saveEventFail = (): Action => {
-  return {
-    type: 'SAVE_EVENT_FAILED',
-  };
-};
+export const saveEventFail = (): Action => ({
+  type: 'SAVE_EVENT_FAILED',
+});
 
-export const deleteEvent = (eventKey: string): Action => {
-  return {
-    type: 'DELETE_EVENT',
-    payload: { eventKey }
-  };
-};
+export const deleteEvent = (eventKey: string): Action => ({
+  type: 'DELETE_EVENT',
+  payload: { eventKey },
+});
 
-export const deleteEventDone = (): Action => {
-  return {
-    type: 'DELETE_EVENT_DONE',
-  };
-};
+export const deleteEventDone = (): Action => ({
+  type: 'DELETE_EVENT_DONE',
+});
 
-const saveEventEpic = (action$: any, { firebase }: Deps) =>
-  action$
+const saveEventEpic = (action$: any, { firebase }: Deps) => {
+  const updateEvent = (eventKey, event) => Observable
+    .from(firebase.child('events').child(eventKey).update(event));
+
+  const saveNewEvent = (event) => Observable
+    .from(firebase.child('events').push(event));
+
+  const saveEvent$ = ({ payload: { event, eventKey, fields } }) => {
+    if (!fields) {
+      return updateEvent(eventKey, event);
+    }
+    return saveNewEvent(event);
+  };
+
+  return action$
     .filter((action: Action) => action.type === 'SAVE_EVENT')
-    .mergeMap(({ payload: { event, eventKey, fields } }) => {
-      if (!fields) {
-        const promise = firebase
-          .child('events')
-          .child(eventKey)
-          .update({
-            ...event,
-          });
-        return Observable.from(promise)
-                         .map(saveEventDone)
-                         .catch(e => Observable.of(appError(e)));
-      } else {
-        const promise = firebase
-          .child('events')
-          .push(event);
-        return Observable.from(promise)
-                         .map(saveEventDone)
-                         .catch(e => Observable.of(appError(e)));
-      }
-    });
+    .mergeMap(saveEvent$)
+    .delay(600)
+    .map(saveEventDone)
+    .catch(e => Observable.of(appError(e)));
+};
 
 
-const deleteEventEpic = (action$: any, {firebase}: Deps) =>
+const deleteEventEpic = (action$: any, { firebase }: Deps) =>
   action$
     .filter((action: Action) => action.type === 'DELETE_EVENT')
     .mergeMap(({ payload: { eventKey } }) => {

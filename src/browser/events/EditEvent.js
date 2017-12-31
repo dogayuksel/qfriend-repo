@@ -12,8 +12,6 @@ import { fields } from '../../common/lib/redux-fields';
 type Props = {
   event: Event,
   params: { eventKey: string },
-  isExact: boolean,
-  isAdmin: boolean,
   saveEvent: typeof saveEvent,
   fields: any,
 }
@@ -46,7 +44,7 @@ class EditEvent extends React.Component<Props> {
   }
 
   render() {
-    const { isExact, isAdmin, event, fields } = this.props;
+    const { event, fields } = this.props;
     const { eventKey } = this.props.params;
     const time = moment(event.beginsAt);
     const hours = time.hours();
@@ -59,8 +57,6 @@ class EditEvent extends React.Component<Props> {
       <EventForm
         fields={fields}
         daymonth={daymonth}
-        isAdmin={isAdmin}
-        isExact={isExact}
         eventKey={eventKey}
         onSubmit={this.onFormSubmit}
         handleCalendar={this.handleSelect}

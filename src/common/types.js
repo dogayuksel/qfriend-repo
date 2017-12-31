@@ -123,6 +123,7 @@ export type VenuesState = {
 export type EventsState = {
   eventList: ?Array<Event>,
   eventsLoaded: boolean,
+  eventBeingSaved: boolean,
 };
 
 export type GuidesState = {
@@ -189,6 +190,7 @@ export type Action =
     fields: ?Object,
   } }
   | { type: 'SAVE_EVENT_DONE' }
+  | { type: 'SAVE_EVENT_FAILED' }
   | { type: 'DELETE_EVENT', payload: { eventKey: string } }
   | { type: 'DELETE_EVENT_DONE' }
   | { type: 'REPORT_EVENT_LINK_CLICK', payload: { linkType: string } }

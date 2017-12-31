@@ -5,6 +5,7 @@ import type { Action, EventsState, Event } from '../types';
 const initialState = {
   eventList: [],
   eventsLoaded: false,
+  eventBeingSaved: false,
 };
 
 const reducer = (
@@ -12,6 +13,14 @@ const reducer = (
   action: Action,
 ): EventsState => {
   switch (action.type) {
+
+    case 'SAVE_EVENT': {
+      return { ...state, eventBeingSaved: true };
+    }
+
+    case 'SAVE_EVENT_DONE': {
+      return { ...state, eventBeingSaved: false };
+    }
 
     case 'GET_ALL_EVENTS': {
       const { events } = action.payload;
