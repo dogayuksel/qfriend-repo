@@ -9,6 +9,7 @@ import todos from './todos/reducer';
 import venues from './venues/reducer';
 import queues from './queues/reducer';
 import events from './events/reducer';
+import guides from './guides/reducer';
 import users from './users/reducer';
 import admin from './admin/reducer';
 import { combineReducers } from 'redux';
@@ -47,6 +48,7 @@ const configureReducer = (initialState: Object) => {
     venues,
     queues,
     events,
+    guides,
     users,
     admin,
   });

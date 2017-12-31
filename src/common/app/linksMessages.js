@@ -58,6 +58,10 @@ const LinkMessages = defineMessages({
     defaultMessage: 'Log Queue',
     id: 'app.links.logQueue',
   },
+  addGuide: {
+    defaultMessage: 'Add Guide',
+    id: 'app.links.addGuide',
+  },
   signIn: {
     defaultMessage: 'Sign in',
     id: 'app.links.signIn',

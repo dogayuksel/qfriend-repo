@@ -1,12 +1,13 @@
 // @flow
-import type { State, User } from '../../common/types';
 import React from 'react';
-import SignOut from '../auth/SignOut';
-import getUserPhotoUrl from '../../common/users/getUserPhotoUrl';
-import linksMessages from '../../common/app/linksMessages';
 import { FormattedMessage } from 'react-intl';
 import { Match, Redirect } from 'react-router';
 import { connect } from 'react-redux';
+
+import type { State, User } from '../../common/types';
+import SignOut from '../auth/SignOut';
+import getUserPhotoUrl from '../../common/users/getUserPhotoUrl';
+import linksMessages from '../../common/app/linksMessages';
 import {
   Box,
   Image,
@@ -18,6 +19,7 @@ import {
 // Pages
 import Settings from './SettingsPage';
 import LogQueue from './LogQueuePage';
+import AddGuide from './AddGuidePage';
 
 const Navbar = ({ pathname }) => (
   <Box
@@ -34,12 +36,12 @@ const Navbar = ({ pathname }) => (
 );
 
 const AdminNavbar = ({ pathname }) => (
-  <Box
-    marginVertical={1}
-    marginHorizontal={1}
-  >
+  <Box margin={1}>
     <Link to={`${pathname}/logqueue`} paddingHorizontal={0.5}>
       <FormattedMessage {...linksMessages.logQueue} />
+    </Link>
+    <Link to={`${pathname}/addGuide`} paddingHorizontal={0.5}>
+      <FormattedMessage {...linksMessages.addGuide} />
     </Link>
     <Link to="/editevents" paddingHorizontal={0.5}>
       <FormattedMessage {...linksMessages.editEvents} />
@@ -56,7 +58,7 @@ type MePageProps = {
   isAdmin: boolean,
 };
 
-const MePage = ({ pathname, viewer, isAdmin }): MePageProps => (
+const MePage = ({ pathname, viewer, isAdmin }: MePageProps) => (
   !viewer ?
   <Redirect to="/" />
   :
@@ -89,6 +91,7 @@ const MePage = ({ pathname, viewer, isAdmin }): MePageProps => (
     />
     <Match pattern={`${pathname}/settings`} component={Settings} />
     <Match pattern={`${pathname}/logqueue`} component={LogQueue} />
+    <Match pattern={`${pathname}/addguide`} component={AddGuide} />
   </Box>
 );
 

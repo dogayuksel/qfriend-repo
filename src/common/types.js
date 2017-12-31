@@ -50,7 +50,7 @@ export type Event = {
   name: string,
   photoURL: ?string,
   residentAdvisorURL: ?string,
-  venueKey: number,
+  venueKey: string,
 }
 
 export type Queue = {
@@ -125,6 +125,12 @@ export type EventsState = {
   eventsLoaded: boolean,
 };
 
+export type GuidesState = {
+  guideDate: ?number,
+  guideVenue: ?number,
+  guideEvent: ?string,
+};
+
 export type QueuesState = {
   queueMap: {[venueKey: string]: Array<Queue>},
   queuesLoaded: boolean,
@@ -145,6 +151,7 @@ export type State = {
   events: EventsState,
   queues: QueuesState,
   venues: VenuesState,
+  guides: GuidesState,
 };
 
 // Actions
@@ -199,4 +206,7 @@ export type Action =
   | { type: 'DELETE_QUEUE_ENTRY', payload: { key: string } }
   | { type: 'DELETE_QUEUE_ENTRY_DONE' }
   | { type: 'LIST_VENUES', payload: { venues: Object } }
-  | { type: 'TOGGLE_BASELINE' };
+  | { type: 'TOGGLE_BASELINE' }
+  | { type: 'SET_GUIDE_VENUE', payload: { venueKey: number } }
+  | { type: 'SET_GUIDE_EVENT', payload: { eventKey: string } }
+  | { type: 'SET_GUIDE_DATE', payload: { guideDate: number } };
