@@ -1,7 +1,6 @@
 /* @flow */
 import R from 'ramda';
 import type { Action, QueuesState, Queue } from '../types';
-import moment from 'moment';
 
 const initialState = {
   queueMap: {},
@@ -14,30 +13,14 @@ const reducer = (
 ): QueuesState => {
   switch (action.type) {
     case 'CHECK_ALL_QUEUES': {
-      const queueList = action.payload;
-      if (!queueList) {
+      const queuesQuery = action.payload;
+      if (!queuesQuery) {
         return { ...state, queueMap: {}, queuesLoaded: true };
       }
-      const queues = Object
-        .keys(queueList)
-        .map( key => {
-          const queue: Queue = {
-            ...queueList[key],
-            key,
-          };
-          return queue;
-        }
-        );
-      let queueMap = {};
-      R.map((value) => {
-        if (!queueMap[`${value.venueKey}`]) {
-          queueMap[`${value.venueKey}`] = [value];
-        } else {
-          const list = queueMap[`${value.venueKey}`];
-          list.push(value);
-          queueMap[`${value.venueKey}`] = list;
-        }
-      }, queues);
+      const appendKey = (queue, key) => ({ ...queue, key });
+      const queues: Array<Queue> = R.values(
+        R.mapObjIndexed(appendKey, queuesQuery));
+      const queueMap = R.groupBy((queue) => queue.venueKey, queues);
       return { ...state, queueMap, queuesLoaded: true };
     }
 

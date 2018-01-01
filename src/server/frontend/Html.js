@@ -7,7 +7,6 @@ type Props = {
   bodyCss: string,
   bodyHtml: string,
   helmet: Object,
-  isProduction: boolean,
 };
 
 const Html = ({
@@ -15,7 +14,6 @@ const Html = ({
   bodyCss,
   bodyHtml,
   helmet,
-  isProduction,
 }: Props) => (
   <html {...helmet.htmlAttributes.toComponent()}>
     <head>
