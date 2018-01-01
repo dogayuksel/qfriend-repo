@@ -1,6 +1,7 @@
 /* @flow */
 import { Observable } from 'rxjs/Observable';
 import type { Action, Deps, User, Queue } from '../types';
+import { appError } from '../app/actions';
 
 export const adminCheck = (user: ?User): Action => ({
   type: 'ADMIN_CHECK',
@@ -46,9 +47,7 @@ const addQueueEntryEpic = (action$: any, { firebase, firebaseDatabase }: Deps) =
           loggedAt: firebaseDatabase.ServerValue.TIMESTAMP,
         })
         .then(() => addQueueEntryDone())
-        .catch((e) => {
-          console.log(e);
-        });
+        .catch((e) => Observable.of(appError(e)));
       return Observable.from(promise);
     });
 
@@ -65,9 +64,7 @@ const adminCheckEpic = (action$: any, { firebase }: Deps) =>
           }
           return adminCheckFail();
         })
-        .catch(e => {
-          console.log('error', e);
-        });
+        .catch(e => Observable.of(appError(e)));
       if (user) {
         return Observable.from(promise);
       }

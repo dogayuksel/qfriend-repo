@@ -20,12 +20,10 @@ export const getOneEvent = (snap: Object): Action => {
   };
 };
 
-export const reportEventClick = (linkType: string): Action => {
-  return {
-    type: 'REPORT_EVENT_LINK_CLICK',
-    payload: { linkType },
-  };
-};
+export const reportEventClick = (linkType: string): Action => ({
+  type: 'REPORT_EVENT_LINK_CLICK',
+  payload: { linkType },
+});
 
 export const saveEvent = (
   event: Event, eventKey: string, fields: ?Object
@@ -84,12 +82,8 @@ const deleteEventEpic = (action$: any, { firebase }: Deps) =>
         .child('events')
         .child(eventKey)
         .remove()
-        .then(value => {
-          return deleteEventDone();
-        })
-        .catch(e => {
-          console.log(e);
-        });
+        .then(() => deleteEventDone())
+        .catch(e => Observable.of(appError(e)));
       return Observable.from(promise);
     });
 
