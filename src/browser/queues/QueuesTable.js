@@ -24,6 +24,18 @@ type Props = {
   venueKey: number,
 }
 
+const EventLink = ({ type, address }) => {
+  if (address) {
+    return (
+      <Link to={address}>
+        {type}
+      </Link>
+    );
+  }
+  return null;
+};
+
+
 type TableData = { [date: string]: number };
 
 let QueuesTable = (props: Props) => {
@@ -34,7 +46,7 @@ let QueuesTable = (props: Props) => {
     R.pluck('y'),
   );
   const tableData: TableData = R
-    .map((dp) => calculateAverage(dp))(data);
+    .map((dataArray) => calculateAverage(dataArray))(data);
 
   const prepareDates = R.compose(
     R.reverse(),
@@ -43,27 +55,26 @@ let QueuesTable = (props: Props) => {
   );
   const dates: Array<string> = prepareDates(tableData);
 
-  const getEventDate = (timeStamp) => moment(timeStamp).add(1, 'days').format('YYYYMMDD');
+  const prepEventDate = (timeStamp) => moment(timeStamp)
+    .add(1, 'days').format('YYYYMMDD');
 
-  const findFBEventAtDate = (date, events) => {
-    for (const eve of events) {
-      if (getEventDate(eve.beginsAt) === date &&
-          parseInt(eve.venueKey, 10) === venueKey) {
-        return eve.facebookEventURL;
-      }
-    }
-    return null;
-  };
+  const eventsList = R.pipe(
+    R.map((e) => ({ ...e, venueKey: parseInt(e.venueKey, 10) })),
+    R.map((e) => ({ ...e, beginsAt: prepEventDate(e.beginsAt) })),
+    R.filter(R.propEq('venueKey', venueKey)),
+  )(events);
 
-  const findRAEventAtDate = (date, events) => {
-    for (const eve of events) {
-      if (getEventDate(eve.beginsAt) === date &&
-          parseInt(eve.venueKey, 10) === venueKey) {
-        return eve.residentAdvisorURL;
-      }
-    }
-    return null;
-  };
+  const findFBEventAtDate = (date, events) => R.pipe(
+    R.filter(R.propEq('beginsAt', date)),
+    R.pluck('facebookEventURL'),
+    R.last(),
+  )(events);
+
+  const findRAEventAtDate = (date, events) => R.pipe(
+    R.filter(R.propEq('beginsAt', date)),
+    R.pluck('residentAdvisorURL'),
+    R.last(),
+  )(events);
 
   return (
     <Box
@@ -81,17 +92,15 @@ let QueuesTable = (props: Props) => {
             {`${tableData[date].toFixed(0)}`.padStart(5)}:&nbsp;
           </Text>
           <Text>
-            {findFBEventAtDate(date, events) &&
-             <Link to={findFBEventAtDate(date, events)}>
-               FB
-             </Link>
-            }
+            <EventLink
+              address={findFBEventAtDate(date, eventsList)}
+              type="FB"
+            />
             <Text>&nbsp;</Text>
-            {findRAEventAtDate(date, events) &&
-             <Link to={findRAEventAtDate(date, events)}>
-               RA
-             </Link>
-            }
+            <EventLink
+              address={findRAEventAtDate(date, eventsList)}
+              type="RA"
+            />
           </Text>
         </Box>
       )}
