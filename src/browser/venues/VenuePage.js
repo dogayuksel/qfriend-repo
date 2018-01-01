@@ -93,8 +93,8 @@ let VenuePage = (props: Props) => {
        <Link
          to="/venues"
          margin={3}
-         >
-         Couldn&apos;t find that venue, go back.
+       >
+        Couldn&apos;t find that venue, go back.
        </Link>
       }
       <VenueLinks venues={venues} />

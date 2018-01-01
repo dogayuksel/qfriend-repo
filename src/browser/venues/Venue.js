@@ -1,11 +1,12 @@
 /* @flow */
-import QueueView from '../queue/QueueView';
 import React from 'react';
-import { Heading,
-         Loading,
-         Link,
-         Text,
-         Box } from '../app/components';
+
+import QueueView from '../queue/QueueView';
+import {
+  Heading,
+  Link,
+  Box,
+} from '../app/components';
 
 type VenueProps = {
   event: ?Object,
@@ -18,7 +19,7 @@ type VenueProps = {
 
 const styles = {
   venueItem: {
-      maxWidth: 475,
+    maxWidth: 475,
   },
   eventLink: {
     fontSize: '0.8em',
@@ -34,38 +35,30 @@ const styles = {
   },
 };
 
-const Venue = ({ event, venue: { key, title, description } }: VenueProps) => {
-  return (
-    <Box
-      style={styles.venueItem}
-    >
-      <Box align="center" style={styles.title}>
-        <Box>
-          <Heading
-            size={3}
-            style={styles.title}
-          >
-            {title}
-          </Heading>
-          {event &&
-           <Link
-             style={styles.eventLink}
-             theme="primary"
-             to={`/event/${event.key}`}
-           >
-             details
-           </Link>
-          }
-        </Box>
+const Venue = ({ event, venue: { key, title } }: VenueProps) =>
+  <Box
+    style={styles.venueItem}
+  >
+    <Box align="center" style={styles.title}>
+      <Box>
+        <Heading
+          size={3}
+          style={styles.title}
+        >
+          {title}
+        </Heading>
+        {event &&
+         <Link
+           style={styles.eventLink}
+           theme="primary"
+           to={`/event/${event.key}`}
+         >
+           details
+         </Link>
+        }
       </Box>
-      <QueueView venueKey={key} />
     </Box>
-  );
-};
-
-Venue.propTypes = {
-  venue: React.PropTypes.object.isRequired,
-  event: React.PropTypes.object,
-};
+    <QueueView venueKey={key} />
+  </Box>;
 
 export default Venue;
