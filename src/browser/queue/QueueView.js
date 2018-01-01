@@ -100,7 +100,7 @@ class QueueView extends React.Component {
            </Box>
          </Box>
          :
-         <Text>No queues yet.</Text>
+         <Text>No queues yet</Text>
         }
       </Box>
     );

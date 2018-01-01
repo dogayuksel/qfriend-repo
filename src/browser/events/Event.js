@@ -40,6 +40,7 @@ class EventBlock extends React.Component<Props, ComponentState> {
     const { pathname, event, venue, isAdmin } = this.props;
     const { countdown } = this.state;
     const eventStartDate = moment(event.beginsAt).format();
+    const possibleEndDate = moment(eventStartDate).add(11, 'hours');
     const { reportEventClick } = this.props;
 
     return (
@@ -79,10 +80,8 @@ class EventBlock extends React.Component<Props, ComponentState> {
             paddingVertical={1}
             marginVertical={0.5}
           >
-            {/ago/.test(countdown) ?
+            {moment().isBetween(eventStartDate, possibleEndDate) &&
              <QueueView venueKey={parseInt(event.venueKey, 10)} />
-             :
-             null
             }
           </Box>
 
