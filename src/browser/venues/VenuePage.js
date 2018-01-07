@@ -32,13 +32,13 @@ let VenuePage = (props: Props) => {
   const { params: { shortName }, venues, events } = props;
   const venue = R.find(R.propEq('shortName', shortName))(venues);
 
-  const timeNow = moment().subtract(7, 'hours').valueOf();
-
+  const venueKey = venue && venue.key;
   const venueEvents = R.pipe(
-    R.filter((event) => parseInt(event.venueKey, 10) === venue.key),
+    R.filter((event) => parseInt(event.venueKey, 10) === venueKey),
     R.sortBy(R.prop('beginsAt')),
   )(events);
 
+  const timeNow = moment().subtract(7, 'hours').valueOf();
   const upcomingVenueEvents = R.filter((event) =>
     event.beginsAt > timeNow)(venueEvents);
   const pastVenueEvents = R.reverse(R.filter((event) =>
@@ -65,6 +65,7 @@ let VenuePage = (props: Props) => {
               <Box display="flex" flexWrap="wrap">
                 {upcomingVenueEvents.map((event) =>
                   <EventBlock
+                    key={event.key}
                     pathname={'/venues'}
                     event={event}
                   />
@@ -80,6 +81,7 @@ let VenuePage = (props: Props) => {
               <Box display="flex" flexWrap="wrap">
                 {pastVenueEvents.map((event) =>
                   <EventBlock
+                    key={event.key}
                     pathname={'/venues'}
                     event={event}
                   />
@@ -93,8 +95,8 @@ let VenuePage = (props: Props) => {
        <Link
          to="/venues"
          margin={3}
-       >
-        Couldn&apos;t find that venue, go back.
+         >
+         Couldn&apos;t find that venue, go back.
        </Link>
       }
       <VenueLinks venues={venues} />
