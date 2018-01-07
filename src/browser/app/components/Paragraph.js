@@ -7,11 +7,13 @@ import styled from './styled';
 const Paragraph: Styled<TextProps> = styled((theme, {
   display = 'block',
   marginBottom = theme.paragraph.marginBottom,
+  marginRight = theme.paragraph.marginRight,
   maxWidth = theme.block.maxWidth,
 }) => ({
   $extends: [Text, ({
     display,
     marginBottom,
+    marginRight,
     maxWidth,
   }: Strict<TextProps>)],
 }));

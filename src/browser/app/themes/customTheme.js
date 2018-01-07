@@ -55,6 +55,7 @@ const theme: Theme = {
   },
   paragraph: {
     marginBottom: 1,
+    marginRight: 1,
   },
 };
 
