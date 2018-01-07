@@ -38,7 +38,8 @@ import { firebase } from '../../common/lib/redux-firebase';
 import { fields } from '../../common/lib/redux-fields';
 
 /* eslint-disable no-unused-vars */
-import styles from './custom-select-calendar-styles.css';
+import selectStyles from './../app/components/react-select.css';
+import customStyles from './custom-select-calendar-styles.css';
 /* eslint-enable no-unused-vars */
 
 type Props = {

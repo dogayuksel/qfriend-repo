@@ -8,7 +8,10 @@ import Select from 'react-select';
 
 // https://javascriptplayground.com/blog/
 //   2016/07/css-modules-webpack-react/
-import styles from './custom-select-calendar-styles.css';
+/* eslint-disable no-unused-vars */
+import selectStyles from './../app/components/react-select.css';
+import customStyles from './custom-select-calendar-styles.css';
+/* eslint-enable no-unused-vars */
 
 import type { State, Venue } from '../../common/types';
 import {

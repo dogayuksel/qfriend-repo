@@ -74,10 +74,6 @@ const App = ({
           link={[
             ...favicon.link,
             // To test vertical rhythm visually.
-            {
-              href: 'https://unpkg.com/react-select/dist/react-select.css',
-              rel: 'stylesheet',
-            },
           ]}
         />
         <Header />
