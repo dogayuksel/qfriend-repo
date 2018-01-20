@@ -51,6 +51,9 @@ const EventForm = ({
   const activeFilter = (venue) => venue.active === 1;
   const venueMap = R.map(pickMix, R.filter(activeFilter, venues));
 
+  const venueSelected = (fields.venueKey.value === 'undefined' || !fields.venueKey.value) ?
+                        false : true;
+
   return (
     <Box margin={1}>
       <Link to="/editevents">
@@ -154,13 +157,13 @@ const EventForm = ({
         }
         <Box>
           <Button
-            disabled={!fields.venueKey.value}
+            disabled={!venueSelected}
             onClick={onSubmit}
             success
           >
             Save
           </Button>
-          {(!fields.venueKey.value && !eventBeingSaved) &&
+          {(!venueSelected && !eventBeingSaved) &&
            <Text marginLeft={0.5} color="primary">
              You must select a venue
            </Text>
