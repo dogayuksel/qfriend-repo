@@ -154,11 +154,17 @@ const EventForm = ({
         }
         <Box>
           <Button
+            disabled={!fields.venueKey.value}
             onClick={onSubmit}
             success
           >
             Save
           </Button>
+          {(!fields.venueKey.value && !eventBeingSaved) &&
+           <Text marginLeft={0.5} color="primary">
+             You must select a venue
+           </Text>
+          }
           {eventBeingSaved &&
            <Text marginLeft={0.5} bold color="primary">
              Event is being saved...
