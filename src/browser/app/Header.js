@@ -47,7 +47,6 @@ const Header = ({
     />
     <HeaderLink exactly to="/" message={linksMessages.home} />
     <HeaderLink exactly to="/venues" message={linksMessages.venues} />
-    <HeaderLink exactly to="/guides" message={linksMessages.guides} />
     {viewer ?
      <HeaderLink to="/me" message={linksMessages.me} />
      :

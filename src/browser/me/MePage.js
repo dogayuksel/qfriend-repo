@@ -22,10 +22,7 @@ import LogQueue from './LogQueuePage';
 import AddGuide from './AddGuidePage';
 
 const Navbar = ({ pathname }) => (
-  <Box
-    marginVertical={2}
-    marginHorizontal={1}
-  >
+  <Box marginVertical={2}>
     <Link exactly to={pathname} paddingHorizontal={0.5}>
       <FormattedMessage {...linksMessages.me} />
     </Link>
@@ -36,17 +33,26 @@ const Navbar = ({ pathname }) => (
 );
 
 const AdminNavbar = ({ pathname }) => (
-  <Box margin={1}>
-    <Link to={`${pathname}/logqueue`} paddingHorizontal={0.5}>
+  <Box display={'flex'} flexWrap={'wrap'}>
+    <Link
+      to={`${pathname}/logqueue`}
+      paddingHorizontal={0.5}
+      paddingVertical={0.5}
+    >
       <FormattedMessage {...linksMessages.logQueue} />
     </Link>
-    <Link to={`${pathname}/addGuide`} paddingHorizontal={0.5}>
-      <FormattedMessage {...linksMessages.addGuide} />
-    </Link>
-    <Link to="/editevents" paddingHorizontal={0.5}>
+    <Link
+      to="/editevents"
+      paddingHorizontal={0.5}
+      paddingVertical={0.5}
+    >
       <FormattedMessage {...linksMessages.editEvents} />
     </Link>
-    <Link to="/viewqueues" paddingHorizontal={0.5}>
+    <Link
+      to="/viewqueues"
+      paddingHorizontal={0.5}
+      paddingVertical={0.5}
+    >
       <FormattedMessage {...linksMessages.viewQueues} />
     </Link>
   </Box>
@@ -64,12 +70,6 @@ const MePage = ({ pathname, viewer, isAdmin }: MePageProps) => (
   :
   <Box marginLeft={2} marginTop={1}>
     <Title message={linksMessages.me} />
-    {isAdmin &&
-     <Box marginTop={2}>
-       <Text marginLeft={2}>Admin Actions</Text>
-       <AdminNavbar pathname={pathname} />
-     </Box>
-    }
     <Navbar pathname={pathname} />
     <Match
       exactly
@@ -80,15 +80,26 @@ const MePage = ({ pathname, viewer, isAdmin }: MePageProps) => (
           <Box marginVertical={1}>
             <Image
               src={getUserPhotoUrl(viewer)}
-                  height={100}
-                  width={100}
-                  title={viewer.displayName}
+              height={100}
+              width={100}
+              title={viewer.displayName}
             />
           </Box>
           <SignOut />
         </Box>
       )}
     />
+    {isAdmin &&
+     <Box
+       marginTop={2}
+       marginRight={2}
+       padding={0.5}
+       style={{ backgroundColor: '#333', maxWidth: '400px' }}
+     >
+       <Text marginLeft={1}>Admin Actions</Text>
+       <AdminNavbar pathname={pathname} />
+     </Box>
+    }
     <Match pattern={`${pathname}/settings`} component={Settings} />
     <Match pattern={`${pathname}/logqueue`} component={LogQueue} />
     <Match pattern={`${pathname}/addguide`} component={AddGuide} />
