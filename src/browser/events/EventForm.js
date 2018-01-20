@@ -53,6 +53,7 @@ const EventForm = ({
 
   const venueSelected = (fields.venueKey.value === 'undefined' || !fields.venueKey.value) ?
                         false : true;
+  const dateSelected = (fields.daymonth.value === "") ? false : true;
 
   return (
     <Box margin={1}>
@@ -157,7 +158,7 @@ const EventForm = ({
         }
         <Box>
           <Button
-            disabled={!venueSelected}
+            disabled={!venueSelected || !dateSelected}
             onClick={onSubmit}
             success
           >
@@ -166,6 +167,11 @@ const EventForm = ({
           {(!venueSelected && !eventBeingSaved) &&
            <Text marginLeft={0.5} color="primary">
              You must select a venue
+           </Text>
+          }
+          {(!dateSelected && !eventBeingSaved) &&
+           <Text marginLeft={0.5} color="primary">
+             You must select a date
            </Text>
           }
           {eventBeingSaved &&
