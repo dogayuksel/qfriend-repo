@@ -27,8 +27,8 @@ import {
 type Props = {
   venues: [Venue],
   event: Event,
+  isAdmin: boolean,
   reportEventClick: (eventName: string) => void,
-  children: any,
 }
 
 let EventPage = (props: Props) => {
