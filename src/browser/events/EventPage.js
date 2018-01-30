@@ -32,7 +32,7 @@ type Props = {
 }
 
 let EventPage = (props: Props) => {
-  const { venues, event, reportEventClick } = props;
+  const { venues, event, reportEventClick, isAdmin } = props;
   const venue = event && venues.find(value => `${value.key}` === event.venueKey);
   const eventStartDate = event && moment(event.beginsAt).format('LLLL');
 
@@ -63,6 +63,14 @@ let EventPage = (props: Props) => {
            <meta itemProp="url" content={venue.facebookURL} />
            <meta itemProp="description" content={venue.description} />
          </div>
+         {isAdmin &&
+          <Link
+            target="_blank"
+            to={`/editevents/event/${event.key}`}
+          >
+            edit event
+          </Link>
+         }
          <Box
            margin={1}
            itemProp="image"
@@ -191,6 +199,7 @@ export default connect((state: State, props) => {
            state.events.eventList.find(
              value => value.key === eventId),
     venues: state.venues.venueList,
+    isAdmin: state.admin.isAdmin,
   };
 }, {
   reportEventClick,
